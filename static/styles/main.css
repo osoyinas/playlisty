@@ -1,0 +1,314 @@
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.inter {
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 35vh;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+body {
+    font-family: 'Gotham', sans-serif;
+}
+
+nav {
+    z-index: 9999;
+    background-color: black;
+    color: white;
+    height: 4em;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    width: 100%;
+}
+
+nav .left,
+nav .right {
+    font-size: 1.2em;
+    font-weight: 400;
+    margin: 0 5%;
+    display: flex;
+    align-items: center;
+    gap: 6em;
+}
+
+nav .left {
+    margin: 0 5%;
+    display: flex;
+    align-items: center;
+    gap: 3em;
+}
+
+nav .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+nav .logo .logo_img {
+    width: 2.2em;
+}
+
+nav .left .logo_tittle {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+nav .login {
+    width: 2.3em;
+}
+
+nav .right {
+    margin: 0 3%;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    cursor: pointer;
+}
+
+nav .right .user_logo {
+    cursor: pointer;
+    all: unset;
+    color: white;
+    font-size: 1.3em;
+    text-decoration: none;
+    padding: 0;
+    border: none;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 5px;
+    width: 7em;
+}
+
+nav .right .log_text {
+    color: white;
+    font-size: 0.6em;
+}
+
+#banner {
+    padding-top: 4em;
+    height: 70vh;
+    min-height: 600px;
+    display: flex;
+    justify-content: left;
+    background-color: #112FD9;
+}
+
+#banner div {
+    margin-left: 15%;
+    margin-top: 5%;
+}
+
+#banner h1 {
+    color: white;
+    font-size: 3em;
+    font-weight: 600;
+}
+
+#banner .Listify_tittle {
+    font-size: 8em;
+    color: #22F241;
+}
+
+#banner h1 .spotify {
+    color: #22F241;
+    font-size: 1.5em;
+}
+
+#banner h1 .playlists {
+    color: white;
+    font-size: 1.5em;
+}
+
+#banner .welcome {
+    color: white;
+    font-size: 1.9em;
+
+}
+
+
+.cssbuttons-io-button {
+    margin-top: 5%;
+    cursor: pointer;
+    background: #CA8DF2;
+    color: white;
+    font-family: inherit;
+    padding: 0.35em;
+    padding-left: 1.2em;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 0.9em;
+    border: none;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    box-shadow: inset 0 0 1.6em -0.6em #714da6;
+    overflow: hidden;
+    position: relative;
+    height: 2.8em;
+    padding-right: 3.3em;
+    width: 200px;
+}
+
+.cssbuttons-io-button .icon {
+    background: white;
+    margin-left: 1em;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0.3em;
+    height: 2.2em;
+    width: 2.2em;
+    border-radius: 0.7em;
+    box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
+    right: 0.3em;
+    transition: all 0.3s;
+}
+
+.cssbuttons-io-button:hover .icon {
+    width: calc(100% - 0.6em);
+}
+
+.cssbuttons-io-button .icon svg {
+    width: 1.1em;
+    transition: transform 0.3s;
+    color: #7b52b9;
+}
+
+.cssbuttons-io-button:hover .icon svg {
+    transform: translateX(0.1em);
+}
+
+.cssbuttons-io-button:active .icon {
+    transform: scale(0.95);
+}
+
+#auth {
+    padding-top: 4em;
+}
+
+#tutorial {
+    padding-top: 5em;
+    width: 100%;
+}
+#tutorial  h2 {
+    font-size: 3.1em;
+    text-align: center;
+    margin-bottom: 1em;
+}
+#tutorial .container {
+    margin: auto;
+    width: 40%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3em;
+    background-color: #FFE9FF;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.3);
+}
+
+#tutorial .container .step {
+    width: 70%;
+    padding: 2em;
+    line-height: 3em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px black solid;
+}
+
+
+
+#tutorial .container .cloud {
+    font-size: 3.1em;
+    text-align: center;
+    color: #04D94F;
+}
+
+#tutorial .container h3 {
+    text-align: center;
+}
+
+.button_step1,.logged {
+    margin-top: 1em;
+    cursor: pointer;
+    padding: 12px 24px;
+    border: 1px solid black;
+    border-radius: 20px;
+    transition: all 0.2s ease-in;
+    position: relative;
+    overflow: hidden;
+    /* font-size: 19px; */
+    color: black;
+    z-index: 1;
+}
+
+.logged{
+    cursor: auto;
+    background-color: #04D94F;
+}
+.button_step1:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.25);
+    top: 100%;
+    width: 140%;
+    height: 180%;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+}
+
+.button_step1:after {
+    content: "";
+    position: absolute;
+    left: 55%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.45);
+    top: 180%;
+    width: 160%;
+    height: 190%;
+    background-color: #04D94F;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+}
+
+.button_step1:hover {
+    color: #ffffff;
+    border: 1px solid #39bda7;
+}
+
+.button_step1:hover:before {
+    top: -35%;
+    background-color: #04D94F;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+.button_step1:hover:after {
+    top: -45%;
+    background-color: #04D94F;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
