@@ -1,7 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/django
 # Edit at https://www.toptal.com/developers/gitignore?templates=django
 #Visual Studio Code
+/DjangoPlaylisty.code-workspace
+./DjangoPlaylisty.code-workspace
 DjangoPlaylisty.code-workspace
+
 ### Django ###
 *.log
 *.pot
