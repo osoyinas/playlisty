@@ -20,5 +20,8 @@ def create_spotify_oauth(request: HttpRequest) -> SpotifyOAuth:
     site = get_current_site(request) #current host
     protocol = request.scheme #Protocol, http/https
     url = f'{protocol}://{site.domain}{path}' #url to redirect
-    SCOPE = 'playlist-modify-private'
+    SCOPE = """
+    playlist-modify-private,
+    playlist-modify-public
+    """
     return SpotifyOAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri =  url)
