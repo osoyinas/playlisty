@@ -3,25 +3,116 @@ from spotipy.oauth2 import SpotifyOAuth
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 import os
-
+import time
+import spotipy
+import random
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
+
 
 def create_spotify_oauth(request: HttpRequest) -> SpotifyOAuth:
     """Creates an SpotifyOAuth object with SCOPE = playlist-modify-private and redirects to the home page
 
     Args:
-        request (HttpRequest): 
+        request (HttpRequest):
 
     Returns:
         SpotifyOAuth:
     """
-    path = reverse('callback') #path of callback view
-    site = get_current_site(request) #current host
-    protocol = request.scheme #Protocol, http/https
-    url = f'{protocol}://{site.domain}{path}' #url to redirect
+    path = reverse('callback')  # path of callback view
+    site = get_current_site(request)  # current host
+    protocol = request.scheme  # Protocol, http/https
+    url = f'{protocol}://{site.domain}{path}'  # url to redirect
     SCOPE = """
     playlist-modify-private,
     playlist-modify-public
     """
-    return SpotifyOAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri =  url)
+    return SpotifyOAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=url)
+
+
+def is_expired(request: HttpRequest) -> bool:
+    """Checks if the token has expired
+
+    Args:
+        request (HttpRequest):
+
+    Returns:
+        bool: Returns True if token has expired
+    """
+    token_info = request.session.get('auth_token', None)
+    if not token_info:
+        return True
+    now = int(time.time())
+    return token_info['expires_at'] - now < 60
+
+
+def create_spotify_playlist(sp: spotipy.Spotify, name: str, public: bool, collaborative: bool, desc: str) -> int:
+    """Creates an empty spotify playlist.
+
+    Args:
+        sp (SpotifyOAuth): Object with the current user to be able to connect spotify's api.
+        name (str): Name of the playlist
+        public (bool): True if playlist is public, False if playlist is private
+        collaborative (bool): True if is collaborative, False if is not collaborative
+        desc (str): playlist's Description
+
+    Returns:
+        int: playlist's id
+    """
+    user = sp.current_user()
+    user_id = user['id']
+    playlist_id = sp.user_playlist_create(user=user_id, name=name, public=public,
+                                          collaborative=collaborative, description=desc)['id']  # Creates the spotify playlist and return the playlist id.
+    return playlist_id
+
+
+def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, raw_artists: list) -> None:
+    """Add top 10 songs of the artists given to the playlist.
+
+    Args:
+        sp (spotipy.Spotify): Object with the current user to be able to connect spotify's API.
+        id (int): Playlist's ID
+        raw_artists (list): Artists's list like ["Bad Bunny", "The Whistlers"]
+    """
+    tracks = []
+    for artist in raw_artists:
+        # Search for the artist
+        search_artist = sp.search(artist, type='artist')
+        # look at the first id result
+        artist_id = search_artist['artists']['items'][0]['id']
+        top_tracks = sp.artist_top_tracks(artist_id=artist_id)['tracks']
+        for track in top_tracks:
+            tracks.append(track['id'])
+        # add the tracks to the spotify playlist
+        sp.playlist_add_items(playlist_id=playlist_id, items=tracks)
+
+
+def reorder_playlist(sp: spotipy.Spotify, playlist_id: int):
+    """Reorder randomly the playlist
+
+    Args:
+        sp (spotipy.Spotify): Object with the current user to be able to connect spotify's API.
+        playlist_id (_type_): Playlist's ID
+    """
+    tracks = sp.playlist_tracks(playlist_id)
+    # Get the number of tracks in the playlist
+    num_tracks = len(tracks['items']) - 1
+    for i in range(len(tracks)):
+        sp.playlist_reorder_items(playlist_id=playlist_id, range_start=random.randint(
+            0, num_tracks), insert_before=random.randint(0, num_tracks))
+
+
+def get_playlist_url(sp: spotipy.Spotify, playlist_id: int) -> str:
+    """Gets the public url of the playlist
+
+    Args:
+        sp (spotipy.Spotify): Object with the current user to be able to connect spotify's API.
+        playlist_id (int): Playlist's ID
+
+    Returns:
+        str: URL
+    """
+    playlist = sp.playlist(playlist_id)
+    playlist_url = playlist["external_urls"]["spotify"]
+    return playlist_url
+

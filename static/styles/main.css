@@ -207,11 +207,13 @@ nav .right .log_text {
     padding-top: 5em;
     width: 100%;
 }
-#tutorial  h2 {
+
+#tutorial h2 {
     font-size: 3.1em;
     text-align: center;
     margin-bottom: 1em;
 }
+
 #tutorial .container {
     margin: auto;
     width: 40%;
@@ -247,7 +249,8 @@ nav .right .log_text {
     text-align: center;
 }
 
-.button_step1,.logged {
+.button_step1,
+.logged {
     margin-top: 1em;
     cursor: pointer;
     padding: 12px 24px;
@@ -261,10 +264,11 @@ nav .right .log_text {
     z-index: 1;
 }
 
-.logged{
+.logged {
     cursor: auto;
     background-color: #04D94F;
 }
+
 .button_step1:before {
     content: "";
     position: absolute;
@@ -311,4 +315,108 @@ nav .right .log_text {
     top: -45%;
     background-color: #04D94F;
     transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+/* CREATE PLAYLIST */
+
+#create_playlist {
+    padding-top: 4em;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.input{
+    border: none;
+    background-color: transparent;
+}
+#search_song_form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+}
+#search_song_form #playlist_artists{
+    text-align: center;
+    font-size: 1.2em;
+}
+#playlist_form {
+    border-radius: 12px;
+    height: 380px;
+    background-color: #112FD9;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+}
+input:focus{
+    outline: none;
+}
+.group {
+    display: flex;
+    line-height: 28px;
+    align-items: center;
+    position: relative;
+    max-width: 190px;
+   }
+   
+   .input_search {
+    width: 100%;
+    height: 40px;
+    line-height: 28px;
+    padding: 0 1rem;
+    padding-left: 2.5rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    outline: none;
+    background-color: #f3f3f4;
+    color: #0d0c22;
+    transition: .3s ease;
+   }
+   
+   .input_search::placeholder {
+    color: #9e9ea7;
+   }
+   
+   .input_search:focus, input:hover {
+    outline: none;
+    border-color: rgba(234,76,137,0.4);
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
+   }
+   
+   .icon {
+    position: absolute;
+    left: 1rem;
+    fill: #9e9ea7;
+    width: 1rem;
+    height: 1rem;
+   }
+   
+   
+   
+   
+   
+   
+#playlist_form .top{
+    padding: .7em 1em;
+    border-radius: 12px;
+    background-color: #112FD9;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+#playlist_form .bottom {
+    background-color: #154EBF;
+    height: 100%;
+    
+}
+#playlist_form .playlist_name{
+    color:white;
+    font-size: 2.5em;
+    font-weight: 600;
+}
+#playlist_form .playlist_desc{
+    width: 100%;
+    color: rgba(255, 255, 255, 0.6);
 }
