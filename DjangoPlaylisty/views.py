@@ -44,10 +44,12 @@ def callback(request: HttpRequest) -> HttpResponse:
     """
     print("CALLBACK VIEW")
     print("USER " + str(request.session['random']))
-
-    auth_manager = oauth2.SpotifyOAuth(
-        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL)
     code = request.GET.get('code')
+    state = request.GET.get('state')
+    auth_manager = oauth2.SpotifyOAuth(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, state=state)
+    print("state")
+    print(state)
     print("Code:")
     print(code)
     token = auth_manager.get_access_token(code=code)
