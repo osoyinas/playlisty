@@ -7,7 +7,11 @@ import spotipy.oauth2 as oauth2
 import random
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
-
+URL = str(os.environ.get('HOST_URL'))  # url to redirect
+SCOPE = """
+    playlist-modify-private,
+    playlist-modify-public
+    """
 
 def home(request: HttpRequest) -> HttpResponse:
     """
@@ -24,13 +28,9 @@ def auth(request: HttpRequest) -> HttpResponse:
     """
     Generates the API token to connect to Spotify's API, redirects to /callback with the token
     """
-    url = str(os.environ.get('HOST_URL'))  # url to redirect
-    SCOPE = """
-    playlist-modify-private,
-    playlist-modify-public
-    """
+    
     auth_manager = oauth2.SpotifyOAuth(
-        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=url)
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL)
     auth_url = auth_manager.get_authorize_url()
     return redirect(auth_url)
 
@@ -39,7 +39,8 @@ def callback(request: HttpRequest) -> HttpResponse:
     """
     Saves the token in auth_token and redirects to /home
     """
-    auth_manager = create_spotify_oauth(request)
+    auth_manager = oauth2.SpotifyOAuth(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL)
     code = request.GET.get('code')
     token = auth_manager.get_access_token(code)
     request.session['token_auth'] = token
@@ -88,7 +89,6 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     """
     Renders create_playlist.html
     """
-    print("RANDOM NUMBER in CREATE PLAYLIST:")
     logged_in = False
     if 'token_auth' in request.session:
         print("create_playlist:")
