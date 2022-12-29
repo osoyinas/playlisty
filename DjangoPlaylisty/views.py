@@ -10,7 +10,6 @@ from spotipy.oauth2 import SpotifyClientCredentials
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
 SCOPE = """playlist-modify-private,playlist-modify-public"""
-CHARS = string.ascii_letters + string.digits
 
 
 def home(request: HttpRequest) -> HttpResponse:
@@ -29,8 +28,6 @@ def auth(request: HttpRequest) -> HttpResponse:
     """
     Generates the API token to connect to Spotify's API, redirects to /callback with the token
     """
-    print("AUTH VIEW")
-    print("USER " + str(request.session['random']))
     auth_manager = create_spotify_oauth()
     auth_url = auth_manager.get_authorize_url()
     return redirect(auth_url)
