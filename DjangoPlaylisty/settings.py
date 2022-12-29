@@ -82,7 +82,7 @@ DATABASES = {
         'NAME':'railway',
         'USER': 'postgres',
         'PASSWORD': 'jnzPZSAV5vP7DMmSgIhf',
-        'HOST':'@containers-us-west-16.railway.app',
+        'HOST':'containers-us-west-16.railway.app',
         'PORT':'7310',
     }
 }
