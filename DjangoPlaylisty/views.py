@@ -12,14 +12,15 @@ URL = str(os.environ.get('HOST_URL'))  # url to redirect
 SCOPE = """playlist-modify-private,playlist-modify-public"""
 CHARS = string.ascii_letters + string.digits
 
+
 def home(request: HttpRequest) -> HttpResponse:
     """
     Index page view. Checks if the user is logged in and passes that information to the template.
     """
     print("HOME  VIEW")
     if 'random' not in request.session:
-        request.session['random'] = random.randint(0,10000)
-    
+        request.session['random'] = random.randint(0, 10000)
+
     print("USER " + str(request.session['random']))
     logged_in = False
     if 'token_auth' in request.session:
@@ -34,11 +35,9 @@ def auth(request: HttpRequest) -> HttpResponse:
     """
     print("AUTH VIEW")
     print("USER " + str(request.session['random']))
-    STATE = ''.join(random.choices(CHARS, k=16))
-    print("CREATED STATE: "+ STATE)
-    auth_manager = oauth2.SpotifyOAuth(
-        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, state= STATE)
-    auth_url = auth_manager.get_authorize_url(state=STATE)
+    auth_manager = SpotifyOAuth(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL) 
+    auth_url = auth_manager.get_authorize_url()
     return redirect(auth_url)
 
 
@@ -48,11 +47,10 @@ def callback(request: HttpRequest) -> HttpResponse:
     """
     print("CALLBACK VIEW")
     print("USER " + str(request.session['random']))
-    code = request.GET.get('code')
-    state = request.GET.get('state')
-    auth_manager = oauth2.SpotifyOAuth(state=state)
-    print("state")
-    print(state)
+    raw_code = request.GET.get('code')
+    auth_manager = SpotifyOAuth(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL)
+    code = auth_manager.parse_response_code(raw_code)
     print("Code:")
     print(code)
     token = auth_manager.get_access_token(code=code)
