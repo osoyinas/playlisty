@@ -46,6 +46,7 @@ def logout(request: HttpRequest) -> HttpResponse:
     """
     if 'auth_token' in request.session:
         request.session.pop('auth_token')
+        request.session.clear()
     return redirect('home')
 
 def generate_playlist(request: HttpRequest) -> HttpResponse:
@@ -56,12 +57,10 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         name = request.POST['name']
         desc = request.POST['desc']
-        print()
         public = False
         if 'public' in request.POST:
             public = True
         collab = False
-        print(request.POST['artists'])
         artists_ids = request.POST['artists'].split(",")
         artists_ids.pop()
         token_info = get_token(request)
