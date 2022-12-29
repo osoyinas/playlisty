@@ -3,8 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from spotify_api.spotify import *
 import spotipy
-import json
-import random
+from django.views.decorators.csrf import csrf_protect
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
 
@@ -49,7 +48,7 @@ def logout(request: HttpRequest) -> HttpResponse:
         request.session.pop('auth_token')
     return redirect('home')
 
-
+@csrf_protect.csrf_exempt
 def generate_playlist(request: HttpRequest) -> HttpResponse:
     logged_in = False
     if 'auth_token' in request.session:
