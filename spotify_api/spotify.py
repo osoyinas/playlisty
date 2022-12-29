@@ -82,6 +82,8 @@ def create_spotify_playlist(sp: spotipy.Spotify, name: str, public: bool, collab
         int: playlist's id
     """
     user = sp.current_user()
+    print(user)
+    print("------------------------")
     user_id = user['id']
     playlist_id = sp.user_playlist_create(user=user_id, name=name, public=public,
                                           collaborative=collaborative, description=desc)['id']  # Creates the spotify playlist and return the playlist id.
