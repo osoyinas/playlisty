@@ -37,6 +37,8 @@ def callback(request: HttpRequest) -> HttpResponse:
     """
     sp = create_spotify_oauth(request)
     request.session.clear()
+    request.session.flush()
+    request.session.pop('auth_token')
     code = request.GET.get('code', '')
     token_info = sp.get_access_token(code)
     request.session['auth_token'] = token_info
