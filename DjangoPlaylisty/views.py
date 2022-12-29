@@ -50,15 +50,14 @@ def callback(request: HttpRequest) -> HttpResponse:
     print("CALLBACK VIEW")
     print("USER " + str(request.session['random']))
 
-    # auth_manager = oauth2.SpotifyOAuth(
-    #     client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL)
-    auth_manager = request.session['auth_manager']
+    auth_manager = oauth2.SpotifyOAuth(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL)
     code = request.GET.get('code')
     print("Code:")
     print(code)
     token = auth_manager.get_access_token(code)
-    if 'token_auth' in request.session:
-        del request.session['token_auth']
+    print("TOKEN SEGUNDO:")
+    print(token)
     request.session['token_auth'] = token
     print("TOKEN ASIGNADO:")
     print(request.session['token_auth'])
