@@ -2,9 +2,10 @@
 {% load static %}
 {% block content%}
 <body>
-    <section id = "generate_playlist">
-        <h1>Playlist generated!<h1>
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/{{playlist_id}}" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    
+    <section id = "generate_playlist" style = "background-image: url('{% static 'svg/Sprinkle.svg' %}');">
+        <h1>Playlist generated!</h1>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/{{playlist_id}}" width="50%" height="50%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
     </section>
     
     

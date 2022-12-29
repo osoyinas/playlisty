@@ -9,7 +9,24 @@ import random
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
 
+def get_token(request:HttpRequest)->SpotifyOAuth:
+    """Generates a token if is expired
 
+    Args:
+        request (HttpRequest): _description_
+
+    Returns:
+        SpotifyOAuth: _description_
+    """
+    token_info = request.session.get('auth_token', None)
+    if not token_info:
+        raise "exception"
+    now = int(time.time())
+    is_expired = token_info['expires_at'] - now < 60
+    if (is_expired):
+        sp_oauth = create_spotify_oauth(request)
+        token_info = sp_oauth.refresh_access_token(token_info['refresh_token'])
+    return token_info
 def create_spotify_oauth(request: HttpRequest) -> SpotifyOAuth:
     """Creates an SpotifyOAuth object with SCOPE = playlist-modify-private and redirects to the home page
 
@@ -66,7 +83,27 @@ def create_spotify_playlist(sp: spotipy.Spotify, name: str, public: bool, collab
     return playlist_id
 
 
-def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, raw_artists: list) -> None:
+# def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, raw_artists: list) -> None:
+#     """Add top 10 songs of the artists given to the playlist.
+
+#     Args:
+#         sp (spotipy.Spotify): Object with the current user to be able to connect spotify's API.
+#         id (int): Playlist's ID
+#         raw_artists (list): Artists's list like ["Bad Bunny", "The Whistlers"]
+#     """
+#     tracks = []
+#     for artist in raw_artists:
+#         # Search for the artist
+#         search_artist = sp.search(artist, type='artist')
+#         # look at the first id result
+#         artist_id = search_artist['artists']['items'][0]['id']
+#         top_tracks = sp.artist_top_tracks(artist_id=artist_id)['tracks']
+#         for track in top_tracks:
+#             tracks.append(track['id'])
+#         # add the tracks to the spotify playlist
+#         sp.playlist_add_items(playlist_id=playlist_id, items=tracks)
+
+def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, artists_ids: list) -> None:
     """Add top 10 songs of the artists given to the playlist.
 
     Args:
@@ -75,17 +112,14 @@ def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, raw_artists: list) -> N
         raw_artists (list): Artists's list like ["Bad Bunny", "The Whistlers"]
     """
     tracks = []
-    for artist in raw_artists:
+    for artist_id in artists_ids:
         # Search for the artist
-        search_artist = sp.search(artist, type='artist')
         # look at the first id result
-        artist_id = search_artist['artists']['items'][0]['id']
         top_tracks = sp.artist_top_tracks(artist_id=artist_id)['tracks']
         for track in top_tracks:
             tracks.append(track['id'])
         # add the tracks to the spotify playlist
         sp.playlist_add_items(playlist_id=playlist_id, items=tracks)
-
 
 def reorder_playlist(sp: spotipy.Spotify, playlist_id: int):
     """Reorder randomly the playlist

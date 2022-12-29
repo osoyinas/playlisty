@@ -1,30 +1,16 @@
 {% extends 'base.html' %} {% load static %} {% block content%}
 <body>
-  <section id="create_playlist">
-    <form action="{%url 'getartists' %}" method="POST" id="search_song_form">
-      {% csrf_token %}
-      <div class="group">
-        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-          <g>
-            <path
-              d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
-            ></path>
-          </g>
-        </svg>
-        <input
-          placeholder="Search artists"
-          type="search"
-          class="input_search"
-          name="artist_name"
-        />
+  <section id="create_playlist" style = "background-image: url('{% static 'svg/Sprinkle.svg' %}');">
+    <div class="container">
+      <div class="wrapper">
+        <input type="text" name="search" id="search" placeholder="Type to search" autocomplete="chrome-off">
+        <button class="search_button"><i class="fa fa-search"></i></button>
+        <div class="results">
+          <!-- Results -->
+        </div>
       </div>
-      <button class="button_step1" type="submit">Search</button>
-    </form>
-    <form
-      action="{% url 'generateplaylist' %}"
-      method="POST"
-      id="playlist_form"
-    >
+    </div>
+    <form action="{% url 'generateplaylist' %}" method="POST" id="playlist_form">
       {% csrf_token %}
       <div class="top">
         <input
@@ -35,6 +21,15 @@
           name="name"
           value="Playlist's Name"
         />
+        <div class="checks">
+          <div class="check_public">
+            <div class="cntr">
+              <input name="public" checked="" type="checkbox" id="cbx" class="hidden-xs-up">
+              <label for="cbx" class="cbx"></label>
+            </div>
+            <p>Public</p>
+          </div>
+        </div>
         <input
           placeholder="Description"
           class="playlist_desc input"
@@ -44,26 +39,12 @@
           value="A playlist generated using playlisty.app"
         />
       </div>
-      <div class="bottom">
-        <input
-          placeholder="Search artists"
-          class="playlist_artists input"
-          type="text"
-          id="playlist_artists"
-          name="artists"
-        />
-      </div>
-      <button class="button_step1" type="submit">Generate playlist</button>
+      <h2>Artists:</h2>
+      <div class="bottom"></div>
+      <input type="hidden" name="artists" id="list_ids"/>
+      <button class="submit_botton" type="submit">Generate playlist</button>
     </form>
   </section>
-  <iframe
-    style="border-radius: 12px"
-    src="https://open.spotify.com/embed/playlist/1YwiMWhVF8egOfQbkyM6YX?utm_source=generator"
-    width="40%"
-    height="380"
-    frameborder="0"
-    allowfullscreen=""
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-  ></iframe>
+  <script src="{% static 'js/get_artist.js' %}"></script>
 </body>
 {% endblock %}

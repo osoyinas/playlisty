@@ -51,25 +51,28 @@ def logout(request: HttpRequest) -> HttpResponse:
 
 
 def generate_playlist(request: HttpRequest) -> HttpResponse:
+    logged_in = False
+    if 'auth_token' in request.session:
+        logged_in = True
+    context = {'logged_in': logged_in}
     if request.method == 'POST':
         name = request.POST['name']
         desc = request.POST['desc']
-        raw_artists = request.POST['artists'].split(",")
-        artists = []
-        for raw_artist in raw_artists:
-            artists.append(raw_artist.strip())
-        if len(artists) == 0:
-            artists = ["Bad Bunny"]
-        token_info = request.session.get('auth_token')
-        sp = spotipy.Spotify(auth=token_info['access_token'])
+        print()
         public = False
+        if 'public' in request.POST:
+            public = True
         collab = False
-        playlist_id = create_spotify_playlist(
-            sp, name, public, collab, desc)
-        add_tracks_to(sp, playlist_id, artists)
+        print(request.POST['artists'])
+        artists_ids = request.POST['artists'].split(",")
+        artists_ids.pop()
+        token_info = get_token(request)
+        sp = spotipy.Spotify(auth=token_info['access_token'])
+        playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
+        add_tracks_to(sp, playlist_id, artists_ids)
         reorder_playlist(sp, playlist_id)
-        playlist_url = get_playlist_url(sp, playlist_id)
-        return render(request, 'generate_playlist.html', {'playlist_id': playlist_id})
+        context = {'playlist_id': playlist_id, 'logged_in': logged_in}
+        return render(request, 'generate_playlist.html', context)
 
 
 def create_playlist(request: HttpRequest) -> HttpResponse:
@@ -83,16 +86,16 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     return render(request, 'create_playlist.html', context)
 
 
-def get_artists(request: HttpRequest) -> JsonResponse:
-    str = request.POST['artist_name']
-    print(str)
-    token_info = request.session.get('auth_token')
+def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
+    if artist_str == "undefined":
+        return JsonResponse({'message': "Not Found"})
+    token_info = get_token(request)
     sp = spotipy.Spotify(auth=token_info['access_token'])
-    results = sp.search(str, type='artist')
-    artists = results['artists']['items'][:5]
+    results = sp.search(artist_str, type='artist')
+    artists = results['artists']['items']
     artists_list = []
     for artist in artists:
-        artists_list.append(artist)
-    print(artists_list)
-    data = {'message': "Success", 'artists': artists_list}
+        if artist_str.lower().strip() in artist['name'].lower():
+            artists_list.append(artist)
+    data = {'message': "Success", 'artists': artists_list[:4]}
     return JsonResponse(data)
