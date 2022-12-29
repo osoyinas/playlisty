@@ -21,7 +21,7 @@ def home(request: HttpRequest) -> HttpResponse:
     if 'random' not in request.session:
         request.session['random'] = random.randint(0,10000)
     
-    print("USER " + request.session['random'])
+    print("USER " + str(request.session['random']))
     logged_in = False
     if 'token_auth' in request.session:
         logged_in = True
@@ -34,7 +34,7 @@ def auth(request: HttpRequest) -> HttpResponse:
     Generates the API token to connect to Spotify's API, redirects to /callback with the token
     """
     print("AUTH VIEW")
-    print("USER " + request.session['random'])
+    print("USER " + str(request.session['random']))
     auth_manager = oauth2.SpotifyOAuth(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL)
     auth_url = auth_manager.get_authorize_url()
@@ -46,7 +46,8 @@ def callback(request: HttpRequest) -> HttpResponse:
     Saves the token in auth_token and redirects to /home
     """
     print("CALLBACK VIEW")
-    print("USER " + request.session['random'])
+    print("USER " + str(request.session['random']))
+
     auth_manager = oauth2.SpotifyOAuth(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL)
     code = request.GET.get('code')
@@ -65,7 +66,7 @@ def logout(request: HttpRequest) -> HttpResponse:
     """
     Deletes the auth token
     """
-    print("USER " + request.session['random'])
+    print("USER " + str(request.session['random']))
     if 'token_auth' in request.session:
         del request.session['token_auth']
     return redirect('home')
@@ -73,7 +74,7 @@ def logout(request: HttpRequest) -> HttpResponse:
 
 def generate_playlist(request: HttpRequest) -> HttpResponse:
     print("GENERATE PLAYLIST VIEW")
-    print("USER " + request.session['random'])
+    print("USER " + str(request.session['random']))
     logged_in = False
     if 'token_auth' in request.session:
         logged_in = True
@@ -102,7 +103,7 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     """
     Renders create_playlist.html
     """
-    print("USER " + request.session['random'])
+    print("USER " + str(request.session['random']))
     print("CREATE PLAYLIST VIEW")
     logged_in = False
     if 'token_auth' in request.session:
