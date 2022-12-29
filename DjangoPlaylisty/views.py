@@ -25,6 +25,9 @@ def auth(request: HttpRequest) -> HttpResponse:
     """
     sp_oauth = create_spotify_oauth(request)
     auth_url = sp_oauth.get_authorize_url()
+    print("URL:")
+    print(auth_url)
+    print("------------------------------")
     return redirect(auth_url)
 
 
@@ -37,6 +40,10 @@ def callback(request: HttpRequest) -> HttpResponse:
     code = request.GET.get('code', '')
     token_info = sp.get_access_token(code)
     request.session['auth_token'] = token_info
+    print("TOKEN ASIGNADO:")
+    print(request.session['auth_token'])
+    print("------------------------------")
+
     return redirect('home')
 
 
@@ -47,12 +54,17 @@ def logout(request: HttpRequest) -> HttpResponse:
     if 'auth_token' in request.session:
         request.session.pop('auth_token')
         request.session.clear()
+        print("LOGGED OUT")
     return redirect('home')
+
 
 def generate_playlist(request: HttpRequest) -> HttpResponse:
     logged_in = False
     if 'auth_token' in request.session:
         logged_in = True
+        print("GENERATED PLAYLIST:")
+        print(request.session['auth_token'])
+        print("------------------------------")
     context = {'logged_in': logged_in}
     if request.method == 'POST':
         name = request.POST['name']
@@ -78,6 +90,9 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     """
     logged_in = False
     if 'auth_token' in request.session:
+        print("create_playlist:")
+        print(request.session['auth_token'])
+        print("------------------------------")
         logged_in = True
     context = {'logged_in': logged_in}
     return render(request, 'create_playlist.html', context)
