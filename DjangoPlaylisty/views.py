@@ -48,7 +48,6 @@ def logout(request: HttpRequest) -> HttpResponse:
         request.session.pop('auth_token')
     return redirect('home')
 
-@csrf_protect.csrf_exempt
 def generate_playlist(request: HttpRequest) -> HttpResponse:
     logged_in = False
     if 'auth_token' in request.session:
