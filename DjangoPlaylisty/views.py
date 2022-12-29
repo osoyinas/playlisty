@@ -1,4 +1,5 @@
 import os
+import string
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from spotify_api.spotify import *
@@ -9,6 +10,7 @@ CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
 URL = str(os.environ.get('HOST_URL'))  # url to redirect
 SCOPE = """playlist-modify-private,playlist-modify-public"""
+CHARS = string.ascii_letters + string.digits
 
 def home(request: HttpRequest) -> HttpResponse:
     """
@@ -32,8 +34,10 @@ def auth(request: HttpRequest) -> HttpResponse:
     """
     print("AUTH VIEW")
     print("USER " + str(request.session['random']))
+    STATE = ''.join(random.choices(CHARS, k=16))
+    print("CREATED STATE: "+ STATE)
     auth_manager = oauth2.SpotifyOAuth(
-        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL)
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, state= STATE)
     auth_url = auth_manager.get_authorize_url()
     return redirect(auth_url)
 
