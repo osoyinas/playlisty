@@ -8,10 +8,7 @@ import random
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
 URL = str(os.environ.get('HOST_URL'))  # url to redirect
-SCOPE = """
-    playlist-modify-private,
-    playlist-modify-public
-    """
+SCOPE = """playlist-modify-private,playlist-modify-public"""
 
 def home(request: HttpRequest) -> HttpResponse:
     """
