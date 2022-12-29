@@ -17,6 +17,7 @@ def home(request: HttpRequest) -> HttpResponse:
     """
     Index page view. Checks if the user is logged in and passes that information to the template.
     """
+    print("HOME  VIEW")
     logged_in = False
     if 'token_auth' in request.session:
         logged_in = True
@@ -28,7 +29,8 @@ def auth(request: HttpRequest) -> HttpResponse:
     """
     Generates the API token to connect to Spotify's API, redirects to /callback with the token
     """
-    
+    print("AUTH VIEW")
+
     auth_manager = oauth2.SpotifyOAuth(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL)
     auth_url = auth_manager.get_authorize_url()
@@ -39,14 +41,17 @@ def callback(request: HttpRequest) -> HttpResponse:
     """
     Saves the token in auth_token and redirects to /home
     """
+    print("CALLBACK VIEW")
+
     auth_manager = oauth2.SpotifyOAuth(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL)
     code = request.GET.get('code')
+    print("Code:")
+    print(code)
     token = auth_manager.get_access_token(code)
     request.session['token_auth'] = token
     print("TOKEN ASIGNADO:")
     print(request.session['token_auth'])
-    print("------------------------------")
     return redirect('home')
 
 
@@ -60,12 +65,12 @@ def logout(request: HttpRequest) -> HttpResponse:
 
 
 def generate_playlist(request: HttpRequest) -> HttpResponse:
+    print("GENERATE PLAYLIST VIEW")
     logged_in = False
     if 'token_auth' in request.session:
         logged_in = True
         print("GENERATED PLAYLIST:")
         print(request.session['token_auth'])
-        print("------------------------------")
     context = {'logged_in': logged_in}
     if request.method == 'POST':
         name = request.POST['name']
@@ -89,11 +94,11 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     """
     Renders create_playlist.html
     """
+    print("CREATE PLAYLIST VIEW")
     logged_in = False
     if 'token_auth' in request.session:
         print("create_playlist:")
         print(request.session['token_auth'])
-        print("------------------------------")
         logged_in = True
     context = {'logged_in': logged_in}
     return render(request, 'create_playlist.html', context)
