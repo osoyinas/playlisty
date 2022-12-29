@@ -59,12 +59,12 @@ function optionClicked(event) {
     bottomContainer.innerHTML += `<iframe as="style" style="border-radius:12px" src="https://open.spotify.com/embed/artist/${artist_id}" width="100%" height="80" frameBorder="0" allow="encrypted-media"></iframe> `
     hiddenInput.value = raw_string;
 }
-submitForm.addEventListener('submit',(event)=>{
-    event.preventDefault();
-    if (hiddenInput.value.length == 0){
-        alert("Select artists");
-    }    
-    else{
-        submitForm.submit();
-    }
-})
+// submitForm.addEventListener('submit',(event)=>{
+//     event.preventDefault();
+//     if (hiddenInput.value.length == 0){
+//         alert("Select artists");
+//     }    
+//     else{
+//         submitForm.submit();
+//     }
+// })
