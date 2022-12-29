@@ -36,7 +36,7 @@ def auth(request: HttpRequest) -> HttpResponse:
     print("AUTH VIEW")
     print("USER " + str(request.session['random']))
     auth_manager = SpotifyOAuth(
-        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL) 
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, cache_path=".cache-") 
     auth_url = auth_manager.get_authorize_url()
     return redirect(auth_url)
 
@@ -49,7 +49,7 @@ def callback(request: HttpRequest) -> HttpResponse:
     print("USER " + str(request.session['random']))
     raw_code = request.GET.get('code')
     auth_manager = SpotifyOAuth(
-        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL)
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, cache_path=".cache-")
     code = auth_manager.parse_response_code(raw_code)
     print("Code:")
     print(code)
