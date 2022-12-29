@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from spotify_api.spotify import *
 import spotipy
-from django.views.decorators.csrf import csrf_protect
+import random
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
 
@@ -16,6 +16,9 @@ def home(request: HttpRequest) -> HttpResponse:
     if 'auth_token' in request.session:
         logged_in = True
     context = {'logged_in': logged_in}
+    print("RANDOM NUMBER in HOME:")
+    request.session["random"] = random.randint(0, 100)
+    print(request.session["random"])
     return render(request, "home.html", context)
 
 
@@ -58,7 +61,6 @@ def logout(request: HttpRequest) -> HttpResponse:
         request.session.clear()
         request.session.delete()
         request.session.flush()
-        request.session.clear()
         print("LOGGED OUT")
     return redirect('home')
 
@@ -80,7 +82,7 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
         collab = False
         artists_ids = request.POST['artists'].split(",")
         artists_ids.pop()
-        token_info = get_auth_token(request)
+        token_info = request.session['auth_token']
         sp = spotipy.Spotify(auth=token_info['access_token'])
         playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
         add_tracks_to(sp, playlist_id, artists_ids)
@@ -93,6 +95,8 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     """
     Renders create_playlist.html
     """
+    print("RANDOM NUMBER in CREATE PLAYLIST:")
+    print(request.session["random"])
     logged_in = False
     if 'auth_token' in request.session:
         print("create_playlist:")
