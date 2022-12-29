@@ -149,4 +149,5 @@ def get_playlist_url(sp: spotipy.Spotify, playlist_id: int) -> str:
     playlist = sp.playlist(playlist_id)
     playlist_url = playlist["external_urls"]["spotify"]
     return playlist_url
-
+def caraculens():
+    return
