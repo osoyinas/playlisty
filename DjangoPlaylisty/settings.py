@@ -136,3 +136,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CSRF_TRUSTED_ORIGINS = ['https://playlisty-production.up.railway.app']
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
