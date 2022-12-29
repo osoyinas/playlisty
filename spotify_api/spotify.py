@@ -28,6 +28,7 @@ def get_token(request:HttpRequest)->SpotifyOAuth:
         sp_oauth = create_spotify_oauth(request)
         token_info = sp_oauth.refresh_access_token(token_info['refresh_token'])
     return token_info
+
 def create_spotify_oauth(request: HttpRequest) -> SpotifyOAuth:
     """Creates an SpotifyOAuth object with SCOPE = playlist-modify-private and redirects to the home page
 
