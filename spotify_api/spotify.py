@@ -19,7 +19,10 @@ def get_token(request:HttpRequest)->SpotifyOAuth:
         SpotifyOAuth: _description_
     """
     token_info = request.session.get('auth_token', None)
-    print("TOKEN INFO:" + token_info)
+    print("TOKEN INFO")
+    print(token_info)
+    print("-------")
+
     if not token_info:
         raise "exception"
     now = int(time.time())
