@@ -40,6 +40,7 @@ def create_spotify_oauth(request: HttpRequest) -> SpotifyOAuth:
     site = get_current_site(request)  # current host
     protocol = request.scheme  # Protocol, http/https
     url = f'{protocol}://{site.domain}{path}'  # url to redirect
+    url = "https://playlisty-production.up.railway.app/callback/"
     SCOPE = """
     playlist-modify-private,
     playlist-modify-public
