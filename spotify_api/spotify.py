@@ -8,8 +8,10 @@ import spotipy
 import random
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
+URL = str(os.environ.get('HOST_URL'))  # url to redirect
 
-def get_auth_token(request:HttpRequest)->SpotifyOAuth:
+
+def get_token(request: HttpRequest) -> SpotifyOAuth:
     """Generates a token if is expired
 
     Args:
@@ -18,11 +20,7 @@ def get_auth_token(request:HttpRequest)->SpotifyOAuth:
     Returns:
         SpotifyOAuth: _description_
     """
-    token_info = request.session.get('auth_token', None)
-    print("TOKEN INFO")
-    print(token_info)
-    print("-------------------------------------------------")
-
+    token_info = request.session.get('token_auth', None)
     if not token_info:
         raise "exception"
     now = int(time.time())
@@ -32,7 +30,8 @@ def get_auth_token(request:HttpRequest)->SpotifyOAuth:
         token_info = sp_oauth.refresh_access_token(token_info['refresh_token'])
     return token_info
 
-def create_spotify_oauth(request: HttpRequest) -> SpotifyOAuth:
+
+def create_spotify_oauth() -> SpotifyOAuth:
     """Creates an SpotifyOAuth object with SCOPE = playlist-modify-private and redirects to the home page
 
     Args:
@@ -42,11 +41,9 @@ def create_spotify_oauth(request: HttpRequest) -> SpotifyOAuth:
         SpotifyOAuth:
     """
     url = str(os.environ.get('HOST_URL'))  # url to redirect
-    SCOPE = """
-    playlist-modify-private,
-    playlist-modify-public
-    """
-    return SpotifyOAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=url)
+    SCOPE = """playlist-modify-private,playlist-modify-public"""
+    return SpotifyOAuth(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, cache_path=".cache-username")
 
 
 def is_expired(request: HttpRequest) -> bool:
@@ -124,6 +121,7 @@ def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, artists_ids: list) -> N
             tracks.append(track['id'])
         # add the tracks to the spotify playlist
         sp.playlist_add_items(playlist_id=playlist_id, items=tracks)
+
 
 def reorder_playlist(sp: spotipy.Spotify, playlist_id: int):
     """Reorder randomly the playlist

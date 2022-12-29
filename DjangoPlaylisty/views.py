@@ -4,11 +4,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from spotify_api.spotify import *
 import spotipy
-import spotipy.oauth2 as oauth2
-import random
+from spotipy.oauth2 import SpotifyClientCredentials
+
+
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
-URL = str(os.environ.get('HOST_URL'))  # url to redirect
 SCOPE = """playlist-modify-private,playlist-modify-public"""
 CHARS = string.ascii_letters + string.digits
 
@@ -17,15 +17,7 @@ def home(request: HttpRequest) -> HttpResponse:
     """
     Index page view. Checks if the user is logged in and passes that information to the template.
     """
-    try:
-        print(request.session['token_auth'])
-    except:
-        print("NO HAY TOKEN")
-    print("HOME  VIEW")
-    if 'random' not in request.session:
-        request.session['random'] = random.randint(0, 10000)
 
-    print("USER " + str(request.session['random']))
     logged_in = False
     if 'token_auth' in request.session:
         logged_in = True
@@ -39,8 +31,7 @@ def auth(request: HttpRequest) -> HttpResponse:
     """
     print("AUTH VIEW")
     print("USER " + str(request.session['random']))
-    auth_manager = SpotifyOAuth(
-        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, cache_path=".cache-username") 
+    auth_manager = create_spotify_oauth()
     auth_url = auth_manager.get_authorize_url()
     return redirect(auth_url)
 
@@ -49,20 +40,10 @@ def callback(request: HttpRequest) -> HttpResponse:
     """
     Saves the token in auth_token and redirects to /home
     """
-    print("CALLBACK VIEW")
-    print("USER " + str(request.session['random']))
-    raw_code = request.GET.get('code')
-    auth_manager = SpotifyOAuth(
-        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, cache_path=".cache-username")
-    code = auth_manager.parse_response_code(raw_code)
-    print("Code:")
-    print(code)
+    code = request.GET.get('code')
+    auth_manager = create_spotify_oauth()
     token = auth_manager.get_access_token(code=code, check_cache=False)
-    print("TOKEN SEGUNDO:")
-    print(token)
     request.session['token_auth'] = token
-    print("TOKEN ASIGNADO:")
-    print(request.session['token_auth'])
     return redirect('home')
 
 
@@ -70,49 +51,40 @@ def logout(request: HttpRequest) -> HttpResponse:
     """
     Deletes the auth token
     """
-    print("USER " + str(request.session['random']))
     if 'token_auth' in request.session:
         del request.session['token_auth']
+        request.session.clear()
     return redirect('home')
 
 
 def generate_playlist(request: HttpRequest) -> HttpResponse:
-    print("GENERATE PLAYLIST VIEW")
-    print("USER " + str(request.session['random']))
     logged_in = False
     if 'token_auth' in request.session:
+        token_info = get_token(request)
         logged_in = True
-        print("GENERATED PLAYLIST:")
-        print(request.session['token_auth'])
-    context = {'logged_in': logged_in}
-    if request.method == 'POST':
-        name = request.POST['name']
-        desc = request.POST['desc']
-        public = False
-        if 'public' in request.POST:
-            public = True
-        collab = False
-        artists_ids = request.POST['artists'].split(",")
-        artists_ids.pop()
-        token_info = request.session['token_auth']
-        sp = spotipy.Spotify(auth=token_info['access_token'])
-        playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
-        add_tracks_to(sp, playlist_id, artists_ids)
-        reorder_playlist(sp, playlist_id)
-        context = {'playlist_id': playlist_id, 'logged_in': logged_in}
-        return render(request, 'generate_playlist.html', context)
+    else:
+        context = {'logged_in': logged_in}
+        return render(request, 'create_playlist.html', context)
+    name = request.POST['name']
+    desc = request.POST['desc']
+    public = 'public' in request.POST
+    collab = False
+    artists_ids = request.POST['artists'].split(",") #list of artists IDS
+    artists_ids.pop() #the last element is ''
+    sp = spotipy.Spotify(auth=token_info['access_token'])
+    playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
+    add_tracks_to(sp, playlist_id, artists_ids)
+    reorder_playlist(sp, playlist_id)
+    context = {'playlist_id': playlist_id, 'logged_in': logged_in}
+    return render(request, 'generate_playlist.html', context)
 
 
 def create_playlist(request: HttpRequest) -> HttpResponse:
     """
     Renders create_playlist.html
     """
-    print("USER " + str(request.session['random']))
-    print("CREATE PLAYLIST VIEW")
     logged_in = False
     if 'token_auth' in request.session:
-        print("create_playlist:")
-        print(request.session['token_auth'])
         logged_in = True
     context = {'logged_in': logged_in}
     return render(request, 'create_playlist.html', context)
@@ -122,7 +94,7 @@ def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
     if artist_str == "undefined":
         return JsonResponse({'message': "Not Found"})
     token_info = request.session['token_auth']
-    sp = spotipy.Spotify(auth=token_info['access_token'])
+    sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
     results = sp.search(artist_str, type='artist')
     artists = results['artists']['items']
     artists_list = []
