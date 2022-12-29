@@ -9,7 +9,7 @@ import random
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
 
-def get_token(request:HttpRequest)->SpotifyOAuth:
+def get_auth_token(request:HttpRequest)->SpotifyOAuth:
     """Generates a token if is expired
 
     Args:

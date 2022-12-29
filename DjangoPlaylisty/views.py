@@ -63,7 +63,7 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
         collab = False
         artists_ids = request.POST['artists'].split(",")
         artists_ids.pop()
-        token_info = get_token(request)
+        token_info = get_auth_token(request)
         sp = spotipy.Spotify(auth=token_info['access_token'])
         playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
         add_tracks_to(sp, playlist_id, artists_ids)
@@ -86,7 +86,7 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
 def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
     if artist_str == "undefined":
         return JsonResponse({'message': "Not Found"})
-    token_info = get_token(request)
+    token_info = get_auth_token(request)
     sp = spotipy.Spotify(auth=token_info['access_token'])
     results = sp.search(artist_str, type='artist')
     artists = results['artists']['items']
