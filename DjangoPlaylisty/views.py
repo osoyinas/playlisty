@@ -37,6 +37,7 @@ def callback(request: HttpRequest) -> HttpResponse:
     """
     sp = create_spotify_oauth(request)
     request.session.clear()
+    request.session.delete()
     request.session.flush()
     code = request.GET.get('code', '')
     token_info = sp.get_access_token(code)
@@ -54,6 +55,9 @@ def logout(request: HttpRequest) -> HttpResponse:
     """
     if 'auth_token' in request.session:
         request.session.pop('auth_token')
+        request.session.clear()
+        request.session.delete()
+        request.session.flush()
         request.session.clear()
         print("LOGGED OUT")
     return redirect('home')
