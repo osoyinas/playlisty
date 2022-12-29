@@ -57,7 +57,7 @@ def callback(request: HttpRequest) -> HttpResponse:
     code = auth_manager.parse_response_code(raw_code)
     print("Code:")
     print(code)
-    token = auth_manager.get_access_token(code=code)
+    token = auth_manager.get_access_token(code=code, check_cache=False)
     print("TOKEN SEGUNDO:")
     print(token)
     request.session['token_auth'] = token
