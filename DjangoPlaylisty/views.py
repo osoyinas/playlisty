@@ -14,7 +14,7 @@ def home(request: HttpRequest) -> HttpResponse:
     Index page view. Checks if the user is logged in and passes that information to the template.
     """
     logged_in = False
-    if 'auth_token' in request.session:
+    if 'token_auth' in request.session:
         logged_in = True
     context = {'logged_in': logged_in}
     return render(request, "home.html", context)
@@ -24,7 +24,13 @@ def auth(request: HttpRequest) -> HttpResponse:
     """
     Generates the API token to connect to Spotify's API, redirects to /callback with the token
     """
-    auth_manager = create_spotify_oauth(request)
+    url = str(os.environ.get('HOST_URL'))  # url to redirect
+    SCOPE = """
+    playlist-modify-private,
+    playlist-modify-public
+    """
+    auth_manager = oauth2.SpotifyOAuth(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=url)
     auth_url = auth_manager.get_authorize_url()
     return redirect(auth_url)
 
