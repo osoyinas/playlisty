@@ -75,14 +75,15 @@ WSGI_APPLICATION = 'DjangoPlaylisty.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME':'railway',
-        'USER': 'root',
-        'PASSWORD': 'zXKRbgVHGTmFqkjvDPTH',
-        'HOST':'@containers-us-west-156.railway.app',
-        'PORT':'5508',
+        'USER': 'postgres',
+        'PASSWORD': 'jnzPZSAV5vP7DMmSgIhf',
+        'HOST':'@containers-us-west-16.railway.app',
+        'PORT':'7310',
     }
 }
 
