@@ -38,7 +38,7 @@ def auth(request: HttpRequest) -> HttpResponse:
     print("CREATED STATE: "+ STATE)
     auth_manager = oauth2.SpotifyOAuth(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, state= STATE)
-    auth_url = auth_manager.get_authorization_code()
+    auth_url = auth_manager.get_authorize_url(state=STATE)
     return redirect(auth_url)
 
 
