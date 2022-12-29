@@ -91,7 +91,7 @@ def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
     if artist_str == "undefined":
         return JsonResponse({'message': "Not Found"})
     token_info = request.session['token_auth']
-    sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
+    sp = spotipy.Spotify(auth=token_info['access_token'])
     results = sp.search(artist_str, type='artist')
     artists = results['artists']['items']
     artists_list = []
