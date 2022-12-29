@@ -17,6 +17,10 @@ def home(request: HttpRequest) -> HttpResponse:
     """
     Index page view. Checks if the user is logged in and passes that information to the template.
     """
+    try:
+        print(request.session['token_auth'])
+    except:
+        print("NO HAY TOKEN")
     print("HOME  VIEW")
     if 'random' not in request.session:
         request.session['random'] = random.randint(0, 10000)
@@ -36,7 +40,7 @@ def auth(request: HttpRequest) -> HttpResponse:
     print("AUTH VIEW")
     print("USER " + str(request.session['random']))
     auth_manager = SpotifyOAuth(
-        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, cache_path=".cache-") 
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, cache_path=".cache-username") 
     auth_url = auth_manager.get_authorize_url()
     return redirect(auth_url)
 
@@ -49,7 +53,7 @@ def callback(request: HttpRequest) -> HttpResponse:
     print("USER " + str(request.session['random']))
     raw_code = request.GET.get('code')
     auth_manager = SpotifyOAuth(
-        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, cache_path=".cache-")
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, cache_path=".cache-username")
     code = auth_manager.parse_response_code(raw_code)
     print("Code:")
     print(code)
