@@ -21,7 +21,7 @@ def get_auth_token(request:HttpRequest)->SpotifyOAuth:
     token_info = request.session.get('auth_token', None)
     print("TOKEN INFO")
     print(token_info)
-    print("-------")
+    print("-------------------------------------------------")
 
     if not token_info:
         raise "exception"
