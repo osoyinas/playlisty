@@ -119,6 +119,7 @@ nav .right .log_text {
     display: flex;
     justify-content: left;
     background-color: #112FD9;
+    background-color: black;
 }
 
 #banner div {
