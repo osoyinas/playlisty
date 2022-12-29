@@ -26,7 +26,6 @@ def auth(request: HttpRequest) -> HttpResponse:
     """
     auth_manager = create_spotify_oauth(request)
     auth_url = auth_manager.get_authorize_url()
-    request.session['auth_manager'] = auth_manager
     return redirect(auth_url)
 
 
@@ -34,7 +33,7 @@ def callback(request: HttpRequest) -> HttpResponse:
     """
     Saves the token in auth_token and redirects to /home
     """
-    auth_manager = request.session['auth_manager']
+    auth_manager = create_spotify_oauth(request)
     code = request.GET.get('code')
     token = auth_manager.get_access_token(code)
     request.session['token_auth'] = token
