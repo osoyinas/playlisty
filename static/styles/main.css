@@ -1,3 +1,38 @@
+@font-face {
+    font-family: 'Circular';
+    src: url('/static/fonts/Circular/CircularStd-Light.otf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Circular';
+    src: url('/static/fonts/Circular/CircularStd-Book.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Circular';
+    src: url('/static/fonts/Circular/CircularStd-Medium.otf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Circular';
+    src: url('/static/fonts/Circular/CircularStd-900.otf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Circular';
+    src: url('/static/fonts/Circular/CircularStd-Black.otf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
 :root {
     --pink: #CA8DF2;
     --blue: #112FD9;
@@ -38,9 +73,8 @@ input:focus {
 }
 
 body {
-    font-family: 'Gotham', sans-serif;
+    font-family: 'Circular', sans-serif;
 }
-
 
 nav {
     z-index: 9999;
@@ -56,7 +90,7 @@ nav {
 nav .left,
 nav .right {
     font-size: 1.2em;
-    font-weight: 400;
+    font-weight: 300;
     margin: 0 5%;
     display: flex;
     align-items: center;
@@ -82,7 +116,7 @@ nav .logo .logo_img {
 
 nav .left .logo_tittle {
     font-size: 1.5em;
-    font-weight: 600;
+    font-weight: 900;
 }
 
 nav .login {
@@ -137,7 +171,7 @@ nav .right .log_text {
 #banner h1 {
     color: white;
     font-size: 3em;
-    font-weight: 600;
+    font-weight: 900;
 }
 
 #banner .Listify_tittle {
@@ -256,7 +290,7 @@ nav .right .log_text {
 #tutorial .container .cloud {
     font-size: 3.1em;
     text-align: center;
-    color: var(--light-green);
+    color: var(--green);
 }
 
 #tutorial .container h3 {
@@ -280,7 +314,7 @@ nav .right .log_text {
 
 #tutorial .logged {
     cursor: auto;
-    background-color: var(--light-green);
+    background-color: var(--green);
 }
 
 #tutorial .button_step1:before {
@@ -339,12 +373,14 @@ nav .right .log_text {
     flex-direction: column;
     align-items: center;
     background-color: white;
+    background-color: #121212;
 }
 
 #create_playlist .container {
     height: 30%;
-    margin-top: 5%;
+    margin-top: 2.5%;
     width: 100%;
+    position: relative;
 }
 
 .input {
@@ -358,8 +394,11 @@ nav .right .log_text {
     background: white;
     border-radius: 5px;
     box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.15);
-    position: relative;
-    width: 40%;
+    position: absolute;
+    width: 30%;
+    top: 2.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #create_playlist #search {
@@ -385,9 +424,7 @@ nav .right .log_text {
     width: 50px;
 }
 
-button:focus {
-    outline: none;
-}
+
 
 #create_playlist button i {
     width: 100%;
@@ -438,18 +475,22 @@ button:focus {
     padding: 10px;
 }
 
-#create_playlist #playlist_form {
+#create_playlist form {
+    position: relative;
+}
+
+#create_playlist form #playlist_form {
     border-radius: 12px;
     height: 50%;
-    background-color: #1D1A27;
-    width: 40%;
+    background-color: #232323;
+    width: 100%;
     display: flex;
     flex-direction: column;
     border-radius: 12px;
     margin-bottom: 5em;
 }
 
-#create_playlist #playlist_form .top {
+#create_playlist form #playlist_form .top {
     padding: .7em 1em;
     border-radius: 12px;
     background-color: inherit;
@@ -460,40 +501,42 @@ button:focus {
 
 #create_playlist h2 {
     color: white;
-    font-weight: 600;
+    font-weight: 900;
     margin-left: .7em;
     margin-bottom: 1em;
 }
 
-#create_playlist #playlist_form .bottom {
+#create_playlist form #playlist_form .bottom {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: .2em;
     background-color: inherit;
-    height: 100%;
+    height: 400px;
     overflow-y: scroll;
-    padding-left: 7px;
+    padding: .7em 1em;
+    border-radius: 12px;
+    margin-bottom: 10px;
 }
 
-#create_playlist #playlist_form .bottom::-webkit-scrollbar {
+#create_playlist form #playlist_form .bottom::-webkit-scrollbar {
     width: 7px;
-    background-color: inherit;
 }
 
-#create_playlist #playlist_form .bottom::-webkit-scrollbar-thumb {
-    background-color: #4B4646;
+#create_playlist form #playlist_form .bottom::-webkit-scrollbar-thumb {
+    color: red;
     border-radius: 15px;
+    height: 2px;
 }
 
-#create_playlist #playlist_form .playlist_name {
+#create_playlist form #playlist_form .playlist_name {
     color: white;
     color: #BFFCFA;
     font-size: 2.5em;
-    font-weight: 600;
+    font-weight: 900;
 }
 
-#create_playlist #playlist_form .playlist_desc {
+#create_playlist form #playlist_form .playlist_desc {
     width: 100%;
     color: rgba(255, 255, 255, 0.6);
     color: #4B4646;
@@ -501,38 +544,39 @@ button:focus {
 
 }
 
-#create_playlist #playlist_form .checks {
+#create_playlist form #playlist_form .checks {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 50%;
 }
 
-#create_playlist #playlist_form .check_public {
+#create_playlist form #playlist_form .check_public {
     display: flex;
     align-items: center;
     gap: .5em;
 }
 
-#create_playlist #playlist_form .check_public p {
+#create_playlist form #playlist_form .check_public p {
     color: #04D94F;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1.2em;
 }
 
-#create_playlist .submit_botton {
+#create_playlist form .submit_botton {
+    position: absolute;
     cursor: pointer;
     outline: none;
     border: none;
     height: 3em;
     font-size: 1.3em;
-    font-weight: 800;
+    font-weight: 900;
     width: 100%;
     background-color: #04D94F;
     color: black;
-    height: 4em;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
+    height: 2em;
+    bottom: 7.5%;
+    /* border-radius: 12px; */
 }
 
 

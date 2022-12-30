@@ -1,51 +1,63 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content%}
+{% extends 'base.html' %} {% load static %} {% block content%}
 <body>
-  <section id="create_playlist" style = "background-image: url('{% static 'svg/Sprinkle.svg' %}');">
+  <section id="create_playlist">
     <div class="container">
       <div class="wrapper">
-        <input type="text" name="search" id="search" placeholder="Type to search" autocomplete="chrome-off">
+        <input
+          type="text"
+          name="search"
+          id="search"
+          placeholder="Type to search"
+          autocomplete="chrome-off"
+        />
         <button class="search_button"><i class="fa fa-search"></i></button>
         <div class="results">
           <!-- Results -->
         </div>
       </div>
     </div>
-    <form action="{% url 'generateplaylist' %}" method="POST" id="playlist_form">
+    <form action="{% url 'generateplaylist' %}" method="POST">
       {% csrf_token %}
-      <div class="top">
-        <input
-          placeholder="Name"
-          class="playlist_name input"
-          type="text"
-          id="playlist_name"
-          name="name"
-          value="Playlist's Name"
-        />
-        <div class="checks">
-          <div class="check_public">
-            <div class="cntr">
-              <input name="public" checked="" type="checkbox" id="cbx" class="hidden-xs-up">
-              <label for="cbx" class="cbx"></label>
+      <div id="playlist_form">
+        <div class="top">
+          <input
+            placeholder="Name"
+            class="playlist_name input"
+            type="text"
+            id="playlist_name"
+            name="name"
+            value="Playlist's Name"
+          />
+          <div class="checks">
+            <div class="check_public">
+              <div class="cntr">
+                <input
+                  name="public"
+                  checked=""
+                  type="checkbox"
+                  id="cbx"
+                  class="hidden-xs-up"
+                />
+                <label for="cbx" class="cbx"></label>
+              </div>
+              <p>Public</p>
             </div>
-            <p>Public</p>
           </div>
+          <input
+            placeholder="Description"
+            class="playlist_desc input"
+            type="text"
+            id="playlist_desc"
+            name="desc"
+            value="A playlist generated using playlisty.app"
+          />
         </div>
-        <input
-          placeholder="Description"
-          class="playlist_desc input"
-          type="text"
-          id="playlist_desc"
-          name="desc"
-          value="A playlist generated using playlisty.app"
-        />
+        <h2>Artists:</h2>
+        <div class="bottom">
+          <!-- Artists -->
+        </div>
+        <input type="hidden" name="artists" id="list_ids" />
       </div>
-      <h2>Artists:</h2>
-      <div class="bottom">
-        <!-- Artists -->
-      </div>
-      <input type="hidden" name="artists" id="list_ids"/>
       <button class="submit_botton" type="submit">Generate playlist</button>
     </form>
   </section>
