@@ -8,7 +8,7 @@ import spotipy
 import random
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
-URL = str(os.environ.get('HOST_URL'))  # url to redirect
+HOST_URL = str(os.environ.get('HOST_URL'))  # url to redirect
 
 
 def get_token(request: HttpRequest) -> SpotifyOAuth:
@@ -40,10 +40,10 @@ def create_spotify_oauth() -> SpotifyOAuth:
     Returns:
         SpotifyOAuth:
     """
-    url = str(os.environ.get('HOST_URL'))  # url to redirect
+    redir_url = os.path.join(HOST_URL, "callback")
     SCOPE = """playlist-modify-private,playlist-modify-public"""
     return SpotifyOAuth(
-        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, cache_path=".cache-username")
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=redir_url)
 
 
 def is_expired(request: HttpRequest) -> bool:
