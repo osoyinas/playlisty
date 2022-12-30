@@ -76,8 +76,6 @@ def create_spotify_playlist(sp: spotipy.Spotify, name: str, public: bool, collab
         int: playlist's id
     """
     user = sp.current_user()
-    print(user)
-    print("------------------------")
     user_id = user['id']
     playlist_id = sp.user_playlist_create(user=user_id, name=name, public=public,
                                           collaborative=collaborative, description=desc)['id']  # Creates the spotify playlist and return the playlist id.
@@ -150,8 +148,4 @@ def get_playlist_url(sp: spotipy.Spotify, playlist_id: int) -> str:
     """
     playlist = sp.playlist(playlist_id)
     playlist_url = playlist["external_urls"]["spotify"]
-<<<<<<< HEAD
     return playlist_url
-=======
-    return playlist_url
->>>>>>> production
