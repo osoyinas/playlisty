@@ -77,16 +77,25 @@ WSGI_APPLICATION = 'DjangoPlaylisty.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
+if str(os.environ.get('DEBUG_DATABASE')) == "0":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME':os.environ.get('PGDATABASE'),
+            'USER': os.environ.get('PGUSER'),
+            'PASSWORD': os.environ.get('PGPASSWORD'),
+            'HOST':os.environ.get('PGHOST'),
+            'PORT':os.environ.get('PGUSER'),
+        }
+    }
+else:
+    DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'jnzPZSAV5vP7DMmSgIhf',
-        'HOST':'containers-us-west-16.railway.app',
-        'PORT':'7310',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
+
 
 
 # Password validation
@@ -133,4 +142,4 @@ STATICFILES_DIRS = [
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CSRF_TRUSTED_ORIGINS = ['https://playlisty-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://playlisty-production.up.railway.app', 'http://localhost:8000']
