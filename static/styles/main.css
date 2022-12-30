@@ -19,12 +19,6 @@
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'Circular';
-    src: url('/static/fonts/Circular/CircularStd-900.otf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-}
 
 @font-face {
     font-family: 'Circular';
