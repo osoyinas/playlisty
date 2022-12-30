@@ -1,3 +1,11 @@
+:root {
+    --pink: #CA8DF2;
+    --blue: #112FD9;
+    --light-blue: #154EBF;
+    --green: #04D94F;
+    --light-green: #22F241;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -118,7 +126,7 @@ nav .right .log_text {
     min-height: 600px;
     display: flex;
     justify-content: left;
-    background-color: #112FD9;
+    background-color: var(--blue);
 }
 
 #banner div {
@@ -134,11 +142,11 @@ nav .right .log_text {
 
 #banner .Listify_tittle {
     font-size: 8em;
-    color: #22F241;
+    color: var(--light-green);
 }
 
 #banner h1 .spotify {
-    color: #22F241;
+    color: var(--light-green);
     font-size: 1.5em;
 }
 
@@ -156,7 +164,7 @@ nav .right .log_text {
 #banner .welcome_button {
     margin-top: 5%;
     cursor: pointer;
-    background: #CA8DF2;
+    background: var(--pink);
     color: white;
     font-family: inherit;
     padding: 0.35em;
@@ -199,7 +207,7 @@ nav .right .log_text {
 #banner .welcome_button .icon svg {
     width: 1.1em;
     transition: transform 0.3s;
-    color: #7b52b9;
+    color: var(--pink);
 }
 
 #banner .welcome_button:hover .icon svg {
@@ -248,7 +256,7 @@ nav .right .log_text {
 #tutorial .container .cloud {
     font-size: 3.1em;
     text-align: center;
-    color: #04D94F;
+    color: var(--light-green);
 }
 
 #tutorial .container h3 {
@@ -272,7 +280,7 @@ nav .right .log_text {
 
 #tutorial .logged {
     cursor: auto;
-    background-color: #04D94F;
+    background-color: var(--light-green);
 }
 
 #tutorial .button_step1:before {
@@ -298,7 +306,7 @@ nav .right .log_text {
     top: 180%;
     width: 160%;
     height: 190%;
-    background-color: #04D94F;
+    background-color: var(--light-green);
     border: 1px solid black;
     border-radius: 50%;
     display: block;
@@ -313,13 +321,13 @@ nav .right .log_text {
 
 #tutorial .button_step1:hover:before {
     top: -35%;
-    background-color: #04D94F;
+    background-color: var(--light-green);
     transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
 }
 
 #tutorial .button_step1:hover:after {
     top: -45%;
-    background-color: #04D94F;
+    background-color: var(--green);
     transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
 }
 
@@ -347,7 +355,7 @@ nav .right .log_text {
 
 #create_playlist .wrapper {
     margin: 0 auto;
-    background: #ffffff;
+    background: white;
     border-radius: 5px;
     box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.15);
     position: relative;
@@ -449,12 +457,14 @@ button:focus {
     flex-direction: column;
     gap: 1em;
 }
-#create_playlist h2{
+
+#create_playlist h2 {
     color: white;
     font-weight: 600;
     margin-left: .7em;
     margin-bottom: 1em;
 }
+
 #create_playlist #playlist_form .bottom {
     display: flex;
     flex-direction: column;
@@ -464,7 +474,6 @@ button:focus {
     height: 100%;
     overflow-y: scroll;
     padding-left: 7px;
-    border-bottom: 0.5em #332C49 solid;
 }
 
 #create_playlist #playlist_form .bottom::-webkit-scrollbar {
@@ -489,6 +498,7 @@ button:focus {
     color: rgba(255, 255, 255, 0.6);
     color: #4B4646;
     font-size: 1em;
+
 }
 
 #create_playlist #playlist_form .checks {
@@ -533,7 +543,6 @@ button:focus {
     height: 27px;
     border: 1px solid #c8ccd4;
     border-radius: 3px;
-    vertical-align: middle;
     transition: background 0.1s ease;
     cursor: pointer;
     display: block;
@@ -609,6 +618,7 @@ button:focus {
     display: none !important;
 }
 
+/* -------------GENERATE PLAYLIST------------- */
 #generate_playlist {
     height: 100vh;
     display: flex;
@@ -618,7 +628,8 @@ button:focus {
     gap: 2em;
     width: 100%;
 }
-#generate_playlist h1{
+
+#generate_playlist h1 {
     color: white;
     font-size: 2em;
 }

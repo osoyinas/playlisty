@@ -4,12 +4,16 @@ const resultsWrapper = document.querySelector('.results');
 const hiddenInput = document.getElementById("list_ids")
 const submitForm = document.getElementById('playlist_form')
 const bottomContainer = document.querySelector('.bottom');
+const loggedIn = document.querySelector('.log_text').textContent != "Log in with Spotify!"
 var list_id = []
 const listArtists = async (str) => {
     try {
         if (str.length == 0) {
             searchWrapper.classList.remove('show');
             return;
+        }
+        else if (!loggedIn) {
+            alert("Log in with Spotify!")
         }
         else {
             searchWrapper.classList.add('show');
@@ -47,7 +51,7 @@ function optionClicked(event) {
     searchInput.value = ``;
     resultsWrapper.innerHTML = ``;
     searchWrapper.classList.remove('show');
-    if(list_id.includes(artist_id)){
+    if (list_id.includes(artist_id)) {
         return;
     }
     list_id.push(artist_id);
@@ -58,12 +62,12 @@ function optionClicked(event) {
     bottomContainer.innerHTML += `<iframe as="style" style="border-radius:12px" src="https://open.spotify.com/embed/artist/${artist_id}" width="100%" height="80" frameBorder="0" allow="encrypted-media"></iframe> `
     hiddenInput.value = raw_string;
 }
-submitForm.addEventListener('submit',(event)=>{
+submitForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    if (hiddenInput.value.length == 0){
+    if (hiddenInput.value.length == 0) {
         alert("Select artists");
-    }    
-    else{
+    }
+    else {
         submitForm.submit();
     }
 })

@@ -54,6 +54,17 @@ def logout(request: HttpRequest) -> HttpResponse:
     return redirect('home')
 
 
+def create_playlist(request: HttpRequest) -> HttpResponse:
+    """
+    Renders create_playlist.html
+    """
+    logged_in = False
+    if 'token_auth' in request.session:
+        logged_in = True
+    context = {'logged_in': logged_in}
+    return render(request, 'create_playlist.html', context)
+
+
 def generate_playlist(request: HttpRequest) -> HttpResponse:
     logged_in = False
     if 'token_auth' in request.session:
@@ -66,8 +77,8 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
     desc = request.POST['desc']
     public = 'public' in request.POST
     collab = False
-    artists_ids = request.POST['artists'].split(",") #list of artists IDS
-    artists_ids.pop() #the last element is ''
+    artists_ids = request.POST['artists'].split(",")  # list of artists IDS
+    artists_ids.pop()  # the last element is ''
     sp = spotipy.Spotify(auth=token_info['access_token'])
     playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
     add_tracks_to(sp, playlist_id, artists_ids)
@@ -76,19 +87,8 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
     return render(request, 'generate_playlist.html', context)
 
 
-def create_playlist(request: HttpRequest) -> HttpResponse:
-    """
-    Renders create_playlist.html
-    """
-    logged_in = False
-    if 'token_auth' in request.session:
-        logged_in = True
-    context = {'logged_in': logged_in}
-    return render(request, 'create_playlist.html', context)
-
-
 def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
-    if artist_str == "undefined":
+    if artist_str == "undefined" or  'token_auth' not in request.session:
         return JsonResponse({'message': "Not Found"})
     token_info = get_token(request)
     sp = spotipy.Spotify(auth=token_info['access_token'])

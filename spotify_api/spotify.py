@@ -22,7 +22,7 @@ def get_token(request: HttpRequest) -> SpotifyOAuth:
     """
     token_info = request.session.get('token_auth', None)
     if not token_info:
-        raise "exception"
+        return None
     now = int(time.time())
     is_expired = token_info['expires_at'] - now < 60
     if (is_expired):
