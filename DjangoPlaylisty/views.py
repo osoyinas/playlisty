@@ -74,7 +74,7 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
         context = {'logged_in': logged_in}
         return render(request, 'create_playlist.html', context)
     name = request.POST['name']
-    desc = request.POST['desc']
+    desc = "A playlists generated with playlisty.app"
     public = 'public' in request.POST
     collab = False
     artists_ids = request.POST['artists'].split(",")  # list of artists IDS
