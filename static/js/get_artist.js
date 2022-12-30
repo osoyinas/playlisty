@@ -48,7 +48,6 @@ function optionClicked(event) {
     resultsWrapper.innerHTML = ``;
     searchWrapper.classList.remove('show');
     if(list_id.includes(artist_id)){
-        console.log("DENTRO")
         return;
     }
     list_id.push(artist_id);
