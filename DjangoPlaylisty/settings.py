@@ -85,7 +85,7 @@ if str(os.environ.get('DEBUG_DATABASE')) == "0":
             'USER': os.environ.get('PGUSER'),
             'PASSWORD': os.environ.get('PGPASSWORD'),
             'HOST':os.environ.get('PGHOST'),
-            'PORT':os.environ.get('PGUSER'),
+            'PORT':os.environ.get('PGPORT'),
         }
     }
 else:
