@@ -1,1 +1,1 @@
-web: python manage.py makemigrations && python manage.py migrate && python collectstatic --noinput && gunicorn DjangoPlaylisty.wsgi
+web: python manage.py makemigrations && python manage.py migrate && python collectstatic manage.py --noinput && gunicorn DjangoPlaylisty.wsgi
