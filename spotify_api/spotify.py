@@ -8,8 +8,10 @@ import spotipy
 import random
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
+URL = str(os.environ.get('HOST_URL'))  # url to redirect
 
-def get_token(request:HttpRequest)->SpotifyOAuth:
+
+def get_token(request: HttpRequest) -> SpotifyOAuth:
     """Generates a token if is expired
 
     Args:
@@ -18,7 +20,7 @@ def get_token(request:HttpRequest)->SpotifyOAuth:
     Returns:
         SpotifyOAuth: _description_
     """
-    token_info = request.session.get('auth_token', None)
+    token_info = request.session.get('token_auth', None)
     if not token_info:
         raise "exception"
     now = int(time.time())
@@ -27,7 +29,9 @@ def get_token(request:HttpRequest)->SpotifyOAuth:
         sp_oauth = create_spotify_oauth(request)
         token_info = sp_oauth.refresh_access_token(token_info['refresh_token'])
     return token_info
-def create_spotify_oauth(request: HttpRequest) -> SpotifyOAuth:
+
+
+def create_spotify_oauth() -> SpotifyOAuth:
     """Creates an SpotifyOAuth object with SCOPE = playlist-modify-private and redirects to the home page
 
     Args:
@@ -36,15 +40,10 @@ def create_spotify_oauth(request: HttpRequest) -> SpotifyOAuth:
     Returns:
         SpotifyOAuth:
     """
-    path = reverse('callback')  # path of callback view
-    site = get_current_site(request)  # current host
-    protocol = request.scheme  # Protocol, http/https
-    url = f'{protocol}://{site.domain}{path}'  # url to redirect
-    SCOPE = """
-    playlist-modify-private,
-    playlist-modify-public
-    """
-    return SpotifyOAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=url)
+    url = str(os.environ.get('HOST_URL'))  # url to redirect
+    SCOPE = """playlist-modify-private,playlist-modify-public"""
+    return SpotifyOAuth(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=URL, cache_path=".cache-username")
 
 
 def is_expired(request: HttpRequest) -> bool:
@@ -77,6 +76,8 @@ def create_spotify_playlist(sp: spotipy.Spotify, name: str, public: bool, collab
         int: playlist's id
     """
     user = sp.current_user()
+    print(user)
+    print("------------------------")
     user_id = user['id']
     playlist_id = sp.user_playlist_create(user=user_id, name=name, public=public,
                                           collaborative=collaborative, description=desc)['id']  # Creates the spotify playlist and return the playlist id.
@@ -121,6 +122,7 @@ def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, artists_ids: list) -> N
         # add the tracks to the spotify playlist
         sp.playlist_add_items(playlist_id=playlist_id, items=tracks)
 
+
 def reorder_playlist(sp: spotipy.Spotify, playlist_id: int):
     """Reorder randomly the playlist
 
@@ -148,4 +150,8 @@ def get_playlist_url(sp: spotipy.Spotify, playlist_id: int) -> str:
     """
     playlist = sp.playlist(playlist_id)
     playlist_url = playlist["external_urls"]["spotify"]
+<<<<<<< HEAD
     return playlist_url
+=======
+    return playlist_url
+>>>>>>> production
