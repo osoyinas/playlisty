@@ -380,7 +380,6 @@ nav .right .log_text {
     margin-top: 2.5%;
     width: 100%;
     position: relative;
-    display: flex;
 }
 
 .input {
@@ -388,15 +387,19 @@ nav .right .log_text {
     background-color: transparent;
 }
 
+#create_playlist .container h3 {
+    font-size: 2em;
+    font-weight: 900;
+    text-align: center;
+}
 
 #create_playlist .wrapper {
     margin: 0 auto;
     background: white;
     border-radius: 5px;
     box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.15);
-    width: 30%;
-    height: 3em;
-
+    position: relative;
+    width: 40%;
 }
 
 #create_playlist #search {
