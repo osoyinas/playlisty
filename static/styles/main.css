@@ -624,7 +624,7 @@ nav .right .log_text {
     .burger {
         margin: 20px;
         position: relative;
-        width: 57px;
+        width: 50px;
         height: 40px;
         background: transparent;
         cursor: pointer;
@@ -677,7 +677,17 @@ nav .right .log_text {
 
     .burger input:checked~span:nth-of-type(3) {
         transform: rotate(-45deg);
-        top: 40px;
+        top: 35px;
         left: 5px;
+    }
+    .menu{display: none;}
+
+    .burger:checked + .menu{
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        height: 200vh;
+        background-color: rgba(0, 0, 0, 0.9);
     }
 }

@@ -49,6 +49,12 @@
       <span></span>
       <span></span>
     </label>
+    <div class="menu">
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'createplaylist' %}">Generate Playlist</a>
+      <a href="">Stats</a>
+      <a href="">About</a>
+    </div>
   </nav>
   {% block content%} {% endblock %}
 </html>
