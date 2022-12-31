@@ -15,7 +15,7 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <nav>
+  <nav class="nav">
     <div class="left">
       <div class="logo">
         <a class="logo_tittle" href="{% url 'home' %}">Playlisty</a>
@@ -42,6 +42,13 @@
     </form>
     {% endif %}
   </nav>
-  {% block content%}
-  {% endblock %}
+  <nav class="responsive_nav">
+    <label for="burger" class="burger">
+      <input id="burger" type="checkbox" />
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+  </nav>
+  {% block content%} {% endblock %}
 </html>

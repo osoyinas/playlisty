@@ -81,6 +81,10 @@ nav {
     width: 100%;
 }
 
+.responsive_nav {
+    display: none;
+}
+
 nav .left,
 nav .right {
     font-size: 1.2em;
@@ -525,12 +529,14 @@ nav .right .log_text {
     font-weight: 700;
     color: black;
 }
-.separator{
+
+.separator {
     width: 100%;
     height: 1px;
     background-color: black;
-     margin: 0.5em auto;
+    margin: 0.5em auto;
 }
+
 .submit_button {
     margin-top: 5%;
     margin-inline: auto;
@@ -587,6 +593,7 @@ nav .right .log_text {
 .submit_button:active .icon {
     transform: scale(0.95);
 }
+
 /* -------------GENERATE PLAYLIST------------- */
 #generate_playlist {
     height: 100vh;
@@ -601,4 +608,76 @@ nav .right .log_text {
 #generate_playlist h1 {
     color: white;
     font-size: 2em;
+}
+
+@media(max-width:1024px) {
+    .nav {
+        display: none;
+    }
+
+    .responsive_nav {
+        display: flex;
+        justify-content: right;
+        align-items: center;
+    }
+
+    .burger {
+        margin: 20px;
+        position: relative;
+        width: 57px;
+        height: 40px;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .burger input {
+        display: none;
+    }
+
+    .burger span {
+        display: block;
+        position: absolute;
+        height: 6px;
+        width: 100%;
+        background: white;
+        border-radius: 9px;
+        opacity: 1;
+        left: 0;
+        transform: rotate(0deg);
+        transition: .25s ease-in-out;
+    }
+
+    .burger span:nth-of-type(1) {
+        top: 0px;
+        transform-origin: left center;
+    }
+
+    .burger span:nth-of-type(2) {
+        top: 50%;
+        transform: translateY(-50%);
+        transform-origin: left center;
+    }
+
+    .burger span:nth-of-type(3) {
+        top: 100%;
+        transform-origin: left center;
+        transform: translateY(-100%);
+    }
+
+    .burger input:checked~span:nth-of-type(1) {
+        transform: rotate(45deg);
+        top: 0px;
+        left: 5px;
+    }
+
+    .burger input:checked~span:nth-of-type(2) {
+        width: 0%;
+        opacity: 0;
+    }
+
+    .burger input:checked~span:nth-of-type(3) {
+        transform: rotate(-45deg);
+        top: 40px;
+        left: 5px;
+    }
 }
