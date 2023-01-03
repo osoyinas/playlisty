@@ -59,7 +59,7 @@ def is_expired(request: HttpRequest) -> bool:
     if not token_info:
         return True
     now = int(time.time())
-    return token_info['expires_at'] - now < 10
+    return token_info['expires_at'] - now < 30
 
 
 def create_spotify_playlist(sp: spotipy.Spotify, name: str, public: bool, collaborative: bool, desc: str) -> int:

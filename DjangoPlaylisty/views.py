@@ -59,7 +59,7 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     Renders create_playlist.html
     """
     logged_in = False
-    if 'token_auth' in request.session:
+    if 'token_auth' in request.session and not is_expired(request):
         logged_in = True
     context = {'logged_in': logged_in}
     return render(request, 'create_playlist.html', context)
@@ -67,7 +67,7 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
 
 def generate_playlist(request: HttpRequest) -> HttpResponse:
     logged_in = False
-    if 'token_auth' in request.session:
+    if 'token_auth' in request.session and not is_expired(request):
         token_info = get_token(request)
         logged_in = True
     else:
@@ -83,7 +83,8 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
     playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
     add_tracks_to(sp, playlist_id, artists_ids)
     reorder_playlist(sp, playlist_id)
-    context = {'playlist_id': playlist_id, 'logged_in': logged_in}
+    url = get_playlist_url(sp, playlist_id)
+    context = {'url': url, 'logged_in': logged_in}
     return render(request, 'generate_playlist.html', context)
 
 

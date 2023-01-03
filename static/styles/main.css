@@ -528,7 +528,13 @@ nav .right .log_text {
     font-weight: 700;
     color: black;
 }
-
+#create_playlist form .playlist_container .bottom #empty{
+    width: 100%;
+    text-align: center;
+}
+#create_playlist form .playlist_container .bottom #empty.hidden{
+    display: none;
+}
 .separator {
     width: 100%;
     height: 1px;
@@ -604,10 +610,26 @@ nav .right .log_text {
     width: 100%;
 }
 
-#generate_playlist h1 {
-    color: white;
+
+#generate_playlist .container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
+#generate_playlist .container h1 {
+    color: black;
+    font-size: max(3em,4vw);
+
+}
+#generate_playlist .container a{
+    font-size: max(2em,2vw);
+    color: var(--blue);
+
+}
 @media(max-width:1024px) {
     #banner {
         padding-top: 4em;
