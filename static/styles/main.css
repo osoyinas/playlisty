@@ -618,18 +618,22 @@ nav .right .log_text {
         align-items: center;
         background-color: var(--blue);
     }
+
     .welcome_button {
         margin: 10% auto;
     }
+
     #banner div {
         text-align: center;
         margin: 0;
     }
+
     .nav {
         display: none;
-    } */
+    }
 
-        .responsive_nav {
+    .responsive_nav {
+        z-index: 9999;
         display: flex;
         justify-content: right;
         align-items: center;
@@ -695,16 +699,29 @@ nav .right .log_text {
         left: 5px;
     }
 
-    .menu {
-        display: none;
-    } 
 
-     .menu{
+    .menu {
+        z-index: 8000;
         position: fixed;
         display: flex;
         flex-direction: column;
         width: 100vw;
-        height: 200vh;
+        height: 90vh;
+        top: 4em;
+        gap: 5%;
         background-color: rgba(0, 0, 0, 0.9);
+        justify-content: center;
+        align-items: center;
+        transform: translateX(-100%);
+        transition: translateX 0.3s ease-in-out;
+    }
+    .menu a{
+        font-size: 3.8em;
+        font-weight: 800;
+        text-align: center;
+    }
+    .menu.menu-visible {
+        transform: translateX(0);
+        transition: translateX 0.3s ease-in-out;
     }
 }

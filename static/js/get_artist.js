@@ -4,8 +4,9 @@ const resultsWrapper = document.querySelector('.results');
 const hiddenInput = document.getElementById("list_ids")
 const submitForm = document.getElementById('playlist_form')
 const bottomContainer = document.querySelector('.bottom');
-const loggedIn = document.querySelector('.log_text').textContent != "Log in with Spotify!"
+
 var list_id = []
+
 const listArtists = async (str) => {
     try {
         if (str.length == 0) {
@@ -27,7 +28,6 @@ const listArtists = async (str) => {
                 resultsWrapper.innerHTML = `<ul>${content}</ul>`
             }
         }
-
     } catch (error) {
         console.log(error);
     }

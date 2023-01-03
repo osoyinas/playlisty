@@ -50,11 +50,12 @@
       <span></span>
     </label>
     <div class="menu">
-      <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'createplaylist' %}">Generate Playlist</a>
-      <a href="">Stats</a>
-      <a href="">About</a>
+      <a class="menu_link" href="{% url 'home' %}">Home</a>
+      <a class="menu_link" href="{% url 'createplaylist' %}">Generate Playlist</a>
+      <a class="menu_link" href="">Stats</a>
+      <a class="menu_link" href="">About</a>
     </div>
   </nav>
   {% block content%} {% endblock %}
+  <script src="{% static 'js/menu.js' %}"></script>
 </html>
