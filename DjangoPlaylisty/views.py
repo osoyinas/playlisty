@@ -18,7 +18,7 @@ def home(request: HttpRequest) -> HttpResponse:
     """
 
     logged_in = False
-    if 'token_auth' in request.session:
+    if 'token_auth' in request.session and not is_expired(request):
         logged_in = True
     context = {'logged_in': logged_in}
     return render(request, "home.html", context)

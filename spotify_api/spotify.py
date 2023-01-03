@@ -55,11 +55,11 @@ def is_expired(request: HttpRequest) -> bool:
     Returns:
         bool: Returns True if token has expired
     """
-    token_info = request.session.get('auth_token', None)
+    token_info = request.session.get('token_auth', None)
     if not token_info:
         return True
     now = int(time.time())
-    return token_info['expires_at'] - now < 60
+    return token_info['expires_at'] - now < 10
 
 
 def create_spotify_playlist(sp: spotipy.Spotify, name: str, public: bool, collaborative: bool, desc: str) -> int:
@@ -115,7 +115,9 @@ def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, artists_ids: list) -> N
         # Search for the artist
         # look at the first id result
         top_tracks = sp.artist_top_tracks(artist_id=artist_id)['tracks']
+        top_tracks.sort(key=lambda track: track['popularity'], reverse=True)
         for track in top_tracks:
+            print(track['name'])
             tracks.append(track['id'])
     tracks_set = set(tracks)
     tracks = list(tracks_set)
@@ -124,7 +126,6 @@ def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, artists_ids: list) -> N
     for track in tracks:
         if max_len != 100:  # The max tracks we can append in a playlist in a single request is 100,
             new_tracks.append(track)
-            print(new_tracks)
             max_len += 1
         else:
             sp.playlist_add_items(
