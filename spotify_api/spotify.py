@@ -108,7 +108,7 @@ def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, artists_ids: list) -> N
     Args:
         sp (spotipy.Spotify): Object with the current user to be able to connect spotify's API.
         id (int): Playlist's ID
-        raw_artists (list): Artists's list like ["Bad Bunny", "The Whistlers"]
+        raw_artists (list): Artists's list like ['1b62AO1IzcVr5SOgoguc9o', '4jhHaLksdP8DJZzxYAjOSz']
     """
     tracks = []
     for artist_id in artists_ids:
@@ -117,19 +117,22 @@ def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, artists_ids: list) -> N
         top_tracks = sp.artist_top_tracks(artist_id=artist_id)['tracks']
         for track in top_tracks:
             tracks.append(track['id'])
-        max_len = 0
-        new_tracks = []
-        for track in tracks:
-            if max_len != 100:  # The max tracks we can append in a playlist in a single request is 100,
-                new_tracks.append(track)
-                max_len += 1
-            else:
-                sp.playlist_add_items(
-                    playlist_id=playlist_id, items=new_tracks)
-                new_tracks = []
-                max_len = 0
-        if len(new_tracks) > 0:
-            sp.playlist_add_items(playlist_id=playlist_id, items=new_tracks)
+    tracks_set = set(tracks)
+    tracks = list(tracks_set)
+    max_len = 0
+    new_tracks = []
+    for track in tracks:
+        if max_len != 100:  # The max tracks we can append in a playlist in a single request is 100,
+            new_tracks.append(track)
+            print(new_tracks)
+            max_len += 1
+        else:
+            sp.playlist_add_items(
+                playlist_id=playlist_id, items=new_tracks)
+            new_tracks = []
+            max_len = 0
+    if len(new_tracks) > 0:
+        sp.playlist_add_items(playlist_id=playlist_id, items=new_tracks)
 
 
 def reorder_playlist(sp: spotipy.Spotify, playlist_id: int):
