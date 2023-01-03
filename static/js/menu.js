@@ -6,7 +6,6 @@ burger.addEventListener('change', (event) => {
     if (event.target.checked) {
         menu.classList.add('menu-visible');
     } else {
-        console.log("CACA")
         menu.classList.remove('menu-visible');
     }
 });

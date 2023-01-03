@@ -55,6 +55,21 @@
       <a class="menu_link" href="">Stats</a>
       <a class="menu_link" href="">About</a>
     </div>
+    {% if logged_in == True %}
+      <form action="{% url 'logout' %}" class="right">
+        <button type="submit" class="user_logo">
+          <div class="log_text">Log out</div>
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </form>
+      {% else %}
+      <form action="{% url 'auth' %}" class="right">
+        <button type="submit" class="user_logo">
+          <div class="log_text">Log in with Spotify!</div>
+          <i class="fa-regular fa-user"></i>
+        </button>
+      </form>
+    {% endif %}
   </nav>
   {% block content%} {% endblock %}
   <script src="{% static 'js/menu.js' %}"></script>
