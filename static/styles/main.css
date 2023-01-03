@@ -168,29 +168,28 @@ nav .right .log_text {
 
 #banner h1 {
     color: white;
-    font-size: 3em;
     font-weight: 900;
+
 }
 
 #banner .Listify_tittle {
-    font-size: 8em;
+    font-size: clamp(4em, 10vw, 9em);
     color: var(--light-green);
 }
 
 #banner h1 .spotify {
+    font-size: clamp(2.8em, 7vw, 5em);
     color: var(--light-green);
-    font-size: 1.5em;
 }
 
 #banner h1 .playlists {
+    font-size: clamp(2.8em, 7vw, 5em);
     color: white;
-    font-size: 1.5em;
 }
 
-.welcome {
+#banner h2 {
     color: white;
-    font-size: 1.9em;
-
+    font-size: clamp(2em, 3vw, 3em);
 }
 
 .welcome_button {
@@ -607,15 +606,30 @@ nav .right .log_text {
 
 #generate_playlist h1 {
     color: white;
-    font-size: 2em;
 }
 
 @media(max-width:1024px) {
+    #banner {
+        padding-top: 4em;
+        height: 70vh;
+        min-height: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--blue);
+    }
+    .welcome_button {
+        margin: 10% auto;
+    }
+    #banner div {
+        text-align: center;
+        margin: 0;
+    }
     .nav {
         display: none;
-    }
+    } */
 
-    .responsive_nav {
+        .responsive_nav {
         display: flex;
         justify-content: right;
         align-items: center;
@@ -680,9 +694,12 @@ nav .right .log_text {
         top: 35px;
         left: 5px;
     }
-    .menu{display: none;}
 
-    .burger:checked + .menu{
+    .menu {
+        display: none;
+    } 
+
+     .menu{
         position: fixed;
         display: flex;
         flex-direction: column;

@@ -117,8 +117,19 @@ def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, artists_ids: list) -> N
         top_tracks = sp.artist_top_tracks(artist_id=artist_id)['tracks']
         for track in top_tracks:
             tracks.append(track['id'])
-        # add the tracks to the spotify playlist
-        sp.playlist_add_items(playlist_id=playlist_id, items=tracks)
+        max_len = 0
+        new_tracks = []
+        for track in tracks:
+            if max_len != 100:  # The max tracks we can append in a playlist in a single request is 100,
+                new_tracks.append(track)
+                max_len += 1
+            else:
+                sp.playlist_add_items(
+                    playlist_id=playlist_id, items=new_tracks)
+                new_tracks = []
+                max_len = 0
+        if len(new_tracks) > 0:
+            sp.playlist_add_items(playlist_id=playlist_id, items=new_tracks)
 
 
 def reorder_playlist(sp: spotipy.Spotify, playlist_id: int):

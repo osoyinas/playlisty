@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <form action="{% url 'generateplaylist' %}" method="POST">
+    <form action="{% url 'generateplaylist' %}" method="POST" id="playlist_form">
       {% csrf_token %}
       <div class="playlist_container">
         <div class="top">
