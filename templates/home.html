@@ -6,8 +6,7 @@
       <h2 class="welcome">Welcome to</h2>
       <h1 class="Listify_tittle">Playlisty</h1>
       <h2>Create and Custom </h2>
-        <h1><span class="spotify">Spotify </span><span class="playlists">Playlists</span></h1>
-      
+      <h1><span class="spotify">Spotify </span><span class="playlists">Playlists</span></h1>
       <a type="image" class="welcome_button" href="#tutorial">
         Get started
         <div class="icon">
@@ -50,6 +49,15 @@
           <i class="fa-solid fa-hand-pointer"></i>
         </div>
         <h3>2. Select what you want to do</h3>
+        <div class="options">
+          <a class="box blue" href="{% url 'createplaylist' %}">
+            Generate playlists
+          </a>
+          <a class="box pink">
+            Watch stats
+          </a>
+
+        </div>
       </div>
     </div>
   </section>

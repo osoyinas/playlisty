@@ -73,20 +73,25 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
     else:
         context = {'logged_in': logged_in}
         return render(request, 'create_playlist.html', context)
-    name = request.POST['name']
-    desc = "A playlists generated with playlisty.app"
-    public = 'public' in request.POST
-    collab = False
-    artists_ids = request.POST['artists'].split(",")  # list of artists IDS
-    artists_ids.pop()  # the last element is ''
+    try:
+        name = request.POST['name']
+        desc = "A playlists generated with playlisty.app"
+        public = 'public' in request.POST
+        collab = False
+        artists_ids = request.POST['artists'].split(",")  # list of artists IDS
+        artists_ids.pop()  # the last element is ''
+    except:
+        return render(request, 'create_playlist.html', context)
     sp = spotipy.Spotify(auth=token_info['access_token'])
     playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
-    add_tracks_to(sp, playlist_id, artists_ids)
-    reorder_playlist(sp, playlist_id)
-    url = get_playlist_url(sp, playlist_id)
-    context = {'url': url, 'logged_in': logged_in}
-    return render(request, 'generate_playlist.html', context)
-
+    try:
+        add_tracks_to(sp, playlist_id, artists_ids)
+        reorder_playlist(sp, playlist_id)
+        url = get_playlist_url(sp, playlist_id)
+        context = {'url': url, 'logged_in': logged_in}
+        return render(request, 'generate_playlist.html', context)
+    except:
+        return HttpResponse("An error ocurred")
 
 def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
     if artist_str == "undefined" or  'token_auth' not in request.session:
