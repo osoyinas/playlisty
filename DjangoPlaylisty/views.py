@@ -16,10 +16,11 @@ def home(request: HttpRequest) -> HttpResponse:
     """
     Index page view. Checks if the user is logged in and passes that information to the template.
     """
-
     logged_in = False
     if 'token_auth' in request.session and not is_expired(request):
         logged_in = True
+    request.session['pre_path'] = request.resolver_match.url_name
+    print(request.resolver_match.url_name)
     context = {'logged_in': logged_in}
     return render(request, "home.html", context)
 
@@ -37,21 +38,23 @@ def callback(request: HttpRequest) -> HttpResponse:
     """
     Saves the token in auth_token and redirects to /home
     """
+    previus = request.session['pre_path']
     code = request.GET.get('code')
     auth_manager = create_spotify_oauth()
     token = auth_manager.get_access_token(code=code, check_cache=False)
     request.session['token_auth'] = token
-    return redirect('home')
+    return redirect(previus)
 
 
 def logout(request: HttpRequest) -> HttpResponse:
     """
     Deletes the auth token
     """
+    previus = request.session['pre_path']
     if 'token_auth' in request.session:
         del request.session['token_auth']
         request.session.clear()
-    return redirect('home')
+    return redirect(previus)
 
 
 def create_playlist(request: HttpRequest) -> HttpResponse:
@@ -59,6 +62,7 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     Renders create_playlist.html
     """
     logged_in = False
+    request.session['pre_path'] = request.resolver_match.url_name
     if 'token_auth' in request.session and not is_expired(request):
         logged_in = True
     context = {'logged_in': logged_in}
@@ -67,6 +71,7 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
 
 def generate_playlist(request: HttpRequest) -> HttpResponse:
     logged_in = False
+    request.session['pre_path'] = request.resolver_match.url_name
     if 'token_auth' in request.session and not is_expired(request):
         token_info = get_token(request)
         logged_in = True
