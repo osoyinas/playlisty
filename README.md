@@ -1,5 +1,5 @@
 
 # playlisty
-Web app that connects to Spotify's API and generates playlists by selecting artists. Also I want to add a functionality to make the user able to watch his own Spotify's Stats.
+Our web app connects to Spotify's API to generate playlists by selecting artists. We also want to add a feature that allows the user to view their own Spotify stats.
 
 https://playlisty-production.up.railway.app/
