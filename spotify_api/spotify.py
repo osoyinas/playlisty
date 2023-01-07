@@ -9,7 +9,7 @@ import random
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
 HOST_URL = str(os.environ.get('HOST_URL'))  # url to redirect
-
+SCOPE = """playlist-modify-private,playlist-modify-public"""
 
 def get_token(request: HttpRequest) -> SpotifyOAuth:
     """Generates a token if is expired
@@ -41,7 +41,6 @@ def create_spotify_oauth() -> SpotifyOAuth:
         SpotifyOAuth:
     """
     redir_url = os.path.join(HOST_URL, "callback")
-    SCOPE = """playlist-modify-private,playlist-modify-public"""
     return SpotifyOAuth(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=redir_url)
 
@@ -117,7 +116,6 @@ def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, artists_ids: list) -> N
         top_tracks = sp.artist_top_tracks(artist_id=artist_id)['tracks']
         top_tracks.sort(key=lambda track: track['popularity'], reverse=True)
         for track in top_tracks:
-            print(track['name'])
             tracks.append(track['id'])
     tracks_set = set(tracks)
     tracks = list(tracks_set)

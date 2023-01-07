@@ -9,7 +9,6 @@ from spotipy.oauth2 import SpotifyClientCredentials
 
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
-SCOPE = """playlist-modify-private,playlist-modify-public"""
 
 
 def home(request: HttpRequest) -> HttpResponse:
@@ -20,7 +19,6 @@ def home(request: HttpRequest) -> HttpResponse:
     if 'token_auth' in request.session and not is_expired(request):
         logged_in = True
     request.session['pre_path'] = request.resolver_match.url_name
-    print(request.resolver_match.url_name)
     context = {'logged_in': logged_in}
     return render(request, "home.html", context)
 
@@ -61,6 +59,7 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     """
     Renders create_playlist.html
     """
+
     logged_in = False
     request.session['pre_path'] = request.resolver_match.url_name
     if 'token_auth' in request.session and not is_expired(request):
@@ -70,6 +69,7 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
 
 
 def generate_playlist(request: HttpRequest) -> HttpResponse:
+
     logged_in = False
     request.session['pre_path'] = request.resolver_match.url_name
     if 'token_auth' in request.session and not is_expired(request):
@@ -98,8 +98,9 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
     except:
         return HttpResponse("An error ocurred")
 
+
 def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
-    if artist_str == "undefined" or  'token_auth' not in request.session:
+    if artist_str == "undefined" or 'token_auth' not in request.session:
         return JsonResponse({'message': "Not Found"})
     token_info = get_token(request)
     sp = spotipy.Spotify(auth=token_info['access_token'])
