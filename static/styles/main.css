@@ -644,7 +644,7 @@ nav .right .log_text {
 
 }
 #generate_playlist .container a{
-    font-size: max(2em,2vw);
+    font-size: max(1em,2vw);
     color: var(--blue);
 
 }
