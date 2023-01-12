@@ -263,7 +263,7 @@ nav .right .log_text {
 
 #tutorial .container {
     margin: auto;
-    width: max(40%,40em);
+    width: max(40%, 40em);
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -280,11 +280,13 @@ nav .right .log_text {
     align-items: center;
     border-bottom: 1px black solid;
 }
-#tutorial .container .step .options{
+
+#tutorial .container .step .options {
     display: flex;
     gap: 15px;
 }
-#tutorial .container .step .box{
+
+#tutorial .container .step .box {
     cursor: pointer;
     height: 150px;
     width: 150px;
@@ -296,12 +298,15 @@ nav .right .log_text {
     font-weight: 900;
     background-color: #04D94F;
 }
+
 #tutorial .container .step .box.blue {
     background-color: var(--blue);
 }
+
 #tutorial .container .step .box.pink {
     background-color: var(--pink);
 }
+
 #tutorial .container .cloud {
     font-size: 3.1em;
     text-align: center;
@@ -546,13 +551,16 @@ nav .right .log_text {
     font-weight: 700;
     color: black;
 }
-#create_playlist form .playlist_container .bottom #empty{
+
+#create_playlist form .playlist_container .bottom #empty {
     width: 100%;
     text-align: center;
 }
-#create_playlist form .playlist_container .bottom #empty.hidden{
+
+#create_playlist form .playlist_container .bottom #empty.hidden {
     display: none;
 }
+
 .separator {
     width: 100%;
     height: 1px;
@@ -629,7 +637,7 @@ nav .right .log_text {
 }
 
 
-#generate_playlist .container{
+#generate_playlist .container {
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -640,14 +648,16 @@ nav .right .log_text {
 
 #generate_playlist .container h1 {
     color: black;
-    font-size: max(3em,4vw);
+    font-size: max(3em, 4vw);
 
 }
-#generate_playlist .container a{
-    font-size: max(1em,2vw);
+
+#generate_playlist .container a {
+    font-size: max(1em, 2vw);
     color: var(--blue);
 
 }
+
 @media(max-width:1024px) {
     #banner {
         padding-top: 4em;
@@ -667,10 +677,12 @@ nav .right .log_text {
         text-align: center;
         margin: 0;
     }
+
     #tutorial .container {
-        width:100%;
+        width: 100%;
 
     }
+
     .nav {
         display: none;
     }
@@ -758,11 +770,13 @@ nav .right .log_text {
         transform: translateX(-100%);
         transition: translateX 0.3s ease-in-out;
     }
-    .menu a{
+
+    .menu a {
         font-size: 3.8em;
         font-weight: 800;
         text-align: center;
     }
+
     .menu.menu-visible {
         transform: translateX(0);
         transition: translateX 0.3s ease-in-out;
