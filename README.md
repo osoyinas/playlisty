@@ -1,7 +1,3 @@
-# Playlisty
-
----
-
 # Overview
 
 **Playlisty** is a web application in which, for the time being, you can generate Spotify’s playlists by selecting artists. In the long term, it will be able to generate playlists with various inputs (artists, songs, genres…) and modes.
