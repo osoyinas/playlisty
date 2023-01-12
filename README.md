@@ -14,7 +14,7 @@ This application is being develped with **[python](https://www.python.org/)** an
 
 # Getting started
 
-First, make sure you have ****installed **[Git](https://git-scm.com/)** and a [**Github**](https://github.com/) account. To clone the repository execute:
+First, make sure you have installed **[Git](https://git-scm.com/)** and a [**Github**](https://github.com/) account. To clone the repository execute:
 
 ```bash
 git clone https://github.com/osoyinas/playlisty.git
