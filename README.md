@@ -45,7 +45,7 @@ python3 manage.py runserver
 
 If everything is correct, you will get:
 
-```bash
+```
 Watching for file changes with StatReloader
 Performing system checks...
 
