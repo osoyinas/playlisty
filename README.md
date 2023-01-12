@@ -56,4 +56,4 @@ Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 ```
 
-Now you can visit your local server by connecting to `[http://127.0.0.1:8000/](http://127.0.0.1:8000/)` . If you had any problem, do not hesitate to contact osoyinas@gmail.com.
+Now you can visit your local server by connecting to `http://127.0.0.1:8000/` . If you had any problem, do not hesitate to contact osoyinas@gmail.com.
