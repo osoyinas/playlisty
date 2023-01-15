@@ -125,13 +125,10 @@ def reorder_playlist(sp: spotipy.Spotify, playlist_id: int):
     tracks = sp.playlist_tracks(playlist_id)
     # Get the number of tracks in the playlist
     num_tracks = len(tracks['items']) - 1
-    print(len(tracks))
     for i in range(len(tracks)):
         start = random.randint(
             0, num_tracks)
         insert_before = random.randint(0, num_tracks)
-        print(start)
-        print(insert_before)
         sp.playlist_reorder_items(
             playlist_id=playlist_id, range_start=start, insert_before=insert_before)
 
