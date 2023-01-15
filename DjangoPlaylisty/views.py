@@ -18,7 +18,8 @@ def home(request: HttpRequest) -> HttpResponse:
     logged_in = False
     if 'token_auth' in request.session and not is_expired(request):
         logged_in = True
-    request.session['pre_path'] = request.resolver_match.url_name   #store the current page
+    # store the current page
+    request.session['pre_path'] = request.resolver_match.url_name
     context = {'logged_in': logged_in}
     return render(request, "home.html", context)
 
@@ -27,9 +28,13 @@ def auth(request: HttpRequest) -> HttpResponse:
     """
     Generates the API token to connect to Spotify's API, redirects to /callback with the token
     """
-    auth_manager = create_spotify_oauth()
-    auth_url = auth_manager.get_authorize_url()
-    return redirect(auth_url)
+    try:
+        auth_manager = create_spotify_oauth()
+        auth_url = auth_manager.get_authorize_url()
+        return redirect(auth_url)
+    except:
+        previus = request.session['pre_path']
+        return redirect(previus)
 
 
 def callback(request: HttpRequest) -> HttpResponse:
