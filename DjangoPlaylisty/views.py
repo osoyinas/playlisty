@@ -76,17 +76,13 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
 def generate_playlist(request: HttpRequest) -> HttpResponse:
 
     logged_in = False
-        
-    request.session['pre_path'] = request.resolver_match.url_name
     if 'token_auth' in request.session and not is_expired(request):
         token_info = get_token(request)
-        context = {'logged_in': logged_in}
         logged_in = True
-    else:
-        context = {'logged_in': logged_in}
-        return render(request, 'create_playlist.html', context)
-    if 'pre_path' in request.session and request.session['pre_path'] == request.resolver_match.url_name:
-        return render(request, 'create_playlist.html', context)
+    context = {'logged_in': logged_in}
+    if request.session['pre_path'] == request.resolver_match.url_name:
+        return redirect('createplaylist')
+    request.session['pre_path'] = request.resolver_match.url_name
     try:
         name = request.POST['name']
         desc = "A playlists generated with playlisty.app"
