@@ -76,12 +76,15 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
 def generate_playlist(request: HttpRequest) -> HttpResponse:
 
     logged_in = False
+        
     request.session['pre_path'] = request.resolver_match.url_name
     if 'token_auth' in request.session and not is_expired(request):
         token_info = get_token(request)
         logged_in = True
     else:
         context = {'logged_in': logged_in}
+        return render(request, 'create_playlist.html', context)
+    if 'pre_path' in request.session and request.session['pre_path'] == request.resolver_match.url_name:
         return render(request, 'create_playlist.html', context)
     try:
         name = request.POST['name']
