@@ -11,7 +11,7 @@ mypy-extensions==0.4.3
 pathspec==0.10.3
 platformdirs==2.6.0
 postgres==4.0
-protobuf==3.20.1
+protobuf>=3.20.2
 psycopg2-binary==2.9.5
 psycopg2-pool==1.1
 pycodestyle==2.10.0
