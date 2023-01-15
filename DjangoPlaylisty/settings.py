@@ -142,4 +142,4 @@ STATICFILES_DIRS = [
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CSRF_TRUSTED_ORIGINS = ['https://playlisty-production.up.railway.app', 'http://localhost:8000']
+CSRF_TRUSTED_ORIGINS = [os.environ.get('HOST_URL')]
