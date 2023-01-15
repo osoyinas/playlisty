@@ -120,7 +120,7 @@ def reorder_playlist(sp: spotipy.Spotify, playlist_id: int):
 
     Args:
         sp (spotipy.Spotify): Object with the current user to be able to connect spotify's API.
-        playlist_id (_type_): Playlist's ID
+        playlist_id (int): Playlist's ID
     """
     tracks = sp.playlist_tracks(playlist_id)
     # Get the number of tracks in the playlist
