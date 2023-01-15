@@ -80,6 +80,7 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
     request.session['pre_path'] = request.resolver_match.url_name
     if 'token_auth' in request.session and not is_expired(request):
         token_info = get_token(request)
+        context = {'logged_in': logged_in}
         logged_in = True
     else:
         context = {'logged_in': logged_in}
