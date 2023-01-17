@@ -15,9 +15,7 @@ def home(request: HttpRequest) -> HttpResponse:
     """
     Index page view. Checks if the user is logged in and passes that information to the template.
     """
-    logged_in = False
-    if 'token_auth' in request.session and not is_expired(request):
-        logged_in = True
+    logged_in = check_logged_in(request)
     # store the current page
     request.session['pre_path'] = request.resolver_match.url_name
     context = {'logged_in': logged_in}
@@ -65,24 +63,28 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     Renders create_playlist.html
     """
 
-    logged_in = False
+    logged_in = check_logged_in(request)
     request.session['pre_path'] = request.resolver_match.url_name
-    if 'token_auth' in request.session and not is_expired(request):
-        logged_in = True
     context = {'logged_in': logged_in}
     return render(request, 'create_playlist.html', context)
 
 
 def generate_playlist(request: HttpRequest) -> HttpResponse:
+    """Generates de playlist
 
-    logged_in = False
-    if 'token_auth' in request.session and not is_expired(request):
-        token_info = get_token(request)
-        logged_in = True
+    Args:
+        request (HttpRequest): request
+
+    Returns:
+        HttpResponse: response
+    """
+    logged_in = check_logged_in(request)
     context = {'logged_in': logged_in}
-    if request.session['pre_path'] == request.resolver_match.url_name:
+
+    if not logged_in or request.session['pre_path'] == request.resolver_match.url_name:
         return redirect('createplaylist')
     request.session['pre_path'] = request.resolver_match.url_name
+    token_info = get_token(request)
     try:
         name = request.POST['name']
         desc = "A playlists generated with playlisty.app"
@@ -117,3 +119,17 @@ def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
             artists_list.append(artist)
     data = {'message': "Success", 'artists': artists_list[:4]}
     return JsonResponse(data)
+
+# Aux functions
+
+
+def check_logged_in(request) -> bool:
+    """If the user is logged in, returns true
+
+    Args:
+        request (HttpRequest):
+
+    Returns:
+        bool: logged in
+    """
+    return 'token_auth' in request.session and not is_expired(request)
