@@ -17,7 +17,7 @@ def home(request: HttpRequest) -> HttpResponse:
     """
     logged_in = check_logged_in(request)
     # store the current page
-    request.session['pre_path'] = request.resolver_match.url_name
+    set_prepath(request)
     context = {'logged_in': logged_in}
     return render(request, "home.html", context)
 
@@ -64,7 +64,7 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     """
 
     logged_in = check_logged_in(request)
-    request.session['pre_path'] = request.resolver_match.url_name
+    set_prepath(request)
     context = {'logged_in': logged_in}
     return render(request, 'create_playlist.html', context)
 
@@ -83,12 +83,13 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
 
     if not logged_in or request.session['pre_path'] == request.resolver_match.url_name:
         return redirect('createplaylist')
-    request.session['pre_path'] = request.resolver_match.url_name
+
+    set_prepath(request)
     token_info = get_token(request)
     try:
         name = request.POST['name']
         desc = "A playlists generated with playlisty.app"
-        public = 'public' in request.POST
+        public = True
         collab = False
         artists_ids = request.POST['artists'].split(",")  # list of artists IDS
         artists_ids.pop()  # the last element is ''
@@ -107,20 +108,43 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
 
 
 def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
-    if artist_str == "undefined" or 'token_auth' not in request.session:
+    """Returns a JSON with N artists name by inputing a str.
+        INPUT: Bad
+        JSON: Bad Bunny, Bad Gyal, Bad Omen, Klaus Badelt
+
+    Args:
+        request (HttpRequest): request
+        artist_str (str): search string
+
+    Returns:
+        JsonResponse: JSON
+    """
+    logged_in = check_logged_in(request)
+    if artist_str == "undefined" or not logged_in:
         return JsonResponse({'message': "Not Found"})
     token_info = get_token(request)
     sp = spotipy.Spotify(auth=token_info['access_token'])
     results = sp.search(artist_str, type='artist')
     artists = results['artists']['items']
     artists_list = []
+    artists_number = 4
     for artist in artists:
         if artist_str.lower().strip() in artist['name'].lower():
             artists_list.append(artist)
-    data = {'message': "Success", 'artists': artists_list[:4]}
+    data = {'message': "Success", 'artists': artists_list[:artists_number]}
     return JsonResponse(data)
 
+
 # Aux functions
+
+def set_prepath(request: HttpRequest):
+    """
+    Saves the current web page to control redirects. If i am in /createplaylist and i logout, I will be redirected to /createplaylist 
+
+    Args:
+        request (HttpRequest): request
+    """
+    request.session['pre_path'] = request.resolver_match.url_name
 
 
 def check_logged_in(request) -> bool:
