@@ -62,7 +62,6 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     """
     Renders create_playlist.html
     """
-
     logged_in = check_logged_in(request)
     set_prepath(request)
     context = {'logged_in': logged_in}
@@ -95,6 +94,7 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
         artists_ids.pop()  # the last element is ''
     except:
         return render(request, 'create_playlist.html', context)
+        
     sp = spotipy.Spotify(auth=token_info['access_token'])
     playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
     try:
