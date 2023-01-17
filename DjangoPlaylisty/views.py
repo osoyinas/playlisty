@@ -136,7 +136,6 @@ def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
 
 
 # Aux functions
-
 def set_prepath(request: HttpRequest):
     """
     Saves the current web page to control redirects. If i am in /createplaylist and i logout, I will be redirected to /createplaylist 
