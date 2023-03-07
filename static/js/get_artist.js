@@ -34,18 +34,6 @@ const listArtists = async (str) => {
     }
 };
 
-
-const waitInit = async () => {
-    searchInput.addEventListener('keyup', (event) => {
-        let input = searchInput.value;
-        listArtists(input);
-    })
-};
-
-window.addEventListener("load", async () => {
-    await waitInit();
-});
-
 function optionClicked(event) {
     artist_id = event.target.value;
     artist_name = event.target.textContent;
@@ -72,3 +60,15 @@ submitForm.addEventListener('submit', (event) => {
         submitForm.submit();
     }
 })
+
+
+const waitInit = async () => {
+    searchInput.addEventListener('keyup', (event) => {
+        let input = searchInput.value;
+        listArtists(input);
+    })
+};
+
+window.addEventListener("load", async () => {
+    await waitInit();
+});
