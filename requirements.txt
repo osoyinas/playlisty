@@ -18,7 +18,7 @@ pycodestyle==2.10.0
 redis==4.4.0
 requests==2.28.1
 six==1.16.0
-spotipy==2.22.0
+spotipy==2.22.1
 sqlparse==0.4.3
 tomli==2.0.1
 urllib3==1.26.13
