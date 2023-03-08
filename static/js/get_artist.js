@@ -5,9 +5,9 @@ const hiddenInput = document.getElementById("list_ids")
 const submitForm = document.getElementById('playlist_form')
 const bottomContainer = document.querySelector('.bottom');
 const loggedIn = document.querySelector('.log_text').textContent != "Log in with Spotify!"
-const emptyContainer  = document.getElementById('empty')
+const emptyContainer = document.getElementById('empty')
 var list_id = []
-data = {name:"",list:[]}
+data = { name: "", list: [] }
 const listArtists = async (str) => {
     try {
         if (str.length == 0) {
@@ -44,8 +44,7 @@ function optionClicked(event) {
         return;
     }
     data.list.push(artist_id);
-    bottomContainer.innerHTML += `<iframe as="style" style="border-radius:12px" src="https://open.spotify.com/embed/artist/${artist_id}" width="100%" height="80" frameBorder="0" allow="encrypted-media"></iframe> `
-
+    bottomContainer.innerHTML += `<iframe as="style" style="border-radius:12px" src="https://open.spotify.com/embed/artist/${artist_id}" width="100%" height="80" frameBorder="0" allow="encrypted-media"></iframe>`;
 }
 
 submitForm.addEventListener('submit', (event) => {
@@ -55,20 +54,18 @@ submitForm.addEventListener('submit', (event) => {
     fetch(url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-      })
-      .then(response => {
-        // Redirect to the requested page
-        window.location.href = response.url;
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+    })
+        .then(response => {
+            // Redirect to the requested page
+            window.location.href = response.url;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 })
-
-  
 
 
 const waitInit = async () => {
