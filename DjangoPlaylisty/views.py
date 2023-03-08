@@ -1,5 +1,5 @@
 import os
-import string
+import json
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from spotify_api.spotify import *
@@ -86,15 +86,27 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
     set_prepath(request)
     token_info = get_token(request)
     try:
-        name = request.POST['name']
+        """
+                name = request.POST['name']
         desc = "A playlists generated with playlisty.app"
         public = True
         collab = False
         artists_ids = request.POST['artists'].split(",")  # list of artists IDS
         artists_ids.pop()  # the last element is ''
+            if request.method == 'POST':
+        """
+        datos_json = json.loads(request.body)
+        print("TAMO ATIVO")
+        nombre = datos_json['nombre']
+        lista = datos_json['lista']
+        print(nombre)
+        print(lista)
+        # haz algo con los datos aquí
+        return HttpResponse('Datos recibidos.')
+    
     except:
         return render(request, 'create_playlist.html', context)
-        
+    """
     sp = spotipy.Spotify(auth=token_info['access_token'])
     playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
     try:
@@ -104,7 +116,7 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
         context = {'url': url, 'logged_in': logged_in}
         return render(request, 'generate_playlist.html', context)
     except:
-        return HttpResponse("An error ocurred")
+        return HttpResponse("An error ocurred")"""
 
 
 def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:

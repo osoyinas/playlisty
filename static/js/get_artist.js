@@ -7,7 +7,7 @@ const bottomContainer = document.querySelector('.bottom');
 const loggedIn = document.querySelector('.log_text').textContent != "Log in with Spotify!"
 const emptyContainer  = document.getElementById('empty')
 var list_id = []
-
+data = {name:"",list:[]}
 const listArtists = async (str) => {
     try {
         if (str.length == 0) {
@@ -40,26 +40,35 @@ function optionClicked(event) {
     searchInput.value = ``;
     resultsWrapper.innerHTML = ``;
     searchWrapper.classList.remove('show');
-    if (list_id.includes(artist_id)) {
+    if (data.list.includes(artist_id)) {
         return;
     }
-    list_id.push(artist_id);
-    raw_string = ""
-    list_id.forEach((id) => {
-        raw_string += id + ","
-    })
+    data.list.push(artist_id);
     bottomContainer.innerHTML += `<iframe as="style" style="border-radius:12px" src="https://open.spotify.com/embed/artist/${artist_id}" width="100%" height="80" frameBorder="0" allow="encrypted-media"></iframe> `
-    hiddenInput.value = raw_string;
+
 }
+
 submitForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    if (hiddenInput.value.length == 0) {
-        alert("Select artists");
-    }
-    else {
-        submitForm.submit();
-    }
+    data.name = document.getElementById("input_name").value;
+    let url = "/generateplaylist"
+    fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        // Redirect to the requested page
+        window.location.href = response.url;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
 })
+
+  
 
 
 const waitInit = async () => {
