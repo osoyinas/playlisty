@@ -86,16 +86,17 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
 
     set_prepath(request)
 
-    if request.method == 'POST':  
-        try:   
-            token_info = get_token(request)   
+    if request.method == 'POST':
+        try:
+            token_info = get_token(request)
             data = json.loads(request.body.decode('utf-8'))
             sp = spotipy.Spotify(auth=token_info['access_token'])
             name = data['name']
             desc = "A playlists generated with playlisty.app"
             public = True
             collab = False
-            playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
+            playlist_id = create_spotify_playlist(
+                sp, name, public, collab, desc)
             artists_ids = list(data['list'])
             add_tracks_to(sp, playlist_id, artists_ids)
             reorder_playlist(sp, playlist_id)
@@ -104,7 +105,7 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
         except ValueError as v:
             data = {'message': "Failed"}
         return JsonResponse(data)
-    
+
     elif (request.method == 'GET'):
         data = json.loads(request.body.decode('utf-8'))
         url = data['url']
@@ -142,7 +143,13 @@ def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
     return JsonResponse(data)
 
 
+def getLoginStatus(request: HttpRequest):
+    data = {'status': check_logged_in(request)}
+    return JsonResponse(data=data)
+
 # Aux functions
+
+
 def set_prepath(request: HttpRequest):
     """
     Saves the current web page to control redirects. If i am in /createplaylist and i logout, I will be redirected to /createplaylist 

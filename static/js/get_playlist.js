@@ -8,7 +8,16 @@ var data = { name: "", list: [] }
 var url = "/getplaylist/"
 
 
-submitButton.addEventListener("click", function () {
+submitButton.addEventListener("click", async function () {
+    let loggedIn = await checkLoggedIn();
+    if (!loggedIn) {
+        alert('Login with Spotify!')
+        return;
+    }
+    else if (!checkSelectedArtists()){
+        alert('Select artists!');
+        return;
+    }
     data.name = nameInput.value;
     loadingView();
     fetch(url, {
@@ -28,12 +37,23 @@ submitButton.addEventListener("click", function () {
             console.error('Error:', error);
         });
 });
-
+function checkSelectedArtists() {
+    return data.list.length != 0;
+}
 function loadingView() {
     section.classList.add('hide');
     loader.classList.add('show');
 }
 
+async function checkLoggedIn() {
+    let url = "/getloginstatus/";
+    let loggedIn = false;
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    loggedIn = data.status;
+    return loggedIn;
+}
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
