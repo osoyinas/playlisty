@@ -1,14 +1,14 @@
 const nameInput = document.getElementById("name_input");
-const submitButton = document.querySelector("submit_button");
+const submitButton = document.querySelector(".submit_button");
 const csrftoken = getCookie('csrftoken');
 
 var idsList = []
 var data = { name: "", list: [] }
 var url = "/getplaylist/"
 
-submitButton.addEventListener('click', (event) => {
+
+submitButton.addEventListener("click", function() {
     data.name = nameInput.value; 
-    console.log("Clicked");
     fetch(url, {
         method: 'POST',
         headers: {
@@ -24,7 +24,7 @@ submitButton.addEventListener('click', (event) => {
         .catch(error => {
             console.error('Error:', error);
         });
-})
+});
 
 function getCookie(name) {
     let cookieValue = null;
