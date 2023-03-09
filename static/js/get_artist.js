@@ -2,7 +2,6 @@ const searchInput = document.getElementById('search');
 const searchWrapper = document.querySelector('.wrapper');
 const resultsWrapper = document.querySelector('.results');
 const bottomContainer = document.querySelector('.bottom');
-const loggedIn = document.querySelector('.log_text').textContent != "Log in with Spotify!";
 const emptyContainer = document.getElementById('empty');
 
 
@@ -15,9 +14,9 @@ function removeArtist(artistId) {
     return;
 }
 
-
 async function listArtists (str) {
     try {
+        let loggedIn = checkLoggedIn();
         if (str.length == 0) {
             searchWrapper.classList.remove('show');
             return;
@@ -73,3 +72,13 @@ async function  waitInit() {
 window.addEventListener("load", async () => {
     await waitInit();
 });
+
+async function checkLoggedIn() {
+    let url = "/getloginstatus/";
+    let loggedIn = false;
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    loggedIn = data.status;
+    return loggedIn;
+}
