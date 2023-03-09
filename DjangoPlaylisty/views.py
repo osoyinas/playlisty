@@ -92,19 +92,16 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
             data = json.loads(request.body.decode('utf-8'))
             sp = spotipy.Spotify(auth=token_info['access_token'])
             name = data['name']
-            print("nombre: " + name)
             desc = "A playlists generated with playlisty.app"
             public = True
             collab = False
             playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
             artists_ids = list(data['list'])
-            print(artists_ids)
             add_tracks_to(sp, playlist_id, artists_ids)
             reorder_playlist(sp, playlist_id)
             url = get_playlist_url(sp, playlist_id)
             data = {'message': "Success", 'url': url}
         except ValueError as v:
-            print(v)
             data = {'message': "Failed"}
         return JsonResponse(data)
     
