@@ -69,7 +69,7 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     return render(request, 'create_playlist.html', context)
 
 
-def generate_playlist(request: HttpRequest) -> HttpResponse:
+def get_playlist(request: HttpRequest) -> HttpResponse:
     """Generates de playlist
 
     Args:

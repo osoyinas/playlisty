@@ -1,14 +1,14 @@
 const nameInput = document.getElementById("name_input");
-const submitForm = document.getElementById('playlist_form');
+const submitButton = document.querySelector("submit_button");
 const csrftoken = getCookie('csrftoken');
 
 var idsList = []
 var data = { name: "", list: [] }
-var url = "/generateplaylist/"
+var url = "/getplaylist/"
 
-submitForm.addEventListener('submit', (event) => {
-    event.preventDefault();
+submitButton.addEventListener('click', (event) => {
     data.name = nameInput.value; 
+    console.log("Clicked");
     fetch(url, {
         method: 'POST',
         headers: {
