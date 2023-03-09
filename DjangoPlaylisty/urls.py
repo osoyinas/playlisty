@@ -24,7 +24,7 @@ urlpatterns = [
     path('callback/', views.callback, name = 'callback'),
     path('logout/', views.logout, name = 'logout'),
     path('createplaylist/', views.create_playlist, name = 'createplaylist'),
-    path('generateplaylist/', views.generate_playlist, name = 'generateplaylist'),
+    path('getplaylist/', views.get_playlist, name = 'getplaylist'),
     path('createplaylist/getartists/<str:artist_str>', views.get_artists, name = 'getartists'),
     
 

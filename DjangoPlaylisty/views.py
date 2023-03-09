@@ -1,9 +1,11 @@
 import os
+import json
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from spotify_api.spotify import *
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from django.http import Http404
 
 
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
@@ -67,7 +69,7 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     return render(request, 'create_playlist.html', context)
 
 
-def generate_playlist(request: HttpRequest) -> HttpResponse:
+def get_playlist(request: HttpRequest) -> HttpResponse:
     """Generates de playlist
 
     Args:
@@ -76,34 +78,40 @@ def generate_playlist(request: HttpRequest) -> HttpResponse:
     Returns:
         HttpResponse: response
     """
+
     logged_in = check_logged_in(request)
-    context = {'logged_in': logged_in}
 
     if not logged_in or request.session['pre_path'] == request.resolver_match.url_name:
         return redirect('createplaylist')
 
     set_prepath(request)
-    token_info = get_token(request)
-    try:
-        name = request.POST['name']
-        desc = "A playlists generated with playlisty.app"
-        public = True
-        collab = False
-        artists_ids = request.POST['artists'].split(",")  # list of artists IDS
-        artists_ids.pop()  # the last element is ''
-    except:
-        return render(request, 'create_playlist.html', context)
-        
-    sp = spotipy.Spotify(auth=token_info['access_token'])
-    playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
-    try:
-        add_tracks_to(sp, playlist_id, artists_ids)
-        reorder_playlist(sp, playlist_id)
-        url = get_playlist_url(sp, playlist_id)
+
+    if request.method == 'POST':  
+        try:   
+            token_info = get_token(request)   
+            data = json.loads(request.body.decode('utf-8'))
+            sp = spotipy.Spotify(auth=token_info['access_token'])
+            name = data['name']
+            desc = "A playlists generated with playlisty.app"
+            public = True
+            collab = False
+            playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
+            artists_ids = list(data['list'])
+            add_tracks_to(sp, playlist_id, artists_ids)
+            reorder_playlist(sp, playlist_id)
+            url = get_playlist_url(sp, playlist_id)
+            data = {'message': "Success", 'url': url}
+        except ValueError as v:
+            data = {'message': "Failed"}
+        return JsonResponse(data)
+    
+    elif (request.method == 'GET'):
+        data = json.loads(request.body.decode('utf-8'))
+        url = data['url']
         context = {'url': url, 'logged_in': logged_in}
         return render(request, 'generate_playlist.html', context)
-    except:
-        return HttpResponse("An error ocurred")
+    else:
+        raise Http404
 
 
 def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
