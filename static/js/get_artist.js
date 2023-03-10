@@ -16,12 +16,14 @@ function removeArtist(artistId) {
 
 async function listArtists (str) {
     try {
-        let loggedIn = checkLoggedIn();
+        let loggedIn = await checkLoggedIn();
         if (str.length == 0) {
             searchWrapper.classList.remove('show');
+            searchInput.value = ``;
             return;
         }
         else if (!loggedIn) {
+            searchInput.value = ``;
             alert("Log in with Spotify!")
         }
         else {
@@ -72,13 +74,3 @@ async function  waitInit() {
 window.addEventListener("load", async () => {
     await waitInit();
 });
-
-async function checkLoggedIn() {
-    let url = "/getloginstatus/";
-    let loggedIn = false;
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-    loggedIn = data.status;
-    return loggedIn;
-}

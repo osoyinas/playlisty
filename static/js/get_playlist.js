@@ -45,15 +45,7 @@ function loadingView() {
     loader.classList.add('show');
 }
 
-async function checkLoggedIn() {
-    let url = "/getloginstatus/";
-    let loggedIn = false;
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-    loggedIn = data.status;
-    return loggedIn;
-}
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -68,4 +60,18 @@ function getCookie(name) {
         }
     }
     return cookieValue;
+}
+
+async function checkLoggedIn() {
+    let url = "/getloginstatus/";
+    let loggedIn = false;
+    try{
+        const response = await fetch(url);
+        const data = await response.json();
+        loggedIn = data.status;
+    }
+    catch{
+        loggedIn = false;
+    }
+    return loggedIn;
 }
