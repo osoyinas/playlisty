@@ -10,10 +10,16 @@ var url = "/getplaylist/"
 
 submitButton.addEventListener("click", async function () {
     let loggedIn = await checkLoggedIn();
+    let notNamed = nameInput.value == "";
     if (!loggedIn) {
         alert('Login with Spotify!')
         return;
     }
+    else if (notNamed) {
+        alert('Name your playlist.');
+        return;
+    }
+
     else if (!checkSelectedArtists()){
         alert('Select artists!');
         return;
