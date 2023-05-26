@@ -7,7 +7,12 @@ import warnings
 
 def main():
     """Run administrative tasks."""
-    warnings.simplefilter("ignore")
+    try:
+        DEBUG = str(os.environ.get('DEBUG')) == "1"
+    except:
+        DEBUG = True
+    if(not DEBUG):
+        warnings.simplefilter("ignore")
     dotenv.read_dotenv()
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DjangoPlaylisty.settings')
     try:
