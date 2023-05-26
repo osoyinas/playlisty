@@ -3,13 +3,12 @@
 import os
 import sys
 import dotenv
+import warnings
 
 def main():
     """Run administrative tasks."""
-    try:
-        dotenv.read_dotenv()
-    except:
-        print("no dotenv")
+    warnings.simplefilter("ignore")
+    dotenv.read_dotenv()
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DjangoPlaylisty.settings')
     try:
         from django.core.management import execute_from_command_line
