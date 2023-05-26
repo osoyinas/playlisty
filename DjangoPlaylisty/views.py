@@ -2,7 +2,7 @@ import os
 import json
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse, JsonResponse
-from spotify_api.spotify import *
+from DjangoPlaylisty.SpotifyAPI.spotify import *
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from django.http import Http404
