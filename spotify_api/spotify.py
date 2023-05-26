@@ -6,6 +6,7 @@ import os
 import time
 import spotipy
 import random
+
 CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
 HOST_URL = str(os.environ.get('HOST_URL'))  # url to redirect
