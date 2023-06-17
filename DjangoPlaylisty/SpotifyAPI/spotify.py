@@ -43,6 +43,7 @@ def create_spotify_oauth() -> SpotifyOAuth:
         SpotifyOAuth:
     """
     redir_url = os.path.join(HOST_URL, "callback")
+    
     return SpotifyOAuth(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET, scope=SCOPE, redirect_uri=redir_url)
 
