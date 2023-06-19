@@ -8,68 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Playlisty -Generate Playlists</title>
     <link rel="stylesheet" href="{% static 'styles/main.css'%}" />
-    <link href="https://fonts.cdnfonts.com/css/gotham" rel="stylesheet" />
     <link rel="icon" href="{% static 'img/Spotify_logo.png'%}" />
     <script
       src="https://kit.fontawesome.com/b97263830a.js"
       crossorigin="anonymous"
     ></script>
   </head>
-  <nav class="nav">
-    <div class="left">
-      <div class="logo">
-        <a class="logo_tittle" href="{% url 'home' %}">Playlisty</a>
-        <img class="logo_img" src="{% static 'img/Spotify_logo.png'%}" alt="" />
-      </div>
-      <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'createplaylist' %}">Generate Playlist</a>
-      <a href="">About</a>
-    </div>
-    {% if logged_in == True %}
-    <form action="{% url 'logout' %}" class="right">
-      <button type="submit" class="user_logo">
-        <div class="log_text">Log out</div>
-        <i class="fa-solid fa-right-from-bracket"></i>
-      </button>
-    </form>
-    {% else %}
-    <form action="{% url 'auth' %}" class="right">
-      <button type="submit" class="user_logo">
-        <div class="log_text">Log in with Spotify!</div>
-        <i class="fa-regular fa-user"></i>
-      </button>
-    </form>
-    {% endif %}
-  </nav>
-  <nav class="responsive_nav">
-    <label for="burger" class="burger">
-      <input id="burger" type="checkbox" />
-      <span></span>
-      <span></span>
-      <span></span>
-    </label>
-    <div class="menu">
-      <a class="menu_link" href="{% url 'home' %}">Home</a>
-      <a class="menu_link" href="{% url 'createplaylist' %}">Generate Playlist</a>
-      <a class="menu_link" href="">Stats</a>
-      <a class="menu_link" href="">About</a>
-    </div>
-    {% if logged_in == True %}
-      <form action="{% url 'logout' %}" class="right">
-        <button type="submit" class="user_logo">
-          <div class="log_text">Log out</div>
-          <i class="fa-solid fa-right-from-bracket"></i>
-        </button>
-      </form>
-      {% else %}
-      <form action="{% url 'auth' %}" class="right">
-        <button type="submit" class="user_logo">
-          <div class="log_text">Log in with Spotify!</div>
-          <i class="fa-regular fa-user"></i>
-        </button>
-      </form>
-    {% endif %}
-  </nav>
+  
   {% block content%} {% endblock %}
   <script src="{% static 'js/menu.js' %}"></script>
 </html>

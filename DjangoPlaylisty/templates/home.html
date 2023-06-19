@@ -4,29 +4,32 @@
   <section id="banner">
     <div>
       <h1 class="Listify_tittle">Playlisty</h1>
-      <h2>Create and Custom </h2>
-      <h1><span class="spotify">Spotify </span><span class="playlists">Playlists</span></h1>
-      <a type="image" class="welcome_button" href="#tutorial">
-        Get started
-        <div class="icon">
-          <svg
-            height="24"
-            width="24"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0h24v24H0z" fill="none"></path>
-            <path
-              d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778
-              7.778-1.414-1.414L16.172 13H4v-2z"
-              fill="currentColor"></path>
-          </svg>
-        </div>
-      </a>
+      <h2>Create and Custom</h2>
+      <h1>
+        <span class="spotify">Spotify </span
+        ><span class="playlists">Playlists</span>
+      </h1>
     </div>
+    <div
+      id="bg"
+      style="background-image: url('{% static 'svg/bg.svg' %}')"
+    ></div>
+    <div class="logo-container">
+      <img
+        src="{% static 'svg/spotify_logo.svg' %}"
+        alt="spotify logo"
+        class="logo"
+      />
+      <form action="{% url 'auth' %}">
+        <button type="submit">
+          hola
+        </button>
+      </form>
+    </div>
+
+
   </section>
-  <div
-    class="inter"
-    style="background-image: url('{% static 'svg/bg.svg' %}')"></div>
+
   <section id="tutorial">
     <h2>Get started</h2>
     <div class="container">
@@ -52,10 +55,7 @@
           <a class="box blue" href="{% url 'createplaylist' %}">
             Generate playlists
           </a>
-          <a class="box pink">
-            Watch stats
-          </a>
-
+          <a class="box pink"> Watch stats </a>
         </div>
       </div>
     </div>
