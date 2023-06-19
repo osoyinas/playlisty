@@ -28,7 +28,7 @@ async function listArtists (str) {
         }
         else {
             searchWrapper.classList.add('show');
-            const response = await fetch(`./getartists/${str}`);
+            const response = await fetch(`./createplaylist/getartists/${str}`);
             const data = await response.json();
             if (data.message == "Success") {
                 content = ``;

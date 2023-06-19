@@ -17,6 +17,7 @@ def home(request: HttpRequest) -> HttpResponse:
     Index page view. Checks if the user is logged in and passes that information to the template.
     """
     logged_in = check_logged_in(request)
+    logged_in = False
     # store the current page
     set_prepath(request)
     context = {'logged_in': logged_in}
