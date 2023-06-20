@@ -62,3 +62,12 @@ input:focus {
 body {
     font-family: 'Circular', sans-serif;
 }
+
+select {
+    font-family: 'Circular', sans-serif;
+
+}
+option {
+    font-family: 'Circular', sans-serif;
+
+}

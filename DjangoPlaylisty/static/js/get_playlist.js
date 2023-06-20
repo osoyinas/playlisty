@@ -3,6 +3,7 @@ const submitButton = document.querySelector(".submit_button");
 const csrftoken = getCookie('csrftoken');
 const loader = document.querySelector(".loader");
 const section = document.getElementById("create_playlist");
+const selectMenu = document.getElementById("select-menu")
 var idsList = []
 var data = { name: "", list: [] }
 var url = "/getplaylist/"
@@ -63,4 +64,8 @@ async function checkLoggedIn() {
         loggedIn = false;
     }
     return loggedIn;
+}
+
+function getCurrentType() {
+
 }

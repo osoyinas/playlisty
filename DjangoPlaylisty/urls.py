@@ -25,6 +25,6 @@ urlpatterns = [
     path('logout/', views.logout, name = 'logout'),
     path('createplaylist/', views.create_playlist, name = 'createplaylist'),
     path('getplaylist/', views.get_playlist, name = 'getplaylist'),
-    path('createplaylist/getartists/<str:artist_str>', views.get_artists, name = 'getartists'),
+    path('createplaylist/getitem/<str:item_str>/<str:item_type>', views.get_item, name = 'getitem'),
     path('getloginstatus/', views.getLoginStatus, name='getloginstatus')
 ]

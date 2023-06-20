@@ -17,7 +17,6 @@ def home(request: HttpRequest) -> HttpResponse:
     Index page view. Checks if the user is logged in and passes that information to the template.
     """
     logged_in = check_logged_in(request)
-    print(logged_in)
     # store the current page
     set_prepath(request)
     context = {'logged_in': logged_in}
@@ -116,7 +115,7 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
         raise Http404
 
 
-def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
+def get_item(request: HttpRequest, item_str: str, item_type:str) -> JsonResponse:
     """Returns a JSON with N artists name by inputing a str.
         INPUT: Bad
         JSON: Bad Bunny, Bad Gyal, Bad Omen, Klaus Badelt
@@ -129,18 +128,18 @@ def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
         JsonResponse: JSON
     """
     logged_in = check_logged_in(request)
-    if artist_str == "undefined" or not logged_in:
+    if item_str == "undefined" or not logged_in:
         return JsonResponse({'status': "not found"})
     token_info = get_token(request)
     sp = spotipy.Spotify(auth=token_info['access_token'])
-    results = sp.search(artist_str, type='artist')
-    artists = results['artists']['items']
-    artists_list = []
-    artists_number = 6
-    for artist in artists:
-        if artist_str.lower().strip() in artist['name'].lower():
-            artists_list.append(artist)
-    data = {'status': "success", 'results': artists_list[:artists_number]}
+    results = sp.search(item_str, type=item_type)
+    items = results[item_type +"s"]['items']
+    items_list = []
+    max_items = 6
+    for item in items:
+        if item_str.lower().strip() in item['name'].lower():
+            items_list.append(item)
+    data = {'status': "success", 'results': items_list[:max_items]}
     return JsonResponse(data)
 
 

@@ -1,29 +1,31 @@
 const searchInput = document.getElementById("search-input");
-var timer = null
-const resultWrapper = document.querySelector('.results-container ul');
-resultsContainer = document.querySelector('.results-container');
-const selectedItems = [];
-const notFound = document.querySelector('#create-playlist h2')
+var timer = null //timer to delay the requests
+const resultsWrapper = document.querySelector('.results-container ul');
+const resultsContainer = document.querySelector('.results-container');
+const generatePlaylistButton = document.getElementById("generate-playlist-button");
+const playlistContainer = document.querySelector('.playlist-container');
+const selectMenu = document.getElementById("select-menu")
+var selectedItems = {items:[]};
 
 searchInput.addEventListener('input', function (event) {
-    startTimer()
+    startTimerAndFetch();
 });
 
-function startTimer() {
+function startTimerAndFetch() {
     resultsContainer.classList.remove('show');
     clearTimeout(timer) //reset timer
-
-    timer = setTimeout(fetchData, 200);
+    timer = setTimeout(fetchData, 500);
 }
 
 async function fetchData() {
-    resultWrapper.innerHTML = `` //reset results
+    resultsWrapper.innerHTML = `` //reset results
     let str = searchInput.value
     if (str == "") {
         return;
     }
-    const response = await fetch(`./createplaylist/getartists/${str}`); //peticion GET
+    const response = await fetch(`./createplaylist/getitem/${str}/${getCurrentType()}`); //peticion GET
     const data = await response.json();
+    console.log(data);
     if (data.status == "success") {
         updateResults(data)
     }
@@ -31,34 +33,96 @@ async function fetchData() {
 
 function updateResults(data) {
     if (data.results.length == 0) {
-        resultWrapper.innerHTML+=`<h2 class="">Not found</h2>`//no results 
+        resultsWrapper.innerHTML += `<h2 class="">Not found</h2>`//no results 
         document.querySelector('#create-playlist h2').classList.add('show');
         resultsContainer.classList.add('show');
         return;
     }
-    resultWrapper.innerHTML = `` //reset results
+    resultsWrapper.innerHTML = `` //reset results
     data.results.forEach((result) => {
         addResultToDom(result)
     });
     document.querySelectorAll('.results-container ul li').
-    forEach(function (item) {
-        item.addEventListener('click', ()=>{
-            resultsContainer.classList.remove('show');
-            searchInput.value = ``
-            selectedItems.push(item.getAttribute('id-value'))
+        forEach(function (item) {
+            item.addEventListener('click', () => {
+                resultsContainer.classList.remove('show');
+                searchInput.value = ``
+                addToPlaylistContainer(item.textContent, item.getAttribute('id-value'), item.getAttribute('type-value'), item.querySelector('img').getAttribute('src'));
+                setTimeout(() => {
+                    resultsWrapper.innerHTML = ``
+                }, 500);
+            });
         });
-    });
     setTimeout(() => {
         resultsContainer.classList.add('show');
     }, 100);
 }
 
 function addResultToDom(result) {
-    let image = result.images.length > 0 ? result.images[0].url : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/168px-Spotify_logo_without_text.svg.png"
-    resultWrapper.innerHTML +=
-        `<li id-value="${result.id}">
+    let image ="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/168px-Spotify_logo_without_text.svg.png"
+    if (result.type != "track"){ //track doesnt contain images
+        image = result.images.length > 0 ? result.images[0].url : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/168px-Spotify_logo_without_text.svg.png"
+    }
+    resultsWrapper.innerHTML +=
+        `<li id-value="${result.id}" type-value="${result.type}">
         ${result.name}
         <img src="${image}" alt="${result.name}">
     </li>`
 }
-//    <img src="${result.images[0].url}" alt="${result.name}">
+
+function addToPlaylistContainer(name, id, type, image) {
+    let content =
+        `<li id-value="${id}" type-value="${type}">
+    <div class="left">
+      <img src="${image}" alt="">
+      <div class="name-type-container">
+        <p class="name">${name}</p>
+      </div>  
+    </div>
+    `
+    if (type == "artist") {
+        content +=
+            `<div class="right">
+        <select name="options">
+          <option value="top-tracks">top 10 tracks</option>
+          <option value="all-tracks">all tracks</option>
+        </select>
+      </div>`
+    }
+    else if(type == "track") {
+        content +=
+            `<div class="right">
+        <select name="options">
+          <option value="just-this">Just this track</option>
+          <option value="similar-songs">Similar Songs</option>
+        </select>
+      </div>`
+    }
+    else if(type == "album") {
+        content +=
+            `<div class="right">
+        <select name="options">
+          <option value="all-tracks">All tracks</option>
+        </select>
+      </div>`
+    }
+    content += `</li>`
+    playlistContainer.innerHTML += content;
+}
+
+//Boton pulsado
+generatePlaylistButton.addEventListener('click', () => {
+    let playlistItems = document.querySelectorAll('.playlist-container li');
+    playlistItems.forEach((item) => {
+        let id = item.getAttribute('id-value');
+        let type =item.getAttribute('type-value');
+        let option = item.querySelector('select').value;
+        let object = {id: id, type:type, option:option}
+        selectedItems.items.push(object)
+    })
+    console.log(selectedItems);
+});
+
+function getCurrentType() {
+    return selectMenu.value;
+}
