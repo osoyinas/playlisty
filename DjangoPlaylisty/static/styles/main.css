@@ -193,7 +193,8 @@ footer {
     margin-top: 2.5rem;
     opacity: 0;
     transition: 0.4s opacity ease-in-out;
-    height: 30rem;
+    height: 10rem;
+    align-items: center;
   }
   .results-container.show{
     opacity: 1;

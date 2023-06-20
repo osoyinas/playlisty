@@ -31,7 +31,7 @@ async function fetchData() {
 
 function updateResults(data) {
     if (data.results.length == 0) {
-        alert('sin resultados')
+        return
     }
     resultWrapper.innerHTML = `` //reset results
     data.results.forEach((result) => {
