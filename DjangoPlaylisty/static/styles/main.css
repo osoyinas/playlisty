@@ -207,7 +207,13 @@ footer {
     display: flex;
     flex-wrap: wrap;
   }
-  
+  #create-playlist h2{
+    display: hidden;
+    opacity: 0;
+  }
+  #create-playlist h2.show{
+    opacity: 1;
+  }
   .results-container li {
     height: 50px;
     padding: 8px;
