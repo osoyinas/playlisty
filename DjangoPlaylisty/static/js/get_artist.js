@@ -1,4 +1,4 @@
-const searchInput = document.getElementById('search');
+const searchInput = document.getElementById('search-input');
 const searchWrapper = document.querySelector('.wrapper');
 const resultsWrapper = document.querySelector('.results');
 const bottomContainer = document.querySelector('.bottom');

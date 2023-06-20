@@ -17,7 +17,7 @@ def home(request: HttpRequest) -> HttpResponse:
     Index page view. Checks if the user is logged in and passes that information to the template.
     """
     logged_in = check_logged_in(request)
-    logged_in = False
+    print(logged_in)
     # store the current page
     set_prepath(request)
     context = {'logged_in': logged_in}
@@ -130,17 +130,17 @@ def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
     """
     logged_in = check_logged_in(request)
     if artist_str == "undefined" or not logged_in:
-        return JsonResponse({'message': "Not Found"})
+        return JsonResponse({'status': "not found"})
     token_info = get_token(request)
     sp = spotipy.Spotify(auth=token_info['access_token'])
     results = sp.search(artist_str, type='artist')
     artists = results['artists']['items']
     artists_list = []
-    artists_number = 4
+    artists_number = 6
     for artist in artists:
         if artist_str.lower().strip() in artist['name'].lower():
             artists_list.append(artist)
-    data = {'message': "Success", 'artists': artists_list[:artists_number]}
+    data = {'status': "success", 'results': artists_list[:artists_number]}
     return JsonResponse(data)
 
 

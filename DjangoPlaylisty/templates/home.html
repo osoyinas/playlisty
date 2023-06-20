@@ -15,82 +15,24 @@
       style="background-image: url('{% static 'svg/bg.svg' %}')"
     ></div>
     {% if logged_in == False %}
-    <button onclick="scrollToElement('#login-to-start')">
+    <button class="fancy-button" onclick="scrollToElement('#login-to-start')">
       <span class="button_top"> Create playlist </span>
     </button>
     {% else %}
-    <button onclick="scrollToElement('#create-playlist')">
+    <button class="fancy-button" onclick="scrollToElement('#create-playlist')">
     <span class="button_top"> Create playlist </span>
   </button>
     {% endif %}
 
   </section>
   {% if logged_in == False %}
-  <section id="login-to-start">
-    <h1>Generate playlists</h1>
-    <div class="text-container">
-      <p>
-        Creating a playlist on our web app is a breeze! We offer you a variety
-        of options to curate your perfect Spotify playlist. Whether you prefer
-        selecting
-        <span style="font-weight: bold"
-          >artists, albums, or individual songs</span
-        >, we've got you covered.
-      </p>
-    </div>
-
-    <form action="{% url 'auth' %}">
-      <button type="submit">
-        <span class="button_top"> Log In with Spotify</span>
-      </button>
-    </form>
-
-    <h1>Why do you have to log in?</h1>
-    <div class="text-container">
-      <p>
-        To be able to generate Spotify playlists using our web app, we kindly
-        ask you to log in with your Spotify account. This is a necessary step to
-        provide you with a seamless and personalized experience. We understand
-        that you may have concerns about privacy and the security of your
-        information, so we want to assure you that your data is safe.
-      </p>
-      <p>
-        When you log in with your Spotify account, our web app uses Spotify's
-        Application Programming Interface (API) to securely authenticate your
-        account. The API allows us to access limited information about your
-        Spotify profile, such as your display name and public playlists, which
-        we use solely for the purpose of generating personalized playlists for
-        you.
-      </p>
-
-      <p>
-        It's important to note that we do not store or have access to your
-        Spotify account credentials, such as your username or password. The
-        authentication process is handled entirely by Spotify, ensuring that
-        your sensitive information remains confidential. We prioritize your
-        privacy and adhere to all necessary security measures to protect your
-        data.
-      </p>
-      <p>
-        By logging in with your Spotify account, you enable our web app to
-        leverage the vast music library and features offered by Spotify. This
-        allows us to curate playlists tailored to your musical preferences,
-        considering your listening history, favorite artists, and genre
-        preferences. The result is a personalized playlist experience that
-        caters to your unique taste in music.
-      </p>
-      <p>
-        We value your trust and understand the importance of transparency when
-        it comes to handling user data. Rest assured that we abide by Spotify's
-        terms of service and privacy policy, and we take all necessary
-        precautions to ensure your privacy and security throughout your
-        interaction with our web app.
-      </p>
-    </div>
-  </section>
+   {% include 'login_to_start.html' %}
   {%else %}
    {% include 'create_playlist.html' %}
   {%endif %}
+  <footer>
+    d
+  </footer>
 </body>
 <script>
   function scrollToElement(selector) {

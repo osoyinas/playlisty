@@ -1,0 +1,64 @@
+@font-face {
+    font-family: 'Circular';
+    src: url('/static/fonts/Circular/CircularStd-Light.otf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Circular';
+    src: url('/static/fonts/Circular/CircularStd-Book.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Circular';
+    src: url('/static/fonts/Circular/CircularStd-Medium.otf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Circular';
+    src: url('/static/fonts/Circular/CircularStd-Black.otf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+:root {
+    --pink: #CA8DF2;
+    --blue: #112FD9;
+    --light-blue: #154EBF;
+    --green: #04D94F;
+    --light-green: #22F241;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+li {
+    list-style: none;
+    text-decoration: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+body {
+    font-family: 'Circular', sans-serif;
+}

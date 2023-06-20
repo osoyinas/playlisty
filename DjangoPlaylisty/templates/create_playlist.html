@@ -2,55 +2,18 @@
 <body>
 
   <section id="create-playlist">
-    <div class="container">
-      <h3>Select the artists</h3>
-      <div class="wrapper">
-        <input
-          type="text"
-          name="search"
-          id="search"
-          placeholder="Type to search"
-          autocomplete="off"
-        />
-        <button class="search_button"><i class="fa fa-search"></i></button>
-        <div class="results">
-          <!-- Results -->
-        </div>
-      </div>
+    <h1>Generate playlists</h1>
+    <div class="input-container">
+      <input id="search-input" type="text" name="text" class="input" placeholder="search...">
+      <span class="icon"> 
+        <svg width="19px" height="19px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="1" d="M14 5H20" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M14 8H17" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M21 11.5C21 16.75 16.75 21 11.5 21C6.25 21 2 16.75 2 11.5C2 6.25 6.25 2 11.5 2" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M22 22L20 20" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+      </span>
     </div>
-    <div id="playlist_form">
-      {% csrf_token %}
-      <div class="playlist_container">
-        <div class="top">
-          <div class="input-group">
-            <input
-              required=""
-              type="text"
-              name="name"
-              autocomplete="off"
-              class="input"
-              id = "name_input"
-            />
-            <label class="user-label">Playlist's name</label>
-          </div>
-        </div>
-        <div class="separator"></div>
-        <div class="bottom">
-          <h2 id="empty" class="hidden">No artists added</h2>
-        </div>
-        <input type="hidden" name="artists" id="list_ids" />
-        <button type = 'image' class="submit_button" type="submit"> Generate playlist
-          <div class="icon">
-              <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg>
-          </button>
-      </a>
-      </div>
+    <div class="results-container">
+      <ul>
+
+      </ul>
     </div>
-  </section> 
-  <div class= "loader_container">
-    <div class="loader "><div></div><div></div><div></div><div></div></div>
-  </div>
-  <script src="{% static 'js/get_artist.js' %}"></script>
-  <script src="{% static 'js/get_playlist.js' %}"></script>
+  <script src="{% static 'js/search_input.js' %}"></script>
 </body>
 {% endblock %}

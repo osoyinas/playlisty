@@ -1,66 +1,85 @@
-@font-face {
-    font-family: 'Circular';
-    src: url('/static/fonts/Circular/CircularStd-Light.otf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
+/* Butons */
+.fancy-button {
+    /* Variables */
+    --button_radius: 0.75em;
+    --button_color: #e8e8e8;
+    --button_outline_color: #000000;
+    font-size: 17px;
+    font-weight: bold;
+    border: none;
+    border-radius: var(--button_radius);
+    background: var(--button_outline_color);
+    z-index: 20;
+    margin-top: 5rem;
+    cursor: pointer;
 }
 
-@font-face {
-    font-family: 'Circular';
-    src: url('/static/fonts/Circular/CircularStd-Book.otf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Circular';
-    src: url('/static/fonts/Circular/CircularStd-Medium.otf') format('truetype');
-    font-weight: 500;
-    font-style: normal;
-}
-
-
-@font-face {
-    font-family: 'Circular';
-    src: url('/static/fonts/Circular/CircularStd-Black.otf') format('truetype');
-    font-weight: 900;
-    font-style: normal;
-}
-
-:root {
-    --pink: #CA8DF2;
-    --blue: #112FD9;
-    --light-blue: #154EBF;
-    --green: #04D94F;
-    --light-green: #22F241;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-* {
-    padding: 0;
-    margin: 0;
+.button_top {
+    display: block;
     box-sizing: border-box;
+    border: 2px solid var(--button_outline_color);
+    border-radius: var(--button_radius);
+    padding: 0.75em 1.5em;
+    background: var(--button_color);
+    color: var(--button_outline_color);
+    transform: translateY(-0.2em);
+    transition: transform 0.1s ease;
 }
 
-a {
-    text-decoration: none;
-    color: white;
+.fancy-button:hover .button_top {
+    /* Pull the button upwards when hovered */
+    transform: translateY(-0.33em);
 }
 
-li {
-    list-style: none;
-    text-decoration: none;
+.fancy-button:active .button_top {
+    /* Push the button downwards when pressed */
+    transform: translateY(0);
 }
 
-input:focus {
+/* Inputs */
+.input-container {
+    width: 300px;
+    position: relative;
+}
+
+.icon {
+    position: absolute;
+    right: 10px;
+    top: calc(50% + 5px);
+    transform: translateY(calc(-50% - 5px));
+}
+
+.input {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    transition: .2s linear;
+    border: 2.5px solid black;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.input:focus {
     outline: none;
+    border: 0.5px solid black;
+    box-shadow: -5px -5px 0px black;
 }
 
-body {
-    font-family: 'Circular', sans-serif;
+.input-container:hover>.icon {
+    animation: anim 1s linear infinite;
+}
+
+@keyframes anim {
+
+    0%,
+    100% {
+        transform: translateY(calc(-50% - 5px)) scale(1);
+    }
+
+    50% {
+        transform: translateY(calc(-50% - 5px)) scale(1.1);
+    }
 }
 
 /* ------------HOME------------ */
@@ -118,41 +137,6 @@ body {
     font-size: clamp(2em, 3vw, 3em);
 }
 
-.logo-container {
-    position: relative;
-    z-index: 10;
-    width: clamp(180px, 40%, 300px);
-    height: 5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5rem;
-}
-
-
-
-.logo-container .logo {
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: levitate 4s infinite;
-}
-
-.logo-container .logo.no-animation{
-    animation: none;
-}
-.logo-container button {
-    position: absolute;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0;
-    height: 100%;
-    top: 0;
-    left: 0;
-}
 
 @keyframes levitate {
 
@@ -167,55 +151,21 @@ body {
 }
 
 /* GENERATE PLAYLIST NOT LOGGED IN  */
-#login-to-start {
+#login-to-start,
+#create-playlist {
     width: auto;
-    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-#login-to-start h1 {
+#login-to-start h1,
+#create-playlist h1 {
     margin: 5rem 0;
     font-size: clamp(2.5rem, 4vw, 6rem);
 }
-  button {
-    /* Variables */
-    --button_radius: 0.75em;
-    --button_color: #e8e8e8;
-    --button_outline_color: #000000;
-    font-size: 17px;
-    font-weight: bold;
-    border: none;
-    border-radius: var(--button_radius);
-    background: var(--button_outline_color);
-    z-index: 20;
-    margin-top: 5rem;
-    cursor: pointer;
-  }
-  
-  .button_top {
-    display: block;
-    box-sizing: border-box;
-    border: 2px solid var(--button_outline_color);
-    border-radius: var(--button_radius);
-    padding: 0.75em 1.5em;
-    background: var(--button_color);
-    color: var(--button_outline_color);
-    transform: translateY(-0.2em);
-    transition: transform 0.1s ease;
-  }
-  
-  button:hover .button_top {
-    /* Pull the button upwards when hovered */
-    transform: translateY(-0.33em);
-  }
-  
-  button:active .button_top {
-    /* Push the button downwards when pressed */
-    transform: translateY(0);
-  }
+
 #login-to-start .text-container {
     width: 60%;
     margin: 0 auto;
@@ -228,7 +178,55 @@ body {
     /* text-align: justify; */
 }
 
-
-/* GENERATE PLAYLIST LOGGED IN */
+footer {
+    margin-top: 5rem;
+    width: 100vw;
+    height: 10rem;
+    background-color: black;
+}
 
 /* CREATE PLAYLIST */
+.results-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2.5rem;
+    opacity: 0;
+    transition: 0.4s opacity ease-in-out;
+    height: 30rem;
+  }
+  .results-container.show{
+    opacity: 1;
+  }
+  .results-container ul {
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .results-container li {
+    height: 50px;
+    padding: 8px;
+    margin: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: lightgray;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+  }
+  .results-container ul li:hover {
+    transform: translateY(-5px);
+  }
+
+
+  .results-container li img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
