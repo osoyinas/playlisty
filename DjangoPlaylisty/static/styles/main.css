@@ -256,7 +256,7 @@ footer {
     border-radius: 20px;
     font-weight: bold;
     transition: transform 0.3s ease;
-    font-size: clamp(1rem,2vw,1.5rem);
+    font-size: clamp(1rem,2vw,1.3rem);
 }
 
 #create-playlist .results-container ul li:hover {
@@ -285,54 +285,59 @@ footer {
 #playlist-section .playlist-container {
     display: flex;
     flex-direction: column;
-    width: min(40rem,100vw);
+    width: min(60rem,100%);
     padding: 2rem 0;
     gap: 5px;
 }
 #playlist-section .playlist-container li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; 
     color: white;
-    margin: 0px 10px;
-}
-#playlist-section .playlist-container li div {
-    display: flex;
-    gap: 10px;
+    margin: 0 10px;
     align-items: center;
-    position: relative;
-    width: 100%;
+    gap: 15px;
 }
 
 #playlist-section .playlist-container li .left {
     font-size: 15px;
-    width: 100%;
+    display: grid;
+    grid-template-columns: 0.2fr 0.2fr 2fr;
+    align-items: center;
+    gap: 18px;
+}
+.name-type-container{
+    width:100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: clamp(1rem,2vw,1.3rem);
+
 }
 #playlist-section .playlist-container li .left h2 {
     color: white;
     opacity: 50%;
-    width: 15%;
 }
-#playlist-section .playlist-container li .name-type-container{
-    display: block;
+#playlist-section .playlist-container li .left .name-type-container{
+    display: inline-block;
+    width: 100%;
 }
 #playlist-section .playlist-container li .left img {
-    width: clamp(50px,4vw,75px);
-    height: auto;
+    width: 50px;
+    height: 50px;
 }
 #playlist-section .playlist-container li .left .name {
     font-weight: bold;
     flex-wrap: nowrap;
     white-space: nowrap;
-    font-weight: bold;
     overflow: hidden;
     text-overflow: ellipsis;
+    width: 100%;
 }
 
 
 #playlist-section .playlist-container li .right {
+    display: flex;
     justify-content: right;
-    flex-grow: 1;
+    width: auto;
 }
 #playlist-section .playlist-container li div select {
     text-align: center;
@@ -342,9 +347,8 @@ footer {
     outline: none;
     border: white;
     height: 50px;
-    font-size: 1rem;
-    width: 70%;
-    min-width: 122px;
+    font-size: clamp(1rem,2vw,1.3rem);
+    width: 100%;
 }
 #playlist-section h2 {
     text-align: center;
