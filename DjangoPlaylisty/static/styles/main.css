@@ -284,37 +284,67 @@ footer {
 }
 #playlist-section .playlist-container {
     display: flex;
-    height: auto;
     flex-direction: column;
-    width: min(100%, 40rem);
+    width: min(40rem,100vw);
     padding: 2rem 0;
+    gap: 5px;
 }
 #playlist-section .playlist-container li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 1rem;
     color: white;
-    margin: 0 15px;
-
+    margin: 0px 10px;
 }
 #playlist-section .playlist-container li div {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     align-items: center;
+    position: relative;
+    width: 100%;
 }
-#playlist-section .playlist-container li div p {
+
+#playlist-section .playlist-container li .left {
+    font-size: 15px;
+    width: 100%;
+}
+#playlist-section .playlist-container li .left h2 {
+    color: white;
+    opacity: 50%;
+    width: 15%;
+}
+#playlist-section .playlist-container li .name-type-container{
+    display: block;
+}
+#playlist-section .playlist-container li .left img {
+    width: clamp(50px,4vw,75px);
+    height: auto;
+}
+#playlist-section .playlist-container li .left .name {
     font-weight: bold;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+#playlist-section .playlist-container li .right {
+    justify-content: right;
+    flex-grow: 1;
 }
 #playlist-section .playlist-container li div select {
-    height: 30px;
-    /* border-radius: 10px; */
     text-align: center;
-    font-weight: 700;
     cursor: pointer;
     color: white;
-    background-color: #000000;
+    background-color: black;
     outline: none;
+    border: white;
+    height: 50px;
+    font-size: 1rem;
+    width: 70%;
+    min-width: 122px;
 }
 #playlist-section h2 {
     text-align: center;
@@ -322,19 +352,10 @@ footer {
 #playlist-section .playlist-container li div select option {
     text-align: center;
 }
-#playlist-section .playlist-container li .name-type-container{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-}
+
 #playlist-section .playlist-container li .name-type-container .type {
     font-size: 90%;
     font-weight: 100;
-}
-#playlist-section .playlist-container li img {
-    width: 50px;
-    height: 50px;
 }
 #playlist-section #button-container{
     width: 100%;
@@ -342,23 +363,6 @@ footer {
     align-items: center;
     justify-content: center;
     padding: 5rem;
-}
-
-
-
-@media (max-width: 1024px) {
-    #login-to-start .text-container {
-        width: 90%;
-        margin: 0 auto;
-        line-height: 2.2rem;
-    }
-    
-    #login-to-start p {
-        font-size: min(1.5rem);
-        text-wrap:balance;
-        text-align: left;
-
-    }
 }
 
 .bg2 {
@@ -373,3 +377,12 @@ footer {
     background-position: bo;
     z-index: -1;
 }   
+
+@media (max-width: 1024px) {
+    #login-to-start .text-container {
+        width: 90%;
+        margin: 0 auto;
+        line-height: 2.2rem;
+    }
+}
+

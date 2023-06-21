@@ -6,7 +6,7 @@ const generatePlaylistButton = document.getElementById("generate-playlist-button
 const playlistContainer = document.querySelector('.playlist-container');
 const selectMenu = document.getElementById("select-menu")
 var selectedItems = {items:[]};
-
+var count = 0;
 searchInput.addEventListener('input', function (event) {
     startTimerAndFetch();
 });
@@ -71,15 +71,17 @@ function addResultToDom(result) {
 }
 
 function addToPlaylistContainer(name, id, type, image) {
+    count+=1;
     let content =
         `<li id-value="${id}" type-value="${type}">
-    <div class="left">
-      <img src="${image}" alt="">
-      <div class="name-type-container">
-        <p class="name">${name}</p>
-        <p class="type">${type}</p>
-      </div>  
-    </div>
+            <div class="left">
+                <h2>${count}</h2>
+            <img src="${image}" alt="">
+            <div class="name-type-container">
+                <p class="name">${name}</p>
+                <p class="type">${type}</p>
+            </div>  
+            </div>
     `
     if (type == "artist") {
         content +=
@@ -94,8 +96,8 @@ function addToPlaylistContainer(name, id, type, image) {
         content +=
             `<div class="right">
         <select name="options">
-          <option value="just-this">Just this track</option>
-          <option value="similar-songs">Similar Songs</option>
+          <option value="just-this">just this track</option>
+          <option value="similar-songs">similar Songs</option>
         </select>
       </div>`
     }
@@ -103,7 +105,7 @@ function addToPlaylistContainer(name, id, type, image) {
         content +=
             `<div class="right">
         <select name="options">
-          <option value="all-tracks">All tracks</option>
+          <option value="all-tracks">all tracks</option>
         </select>
       </div>`
     }
