@@ -15,13 +15,10 @@
       style="background-image: url('{% static 'svg/bg.svg' %}')"
     ></div>
     {% if logged_in == False %}
-    <button class="fancy-button" onclick="scrollToElement('#login-to-start')">
-      <span class="button_top"> Create playlist </span>
-    </button>
+    <a href="#login-to-start" class="loader"></a>
     {% else %}
-    <button class="fancy-button" onclick="scrollToElement('#create-playlist')">
-    <span class="button_top"> Create playlist </span>
-  </button>
+      <a href="#create-playlist" class="loader"></a>
+
     {% endif %}
 
   </section>

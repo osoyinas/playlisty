@@ -1,30 +1,38 @@
 /* Butons */
 .fancy-button {
-    /* Variables */
-    --button_radius: 0.75em;
-    --button_color: #e8e8e8;
-    --button_outline_color: #000000;
-    font-size: 17px;
+    z-index: 100;
+    padding: 10px 20px;
+    border: 0;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all .5s ease;
+    height: clamp(40px, 5vw, 60px);
+    font-size: clamp(14px, 2vw, 20px);
+    text-transform: uppercase;
     font-weight: bold;
-    border: none;
-    border-radius: var(--button_radius);
-    background: var(--button_outline_color);
-    z-index: 20;
-    margin-top: 5rem;
     cursor: pointer;
+    text-wrap: nowrap;
+    white-space: nowrap;
 }
 
-.button_top {
-    display: block;
-    box-sizing: border-box;
-    border: 2px solid var(--button_outline_color);
-    border-radius: var(--button_radius);
-    padding: 0.75em 1.5em;
-    background: var(--button_color);
-    color: var(--button_outline_color);
-    transform: translateY(-0.2em);
-    transition: transform 0.1s ease;
+.fancy-button:hover {
+    letter-spacing: 3px;
+    background-color: hsl(261deg 80% 48%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
 }
+
+.fancy-button:active {
+    letter-spacing: 3px;
+    background-color: hsl(261deg 80% 48%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
+    transform: translateY(10px);
+    transition: 100ms;
+}
+
 
 .fancy-button:hover .button_top {
     /* Pull the button upwards when hovered */
@@ -38,7 +46,7 @@
 
 /* Inputs */
 .input-container {
-    width: clamp(280px,20vw,800px);
+    width: clamp(250px, 20vw, 800px);
     position: relative;
 }
 
@@ -51,21 +59,16 @@
 
 .input {
     width: 100%;
-    height: clamp(40px,5vw,60px);
+    
     padding: 10px;
     transition: .2s linear;
     border: 2.5px solid black;
-    font-size:clamp(14px,2vw,20px); 
+    height: clamp(40px, 5vw, 60px);
+    font-size: clamp(14px, 2vw, 20px);
     text-transform: uppercase;
     letter-spacing: 2px;
-    
-}
 
-/* .input:focus {
-    outline: none;
-    border: 0.5px solid black;
-    box-shadow: -5px -5px 0px black;
-} */
+}
 
 .input-container:hover>.icon {
     animation: anim 1s linear infinite;
@@ -135,7 +138,7 @@
 
 #banner h2 {
     color: white;
-    opacity: 70%;
+    opacity: 60%;
     font-size: clamp(2em, 3vw, 3em);
 }
 
@@ -160,6 +163,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-top: 5rem;
 }
 
 #login-to-start h1,
@@ -195,13 +199,14 @@ footer {
     display: flex;
     gap: 10px;
 }
+
 #create-playlist .container select {
     width: 40%;
-       height: clamp(40px,5vw,60px);
+    height: clamp(40px, 5vw, 60px);
     padding: 10px;
     transition: .2s linear;
     border: 2.5px solid rgb(19, 16, 16);
-    font-size: clamp(14px,2vw,20px);
+    font-size: clamp(14px, 2vw, 20px);
     text-transform: uppercase;
     letter-spacing: 2px;
 }
@@ -214,10 +219,8 @@ footer {
     justify-content: center;
     opacity: 0;
     transition: 0.4s opacity ease-in-out;
-    height: auto;
-    min-height: 20vh;
+    height: 10rem;
     align-items: center;
-    
 }
 
 .results-container.show {
@@ -241,11 +244,14 @@ footer {
 #create-playlist h2.show {
     opacity: 1;
 }
-#create-playlist #search-input, #select-menu {
+
+#create-playlist #search-input,
+#select-menu {
     margin: 0 12px;
 }
+
 #create-playlist .results-container li {
-    height:  50px;
+    height: 50px;
     padding: 8px;
     margin: 5px;
     cursor: pointer;
@@ -256,7 +262,7 @@ footer {
     border-radius: 20px;
     font-weight: bold;
     transition: transform 0.3s ease;
-    font-size: clamp(1rem,2vw,1.3rem);
+    font-size: clamp(1rem, 2vw, 1.3rem);
 }
 
 #create-playlist .results-container ul li:hover {
@@ -269,29 +275,30 @@ footer {
     height: 40px;
     border-radius: 50%;
 }
+
 #playlist-section {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 12vw;
-    /* background: rgb(0,0,0);
-    background: linear-gradient(180deg, rgba(0,0,0,1) 20%, rgba(57,57,57,1) 100%); */
 }
-#playlist-section  h1 {
-    /* color: black; */
+
+#playlist-section h1 {
     color: white;
 }
+
 #playlist-section .playlist-container {
     display: flex;
     flex-direction: column;
-    width: min(60rem,100%);
+    width: min(50rem, 100%);
     padding: 2rem 0;
     gap: 5px;
 }
+
 #playlist-section .playlist-container li {
     display: grid;
-    grid-template-columns: 1.5fr 1fr; 
+    grid-template-columns: 1.5fr 1fr;
     color: white;
     margin: 0 10px;
     align-items: center;
@@ -305,25 +312,30 @@ footer {
     align-items: center;
     gap: 18px;
 }
-.name-type-container{
-    width:100%;
+
+.name-type-container {
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: clamp(1rem,2vw,1.3rem);
+    font-size: clamp(1rem, 2vw, 1.3rem);
 
 }
+
 #playlist-section .playlist-container li .left h2 {
     color: white;
     opacity: 50%;
 }
-#playlist-section .playlist-container li .left .name-type-container{
+
+#playlist-section .playlist-container li .left .name-type-container {
     display: inline-block;
     width: 100%;
 }
+
 #playlist-section .playlist-container li .left img {
     width: 50px;
     height: 50px;
 }
+
 #playlist-section .playlist-container li .left .name {
     font-weight: bold;
     flex-wrap: nowrap;
@@ -333,26 +345,25 @@ footer {
     width: 100%;
 }
 
-
 #playlist-section .playlist-container li .right {
     display: flex;
     justify-content: right;
     width: auto;
 }
+
 #playlist-section .playlist-container li div select {
     text-align: center;
     cursor: pointer;
     color: white;
-    background-color: black;
+    background-color: rgb(57, 57, 57);
     outline: none;
     border: white;
     height: 50px;
-    font-size: clamp(1rem,2vw,1.3rem);
-    width: 100%;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    width: 80%;
+    border-radius: 5px;
 }
-#playlist-section h2 {
-    text-align: center;
-}
+
 #playlist-section .playlist-container li div select option {
     text-align: center;
 }
@@ -361,7 +372,8 @@ footer {
     font-size: 90%;
     font-weight: 100;
 }
-#playlist-section #button-container{
+
+#playlist-section #button-container {
     width: 100%;
     display: flex;
     align-items: center;
@@ -380,7 +392,7 @@ footer {
     background-repeat: no-repeat;
     background-position: bo;
     z-index: -1;
-}   
+}
 
 @media (max-width: 1024px) {
     #login-to-start .text-container {
@@ -390,3 +402,19 @@ footer {
     }
 }
 
+@media (max-width: 768px) {
+    .results-container {
+        margin: 2rem 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        opacity: 0;
+        transition: 0.4s opacity ease-in-out;
+        height: 20rem;
+        align-items: center;
+    }
+
+    #playlist-section .playlist-container li div select {
+        width: 100%;
+    }
+}
