@@ -77,6 +77,7 @@ function addToPlaylistContainer(name, id, type, image) {
       <img src="${image}" alt="">
       <div class="name-type-container">
         <p class="name">${name}</p>
+        <p class="type">${type}</p>
       </div>  
     </div>
     `
@@ -126,3 +127,7 @@ generatePlaylistButton.addEventListener('click', () => {
 function getCurrentType() {
     return selectMenu.value;
 }
+
+selectMenu.addEventListener('change', function(event) {
+    startTimerAndFetch();
+  });

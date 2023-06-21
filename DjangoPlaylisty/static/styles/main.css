@@ -38,7 +38,7 @@
 
 /* Inputs */
 .input-container {
-    width: 300px;
+    width: clamp(280px,20vw,800px);
     position: relative;
 }
 
@@ -51,20 +51,21 @@
 
 .input {
     width: 100%;
-    height: 40px;
+    height: clamp(40px,5vw,60px);
     padding: 10px;
     transition: .2s linear;
     border: 2.5px solid black;
-    font-size: 14px;
+    font-size:clamp(14px,2vw,20px); 
     text-transform: uppercase;
     letter-spacing: 2px;
+    
 }
 
-.input:focus {
+/* .input:focus {
     outline: none;
     border: 0.5px solid black;
     box-shadow: -5px -5px 0px black;
-}
+} */
 
 .input-container:hover>.icon {
     animation: anim 1s linear infinite;
@@ -95,7 +96,7 @@
     flex-direction: column;
 }
 
-#banner #bg {
+#banner .bg {
     position: absolute;
     top: 0;
     left: 0;
@@ -162,13 +163,16 @@
 }
 
 #login-to-start h1,
-#create-playlist h1 {
-    margin: 5rem 0;
+#create-playlist h1,
+#playlist-section h1 {
+    margin: 2rem;
     font-size: clamp(2.5rem, 3vw, 5rem);
+    text-align: center;
 }
 
 #login-to-start .text-container {
     width: 60%;
+    max-width: 60rem;
     margin: 0 auto;
     line-height: 2.2rem;
 }
@@ -193,24 +197,25 @@ footer {
 }
 #create-playlist .container select {
     width: 40%;
-    height: 40px;
+       height: clamp(40px,5vw,60px);
     padding: 10px;
     transition: .2s linear;
-    border: 2.5px solid black;
-    font-size: 14px;
+    border: 2.5px solid rgb(19, 16, 16);
+    font-size: clamp(14px,2vw,20px);
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 
 
 .results-container {
+    margin: 2rem 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 2.5rem;
     opacity: 0;
     transition: 0.4s opacity ease-in-out;
-    height: 10rem;
+    height: auto;
+    min-height: 20vh;
     align-items: center;
     
 }
@@ -236,9 +241,11 @@ footer {
 #create-playlist h2.show {
     opacity: 1;
 }
-
+#create-playlist #search-input, #select-menu {
+    margin: 0 12px;
+}
 #create-playlist .results-container li {
-    height: 50px;
+    height:  50px;
     padding: 8px;
     margin: 5px;
     cursor: pointer;
@@ -249,6 +256,7 @@ footer {
     border-radius: 20px;
     font-weight: bold;
     transition: transform 0.3s ease;
+    font-size: clamp(1rem,2vw,1.5rem);
 }
 
 #create-playlist .results-container ul li:hover {
@@ -261,50 +269,107 @@ footer {
     height: 40px;
     border-radius: 50%;
 }
-
-#create-playlist .playlist-container {
+#playlist-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 12vw;
+    /* background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 20%, rgba(57,57,57,1) 100%); */
+}
+#playlist-section  h1 {
+    /* color: black; */
+    color: white;
+}
+#playlist-section .playlist-container {
     display: flex;
     height: auto;
     flex-direction: column;
-    width: 40%;
-    padding: 2rem;
+    width: min(100%, 40rem);
+    padding: 2rem 0;
 }
-#create-playlist .playlist-container li {
+#playlist-section .playlist-container li {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 1rem;
-    background-color: lightgray;
-    border-radius: 20px;
-    margin: 5px;
+    color: white;
+    border: 1px solid white;
+    margin: 0 15px;
+
 }
-#create-playlist .playlist-container li div {
+#playlist-section .playlist-container li div {
     display: flex;
     gap: 8px;
     align-items: center;
 }
-#create-playlist .playlist-container li div p {
+#playlist-section .playlist-container li div p {
     font-weight: bold;
 }
-#create-playlist .playlist-container li div select {
+#playlist-section .playlist-container li div select {
     height: 30px;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     text-align: center;
     font-weight: 700;
     cursor: pointer;
+    color: white;
+    background-color: #000000;
 }
-
-#create-playlist .playlist-container li div select option {
+#playlist-section h2 {
     text-align: center;
-    font-weight: 700;
 }
-#create-playlist .playlist-container li .name-type-container{
+#playlist-section .playlist-container li div select option {
+    text-align: center;
+}
+#playlist-section .playlist-container li .name-type-container{
     display: flex;
     flex-direction: column;
     align-items: start;
+    justify-content: center;
 }
-#create-playlist .playlist-container li img {
+#playlist-section .playlist-container li .name-type-container .type {
+    font-size: 90%;
+    font-weight: 100;
+}
+#playlist-section .playlist-container li img {
     width: 50px;
     height: 50px;
-    border-radius: 50%;
 }
+#playlist-section #button-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem;
+}
+
+
+
+@media (max-width: 1024px) {
+    #login-to-start .text-container {
+        width: 90%;
+        margin: 0 auto;
+        line-height: 2.2rem;
+    }
+    
+    #login-to-start p {
+        font-size: min(1.5rem);
+        text-wrap:balance;
+        text-align: left;
+
+    }
+}
+
+.bg2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bo;
+    z-index: -1;
+}   
