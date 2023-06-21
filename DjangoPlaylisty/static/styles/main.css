@@ -295,7 +295,6 @@ footer {
     align-items: center;
     padding: 0.5rem 1rem;
     color: white;
-    border: 1px solid white;
     margin: 0 15px;
 
 }
@@ -315,6 +314,7 @@ footer {
     cursor: pointer;
     color: white;
     background-color: #000000;
+    outline: none;
 }
 #playlist-section h2 {
     text-align: center;
