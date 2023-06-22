@@ -206,8 +206,7 @@ footer {
     grid-template-columns: 3fr 1fr;
     gap: 12px;
 }
-#create-playlist .container .input {
-}
+
 #create-playlist .container select {
     
     height: clamp(40px, 5vw, 50px);
