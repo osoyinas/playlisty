@@ -46,7 +46,6 @@
 
 /* Inputs */
 .input-container {
-    width: clamp(250px, 20vw, 800px);
     position: relative;
 }
 
@@ -62,7 +61,7 @@
     padding: 10px;
     transition: .2s linear;
     border: 2.5px solid black;
-    height: clamp(40px, 5vw, 60px);
+    height: clamp(40px, 5vw, 50px);
     font-size: clamp(14px, 2vw, 20px);
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -201,13 +200,17 @@ footer {
 
 /* CREATE PLAYLIST */
 #create-playlist .container {
-    display: flex;
-    gap: 10px;
+    display: grid;
+    width: 95%;
+    max-width: 50rem;
+    grid-template-columns: 3fr 1fr;
+    gap: 12px;
 }
-
+#create-playlist .container .input {
+}
 #create-playlist .container select {
-    width: 40%;
-    height: clamp(40px, 5vw, 60px);
+    
+    height: clamp(40px, 5vw, 50px);
     padding: 10px;
     transition: .2s linear;
     border: 2.5px solid rgb(19, 16, 16);
