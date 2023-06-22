@@ -418,16 +418,6 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .results-container {
-        margin: 2rem 0;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        opacity: 0;
-        transition: 0.4s opacity ease-in-out;
-        height: 20rem;
-        align-items: center;
-    }
 
     #playlist-section .playlist-container li div select {
         width: 100%;
