@@ -223,10 +223,9 @@ footer {
     margin: 2rem 0;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     opacity: 0;
     transition: 0.4s opacity ease-in-out;
-    height: 10rem;
+    height: 18vh;
     align-items: center;
 }
 
