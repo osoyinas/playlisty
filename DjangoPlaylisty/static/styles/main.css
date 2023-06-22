@@ -2,14 +2,14 @@
 .fancy-button {
     z-index: 100;
     padding: 10px 20px;
-    border: 0;
+    border: 1px solid black;
     background-color: white;
     box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
     letter-spacing: 2px;
     text-transform: uppercase;
     transition: all .5s ease;
-    height: clamp(40px, 5vw, 60px);
-    font-size: clamp(14px, 2vw, 20px);
+    height: clamp(60px, 5vw, 60px);
+    font-size: clamp(16px, 2vw, 20px);
     text-transform: uppercase;
     font-weight: bold;
     cursor: pointer;
@@ -59,7 +59,6 @@
 
 .input {
     width: 100%;
-    
     padding: 10px;
     transition: .2s linear;
     border: 2.5px solid black;
@@ -97,6 +96,7 @@
     text-align: center;
     background-color: white;
     flex-direction: column;
+    padding-bottom: 100px;
 }
 
 #banner .bg {
@@ -155,6 +155,9 @@
     }
 }
 
+section {
+    margin: 4rem 0;
+}
 /* GENERATE PLAYLIST NOT LOGGED IN  */
 #login-to-start,
 #create-playlist {
@@ -163,27 +166,29 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-top: 5rem;
 }
 
 #login-to-start h1,
 #create-playlist h1,
 #playlist-section h1 {
-    margin: 2rem;
     font-size: clamp(2.5rem, 3vw, 5rem);
+    margin: 2rem;
     text-align: center;
 }
+#login-to-start form .fancy-button {
+    margin: 4rem 0;
 
+}
 #login-to-start .text-container {
     width: 60%;
     max-width: 60rem;
-    margin: 0 auto;
-    line-height: 2.2rem;
+    line-height: 3rem;
 }
 
 #login-to-start p {
-    font-size: min(1.5rem);
+    font-size: 1.8rem;
     text-align: justify;
+    width: 100%;
     /* text-align: justify; */
 }
 
@@ -395,11 +400,19 @@ footer {
 }
 
 @media (max-width: 1024px) {
-    #login-to-start .text-container {
-        width: 90%;
-        margin: 0 auto;
+
+    #login-to-start .text-container {   
         line-height: 2.2rem;
+        width: 100%;
+        padding: 0 2.5rem;
     }
+
+    #login-to-start p {
+        text-align: left;
+        text-wrap: balance;
+        font-size: 1.5rem;
+    }
+
 }
 
 @media (max-width: 768px) {
