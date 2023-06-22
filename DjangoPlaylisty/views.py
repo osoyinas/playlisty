@@ -137,8 +137,7 @@ def get_item(request: HttpRequest, item_str: str, item_type:str) -> JsonResponse
     items_list = []
     max_items = 6
     for item in items:
-        if item_str.lower().strip() in item['name'].lower():
-            items_list.append(item)
+        items_list.append(item)
     data = {'status': "success", 'results': items_list[:max_items]}
     return JsonResponse(data)
 
