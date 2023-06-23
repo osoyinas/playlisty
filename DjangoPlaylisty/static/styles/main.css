@@ -314,7 +314,7 @@ h3 {
     width: min(50rem, 100%);
     gap: 5px;
     overflow-y: auto;
-    height: 30rem;
+    height: 10rem;
 }
 
 #playlist-section .playlist-container li {
