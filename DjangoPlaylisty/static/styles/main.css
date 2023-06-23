@@ -191,12 +191,6 @@ section {
     /* text-align: justify; */
 }
 
-footer {
-    margin-top: 5rem;
-    width: 100vw;
-    height: 10rem;
-    background-color: black;
-}
 
 /* CREATE PLAYLIST */
 #create-playlist .container {
