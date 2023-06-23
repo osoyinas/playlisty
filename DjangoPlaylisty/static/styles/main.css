@@ -212,15 +212,22 @@ section {
     letter-spacing: 2px;
 }
 
-
+h3 {
+    font-size: 1.5rem;
+    margin: 2rem;
+}
 .results-container {
-    margin: 2rem 0;
     display: flex;
     flex-wrap: wrap;
     opacity: 0;
     transition: 0.4s opacity ease-in-out;
-    height: 18vh;
+    height: 10rem;
     align-items: center;
+    width: 95%;
+    max-width: 50rem;
+    overflow-y: auto;
+    border-radius: 20px;
+    padding: 1rem;
 }
 
 .results-container.show {
@@ -252,13 +259,14 @@ section {
 
 #create-playlist .results-container li {
     height: 50px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    background-color: white;
     padding: 8px;
     margin: 5px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
-    background-color: lightgray;
     border-radius: 20px;
     font-weight: bold;
     transition: transform 0.3s ease;
@@ -282,6 +290,7 @@ section {
     flex-direction: column;
     align-items: center;
     padding-top: 12vw;
+    margin: 0;
 }
 
 #playlist-section h1 {
