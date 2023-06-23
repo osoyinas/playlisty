@@ -165,6 +165,7 @@ section {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
 }
 
 #login-to-start h1,
@@ -198,11 +199,10 @@ section {
     width: 95%;
     max-width: 50rem;
     grid-template-columns: 3fr 1fr;
-    gap: 12px;
+    gap: 1rem;
 }
 
 #create-playlist .container select {
-    
     height: clamp(40px, 5vw, 50px);
     padding: 10px;
     transition: .2s linear;
@@ -217,17 +217,14 @@ h3 {
     margin: 2rem;
 }
 .results-container {
-    display: flex;
-    flex-wrap: wrap;
     opacity: 0;
     transition: 0.4s opacity ease-in-out;
-    height: 10rem;
+    height: 16rem;
     align-items: center;
+    border: 2.5px solid black;
     width: 95%;
     max-width: 50rem;
     overflow-y: auto;
-    border-radius: 20px;
-    padding: 1rem;
 }
 
 .results-container.show {
@@ -239,8 +236,7 @@ h3 {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 #create-playlist h2 {
@@ -252,22 +248,17 @@ h3 {
     opacity: 1;
 }
 
-#create-playlist #search-input,
-#select-menu {
-    margin: 0 12px;
-}
+
 
 #create-playlist .results-container li {
     height: 50px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    background-color: white;
+    background-color: lightgray;
     padding: 8px;
     margin: 5px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
-    border-radius: 20px;
     font-weight: bold;
     transition: transform 0.3s ease;
     font-size: clamp(1rem, 2vw, 1.3rem);
@@ -281,7 +272,6 @@ h3 {
 #create-playlist .results-container li img {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
 }
 
 #playlist-section {

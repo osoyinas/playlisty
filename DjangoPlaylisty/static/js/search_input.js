@@ -65,8 +65,8 @@ function addResultToDom(result) {
     }
     resultsWrapper.innerHTML +=
         `<li id-value="${result.id}" type-value="${result.type}">
-        ${result.name}
         <img src="${image}" alt="${result.name}">
+        ${result.name}
     </li>`
 }
 
