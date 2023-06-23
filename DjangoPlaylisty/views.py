@@ -126,9 +126,9 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
                 elif track['option'] == 'similar-tracks':
                     print("to do, similar songs")
                     #to do, similar songs
-            print(tracks_to_add)
+            url = get_playlist_url(sp=sp,playlist_id=playlist_id)
             add_tracks_to(sp=sp, playlist_id=playlist_id, track_ids=tracks_to_add)
-            data = {'message': "Success"}
+            data = {'message': "Success", 'url': url}
         except ValueError as v:
             data = {'message': "Failed"}
         return JsonResponse(data)

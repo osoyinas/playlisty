@@ -5,7 +5,6 @@ const resultsContainer = document.querySelector('.results-container');
 const generatePlaylistButton = document.getElementById("generate-playlist-button");
 const playlistContainer = document.querySelector('.playlist-container');
 const selectMenu = document.getElementById("select-menu")
-const csrftoken = getCookie('csrftoken');
 var selectedItems = { items: [] };
 var count = 0;
 searchInput.addEventListener('input', function (event) {
@@ -142,7 +141,7 @@ generatePlaylistButton.addEventListener('click', (e) => {
         let object = { id: id, type: type, option: option }
         selectedItems.items.push(object);
     });
-    playlistContainer.innerHTML = ``
+    const csrftoken = getCookie('csrftoken');
     let url = "/getplaylist/"
     fetch(url, {
         method: 'POST',
@@ -155,7 +154,7 @@ generatePlaylistButton.addEventListener('click', (e) => {
         .then(
             response => response.json()
         ).then(data => {
-            console.log(data);
+            window.location.href = data.url
         })
         .catch(error => {
             console.error('Error:', error);
