@@ -154,6 +154,10 @@ generatePlaylistButton.addEventListener('click', (e) => {
         .then(
             response => response.json()
         ).then(data => {
+            if (data.message == "failed"){
+                console.log("Error ocurred");
+                return;
+            }
             window.location.href = data.url
         })
         .catch(error => {

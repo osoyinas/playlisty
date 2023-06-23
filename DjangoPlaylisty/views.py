@@ -131,15 +131,8 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
             data = {'message': "Success", 'url': url}
         except ValueError as v:
             data = {'message': "Failed"}
-        return JsonResponse(data)
+    return JsonResponse(data)
 
-    elif (request.method == 'GET'):
-        data = json.loads(request.body.decode('utf-8'))
-        url = data['url']
-        context = {'url': url, 'logged_in': logged_in}
-        return render(request, 'generate_playlist.html', context)
-    else:
-        raise Http404
 
 
 def get_item(request: HttpRequest, item_str: str, item_type:str) -> JsonResponse:
