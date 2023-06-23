@@ -157,6 +157,7 @@
 section {
     margin: 4rem 0;
 }
+
 /* GENERATE PLAYLIST NOT LOGGED IN  */
 #login-to-start,
 #create-playlist {
@@ -175,10 +176,12 @@ section {
     margin: 2rem;
     text-align: center;
 }
+
 #login-to-start form .fancy-button {
     margin: 4rem 0;
 
 }
+
 #login-to-start .text-container {
     width: 60%;
     max-width: 60rem;
@@ -217,15 +220,15 @@ h3 {
     font-size: 1.5rem;
     margin: 2rem;
 }
+
 .results-container {
     opacity: 0;
     transition: 0.4s opacity ease-in-out;
-    height: 16rem;
+    height: 5rem;
     align-items: center;
-    border: 2.5px solid black;
     width: 95%;
     max-width: 50rem;
-    overflow-y: auto;
+
 }
 
 .results-container.show {
@@ -233,11 +236,12 @@ h3 {
 }
 
 .results-container ul {
+    display: flex;
     justify-content: center;
     list-style: none;
     padding: 0;
     margin: 0;
-    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 #create-playlist h2 {
@@ -249,9 +253,8 @@ h3 {
     opacity: 1;
 }
 
-
-
 #create-playlist .results-container li {
+    border-radius: 18px ;
     height: 50px;
     background-color: lightgray;
     padding: 8px;
@@ -273,6 +276,7 @@ h3 {
 #create-playlist .results-container li img {
     width: 40px;
     height: 40px;
+    border-radius: 50%;
 }
 
 #playlist-section {
@@ -396,7 +400,7 @@ h3 {
 
 @media (max-width: 1024px) {
 
-    #login-to-start .text-container {   
+    #login-to-start .text-container {
         line-height: 2.2rem;
         width: 100%;
         padding: 0 2.5rem;
@@ -407,12 +411,43 @@ h3 {
         text-wrap: balance;
         font-size: 1.5rem;
     }
-
 }
 
 @media (max-width: 768px) {
+    .results-container {
+        opacity: 0;
+        transition: 0.4s opacity ease-in-out;
+        height: 16rem;
+        align-items: center;
+        width: 95%;
+        max-width: 50rem;
+        overflow-y: auto;
+    }
 
-    #playlist-section .playlist-container li div select {
-        width: 100%;
+    .results-container ul {
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        flex-wrap: nowrap;
+        flex-direction: column;
+    }
+    #create-playlist .results-container li img {
+        border-radius: 0;
+    }
+
+    #create-playlist .results-container li {
+        height: 50px;
+        border-radius: 0;
+        background-color: lightgray;
+        padding: 8px;
+        margin: 5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        font-size: clamp(1rem, 2vw, 1.3rem);
     }
 }
