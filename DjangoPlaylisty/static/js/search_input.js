@@ -5,11 +5,27 @@ const resultsContainer = document.querySelector('.results-container');
 const generatePlaylistButton = document.getElementById("generate-playlist-button");
 const playlistContainer = document.querySelector('.playlist-container');
 const selectMenu = document.getElementById("select-menu")
-var selectedItems = {items:[]};
+const csrftoken = getCookie('csrftoken');
+var selectedItems = { items: [] };
 var count = 0;
 searchInput.addEventListener('input', function (event) {
     startTimerAndFetch();
 });
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 function startTimerAndFetch() {
     resultsContainer.classList.remove('show');
@@ -25,9 +41,11 @@ async function fetchData() {
     }
     const response = await fetch(`./createplaylist/getitem/${str}/${getCurrentType()}`); //peticion GET
     const data = await response.json();
-    console.log(data);
     if (data.status == "success") {
         updateResults(data)
+    }
+    else {
+        location.reload();
     }
 }
 
@@ -59,8 +77,8 @@ function updateResults(data) {
 }
 
 function addResultToDom(result) {
-    let image ="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/168px-Spotify_logo_without_text.svg.png"
-    if (result.type != "track"){ //track doesnt contain images
+    let image = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/168px-Spotify_logo_without_text.svg.png"
+    if (result.type != "track") { //track doesnt contain images
         image = result.images.length > 0 ? result.images[0].url : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/168px-Spotify_logo_without_text.svg.png"
     }
     resultsWrapper.innerHTML +=
@@ -71,7 +89,7 @@ function addResultToDom(result) {
 }
 
 function addToPlaylistContainer(name, id, type, image) {
-    count+=1;
+    count += 1;
     let content =
         `<li id-value="${id}" type-value="${type}">
             <div class="left">
@@ -92,16 +110,16 @@ function addToPlaylistContainer(name, id, type, image) {
         </select>
       </div>`
     }
-    else if(type == "track") {
+    else if (type == "track") {
         content +=
             `<div class="right">
         <select name="options">
           <option value="just-this">just this track</option>
-          <option value="similar-songs">similar Songs</option>
+          <option value="similar-tracks">similar Songs</option>
         </select>
       </div>`
     }
-    else if(type == "album") {
+    else if (type == "album") {
         content +=
             `<div class="right">
         <select name="options">
@@ -114,22 +132,41 @@ function addToPlaylistContainer(name, id, type, image) {
 }
 
 //Boton pulsado
-generatePlaylistButton.addEventListener('click', () => {
+generatePlaylistButton.addEventListener('click', (e) => {
+    e.preventDefault();
     let playlistItems = document.querySelectorAll('.playlist-container li');
     playlistItems.forEach((item) => {
         let id = item.getAttribute('id-value');
-        let type =item.getAttribute('type-value');
+        let type = item.getAttribute('type-value');
         let option = item.querySelector('select').value;
-        let object = {id: id, type:type, option:option}
-        selectedItems.items.push(object)
+        let object = { id: id, type: type, option: option }
+        selectedItems.items.push(object);
+    });
+    playlistContainer.innerHTML = ``
+    let url = "/getplaylist/"
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify(selectedItems)
     })
-    console.log(selectedItems);
+        .then(
+            response => response.json()
+        ).then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
 });
 
 function getCurrentType() {
     return selectMenu.value;
 }
 
-selectMenu.addEventListener('change', function(event) {
+selectMenu.addEventListener('change', function (event) {
     startTimerAndFetch();
-  });
+});

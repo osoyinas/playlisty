@@ -83,8 +83,30 @@ def create_spotify_playlist(sp: spotipy.Spotify, name: str, public: bool, collab
                                           collaborative=collaborative, description=desc)['id']  # Creates the spotify playlist and return the playlist id.
     return playlist_id
 
+def get_top_tracks(sp:spotipy.Spotify, artist_id: str):
+    tracks = []
+    top_tracks = sp.artist_top_tracks(artist_id=artist_id)['tracks']
+    for track in top_tracks:
+        tracks.append(track['id'])
+    return tracks
+def add_tracks_to(sp: spotipy.Spotify, playlist_id:int, track_ids: list):
+    tracks_set = set(track_ids) #eliminate repited
+    tracks = list(tracks_set)
+    max_len = 0
+    new_tracks = []
+    for track in tracks:
+        if max_len != 100:  # The max tracks we can append in a playlist in a single request is 100,
+            new_tracks.append(track)
+            max_len += 1
+        else:
+            sp.playlist_add_items(
+                playlist_id=playlist_id, items=new_tracks)
+            new_tracks = []
+            max_len = 0
+    if len(new_tracks) > 0:
+        sp.playlist_add_items(playlist_id=playlist_id, items=new_tracks)
 
-def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, artists_ids: list) -> None:
+def add_tracks_from_artists(sp: spotipy.Spotify, playlist_id: int, artists_ids: list) -> None:
     """Add top 10 songs of the artists given to the playlist.
 
     Args:
@@ -116,6 +138,24 @@ def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, artists_ids: list) -> N
     if len(new_tracks) > 0:
         sp.playlist_add_items(playlist_id=playlist_id, items=new_tracks)
 
+
+def get_all_tracks_from_artist(sp :spotipy.Spotify, artist_id: str):
+    results = sp.artist_albums(artist_id=artist_id)
+    albums = results['items']
+    tracks = []
+    for album in albums:
+        album_id = album['id']
+        album_tracks = sp.album_tracks(limit=50, album_id=album_id)['items']
+        for track in album_tracks:
+            tracks.append(track['id'])
+    return tracks
+
+def get_all_tracks_from_album(sp :spotipy.Spotify, album_id: str):
+    tracks = []
+    album_tracks = sp.album_tracks(album_id=album_id, limit=50)['items']
+    for track in album_tracks:
+            tracks.append(track['id'])
+    return tracks
 
 def reorder_playlist(sp: spotipy.Spotify, playlist_id: int):
     """Reorder randomly the playlist
