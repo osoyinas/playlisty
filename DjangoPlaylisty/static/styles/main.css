@@ -200,6 +200,7 @@ section {
     max-width: 50rem;
     grid-template-columns: 3fr 1fr;
     gap: 1rem;
+    z-index: 100;
 }
 
 #create-playlist .container select {
@@ -260,12 +261,12 @@ h3 {
     align-items: center;
     gap: 8px;
     font-weight: bold;
-    transition: transform 0.3s ease;
+    transition: background-color 0.3s ease;
     font-size: clamp(1rem, 2vw, 1.3rem);
 }
 
 #create-playlist .results-container ul li:hover {
-    transform: translateY(-5px);
+    background-color: #154EBF;
 }
 
 
