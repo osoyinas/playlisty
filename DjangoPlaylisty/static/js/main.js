@@ -33,7 +33,7 @@ async function fetchData() {
     const response = await fetch(`./createplaylist/getitem/${str}/${getCurrentType()}`); //peticion GET
     const data = await response.json();
     if (data.status == "success") {
-        updateResults(data)
+        updateResults(data) 
     }
     else {
         location.reload();
@@ -56,7 +56,7 @@ function updateResults(data) {
             item.addEventListener('click', () => {
                 resultsContainer.classList.remove('show');
                 searchInput.value = ``
-                addToPlaylistContainer(item.textContent, item.getAttribute('id-value'), item.getAttribute('type-value'), item.querySelector('img').getAttribute('src'));
+                addItemToPlaylistContainer(item.textContent, item.getAttribute('id-value'), item.getAttribute('type-value'), item.querySelector('img').getAttribute('src'));
                 setTimeout(() => {
                     resultsWrapper.innerHTML = ``
                 }, 500);
@@ -67,10 +67,11 @@ function updateResults(data) {
     }, 100);
 }
 
+//Add to the DOM the fetched items results.
 function addResultToDom(result) {
     let image = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/168px-Spotify_logo_without_text.svg.png"
     if (result.type != "track") { //track doesnt contain images
-        image = result.images.length > 0 ? result.images[0].url : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/168px-Spotify_logo_without_text.svg.png"
+        image = result.images.length > 0 ? result.images[0].url : image
     }
     resultsWrapper.innerHTML +=
         `<li id-value="${result.id}" type-value="${result.type}">
@@ -79,7 +80,8 @@ function addResultToDom(result) {
     </li>`
 }
 
-function addToPlaylistContainer(name, id, type, image) {
+//Adds an item to the playlist container with its own options depending on the item
+function addItemToPlaylistContainer(name, id, type, image) {
     count += 1;
     let content =
         `<li id-value="${id}" type-value="${type}">
@@ -92,45 +94,52 @@ function addToPlaylistContainer(name, id, type, image) {
             </div>  
             </div>
     `
-    if (type == "artist") {
-        content +=
-            `<div class="right">
-        <select name="options">
-          <option value="top-tracks">top 10 tracks</option>
-          <option value="all-tracks">all tracks</option>
-        </select>
-      </div>`
+    switch (type) {
+        case "artist":
+            content +=
+                `<div class="right">
+              <select name="options">
+                <option value="top-tracks">top 10 tracks</option>
+                <option value="all-tracks">all tracks</option>
+              </select>
+            </div>`;
+            break;
+
+        case "track":
+            content +=
+                `<div class="right">
+              <select name="options">
+                <option value="just-this">just this track</option>
+                <option value="similar-tracks">similar Songs</option>
+              </select>
+            </div>`;
+            break;
+
+        case "album":
+            content +=
+                `<div class="right">
+              <select name="options">
+                <option value="all-tracks">all tracks</option>
+              </select>
+            </div>`;
+            break;
     }
-    else if (type == "track") {
-        content +=
-            `<div class="right">
-        <select name="options">
-          <option value="just-this">just this track</option>
-          <option value="similar-tracks">similar Songs</option>
-        </select>
-      </div>`
-    }
-    else if (type == "album") {
-        content +=
-            `<div class="right">
-        <select name="options">
-          <option value="all-tracks">all tracks</option>
-        </select>
-      </div>`
-    }
+
     content += `</li>`
     playlistContainer.innerHTML += content;
 }
 
-//Boton pulsado
+//Generate playlist button clicked, 
 generatePlaylistButton.addEventListener('click', (e) => {
     e.preventDefault();
     let playlistItems = document.querySelectorAll('.playlist-container li');
     playlistItems.forEach((item) => {
-        let id = item.getAttribute('id-value');
-        let type = item.getAttribute('type-value');
-        let option = item.querySelector('select').value;
-        let object = { id: id, type: type, option: option }
+
+        let object = {
+            id: item.getAttribute('id-value'),
+            type: item.getAttribute('type-value'),
+            option: item.querySelector('select').value
+        }
         selectedItems.items.push(object);
     });
     let url = "/getplaylist/"
@@ -145,7 +154,7 @@ generatePlaylistButton.addEventListener('click', (e) => {
         .then(
             response => response.json()
         ).then(data => {
-            if (data.message == "failed"){
+            if (data.message == "failed") {
                 console.log("Error ocurred");
                 return;
             }
