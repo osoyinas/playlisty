@@ -1,31 +1,23 @@
-const searchInput = document.getElementById("search-input");
-var timer = null //timer to delay the requests
-const resultsWrapper = document.querySelector('.results-container ul');
-const resultsContainer = document.querySelector('.results-container');
-const generatePlaylistButton = document.getElementById("generate-playlist-button");
-const playlistContainer = document.querySelector('.playlist-container');
+//DOM ELEMENTS
+const searchInput = document.getElementById("search-input")
+const csrf_token = document.querySelector('input[name="csrfmiddlewaretoken"]').value
+const resultsWrapper = document.querySelector('.results-container ul')
+const resultsContainer = document.querySelector('.results-container')
+const generatePlaylistButton = document.getElementById("generate-playlist-button")
+const playlistContainer = document.querySelector('.playlist-container')
 const selectMenu = document.getElementById("select-menu")
-var selectedItems = { items: [] };
-var count = 0;
+
+var selectedItems = { items: [] }
+var count = 0; //playlist items count
+var timer = null //timer to delay the requests
+
+//User typed in search input
 searchInput.addEventListener('input', function (event) {
     startTimerAndFetch();
 });
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
 
+
+// Count 500ms and if the user hasnt typed again, fetch. If not, it restarts the timer
 function startTimerAndFetch() {
     resultsContainer.classList.remove('show');
     clearTimeout(timer) //reset timer
@@ -141,13 +133,12 @@ generatePlaylistButton.addEventListener('click', (e) => {
         let object = { id: id, type: type, option: option }
         selectedItems.items.push(object);
     });
-    const csrftoken = getCookie('csrftoken');
     let url = "/getplaylist/"
     fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken
+            'X-CSRFToken': csrf_token
         },
         body: JSON.stringify(selectedItems)
     })
