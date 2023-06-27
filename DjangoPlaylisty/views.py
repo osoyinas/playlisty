@@ -46,7 +46,7 @@ def callback(request: HttpRequest) -> HttpResponse:
     auth_manager = create_spotify_oauth()
     token = auth_manager.get_access_token(code=code, check_cache=False)
     request.session['token_auth'] = token
-    return redirect(previus)
+    return redirect('/createplaylist')
 
 
 def logout(request: HttpRequest) -> HttpResponse:
