@@ -129,7 +129,14 @@ function addItemToPlaylistContainer(name, id, type, image) {
 
     content += `</li>`
     playlistContainer.innerHTML += content;
+    var item = document.querySelector('.playlist-container li[id-value="' + id + '"]');
+    console.log('item :>> ', item);
+    setTimeout(() => {
+        item.classList.add('show')
+    }, 400);
+    
 }
+
 
 //Generate playlist button clicked, 
 generatePlaylistButton.addEventListener('click', (e) => {
@@ -181,5 +188,9 @@ function deleteElement(button) {
     var listItem = button.closest("li");
     
     // Elimina el elemento <li> de la lista
-    listItem.remove();
+    listItem.classList.remove('show')
+    setTimeout(() => {
+        listItem.remove();
+    }, 400);
+    
 }
