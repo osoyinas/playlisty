@@ -34,7 +34,6 @@ async function fetchData() {
     const response = await fetch(`./getitem/${str}/${getCurrentType()}`); //peticion GET
     const data = await response.json();
     if (data.status == "success") {
-        console.log(data);
         updateResults(data) 
     }
     else {
