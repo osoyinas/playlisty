@@ -145,7 +145,6 @@ def get_item(request: HttpRequest, item_str: str, item_type: str) -> JsonRespons
         JsonResponse: JSON
     """
     logged_in = check_logged_in(request)
-    print(logged_in)
     if item_str == "undefined" or not logged_in:
         return JsonResponse({"status": "not found"})
     token_info = get_token(request)
@@ -159,7 +158,7 @@ def get_item(request: HttpRequest, item_str: str, item_type: str) -> JsonRespons
     items_list = []
     max_items = 6
     for item in items:
-        items_list.append(item)
+        items_list.append(add_image_to_item(item))
     data = {"status": "success", "results": items_list[:max_items]}
     return JsonResponse(data=data)
 

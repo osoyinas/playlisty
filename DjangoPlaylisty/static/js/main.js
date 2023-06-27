@@ -71,10 +71,8 @@ function updateResults(data) {
 
 //Add to the DOM the fetched items results.
 function addResultToDom(result) {
-    let image = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/168px-Spotify_logo_without_text.svg.png"
-    if (result.type != "track") { //track doesnt contain images
-        image = result.images.length > 0 ? result.images[0].url : image
-    }
+//track doesnt contain images
+    image = result.images[0].url
     resultsWrapper.innerHTML +=
         `<li id-value="${result.id}" type-value="${result.type}">
         <img src="${image}" alt="${result.name}">
