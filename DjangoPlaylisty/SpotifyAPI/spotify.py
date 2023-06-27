@@ -179,6 +179,21 @@ def get_all_tracks_from_album(sp: spotipy.Spotify, album_id: str):
         tracks.append(track["id"])
     return tracks
 
+def get_similar_tracks(sp: spotipy.Spotify, track_id: dict):
+
+    item = sp.track(track_id=track_id)
+    main_artist = sp.artist(item['artists'][0]['id'])
+    second_artist = sp.artist(item['artists'][1]['id'])
+    seed_tracks = [track_id]
+    seed_genres = list(main_artist['genres'])
+    seed_genres.extend(second_artist['genres'])
+    print(seed_genres)
+    seed_artists = [main_artist['id']]
+    print("GENEROS: " + str(seed_genres))
+    result = sp.recommendations(seed_artists=seed_artists, seed_genres=seed_genres, seed_tracks=seed_tracks)
+    tracks = []
+    return track
+
 
 def reorder_playlist(sp: spotipy.Spotify, playlist_id: int):
     """Reorder randomly the playlist
@@ -220,3 +235,4 @@ def add_image_to_item(item:dict)-> str:
     item['images'] = item['album']['images']
     print(item['images'][0]['url'])
     return item
+
