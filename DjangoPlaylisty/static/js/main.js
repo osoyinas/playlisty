@@ -37,8 +37,8 @@ async function fetchData() {
         updateResults(data) 
     }
     else {
-        
-        window.location.href = "/"
+        console.log("Error");
+        window.location.href = "/ups"
     }
 }
 
