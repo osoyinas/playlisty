@@ -24,6 +24,34 @@
     box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
 }
 
+.logged-in-box {
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    padding: 10px 20px;
+    border: 1px solid black;
+    background-color: #04D94F;
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all .5s ease;
+    height: clamp(60px, 5vw, 60px);
+    font-size: clamp(16px, 2vw, 20px);
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    text-wrap: nowrap;
+    white-space: nowrap;
+}
+.create-playlist-link {
+    z-index: 199;
+    color: #CA8DF2;
+    text-decoration: underline;
+}
+
 .fancy-button:active {
     letter-spacing: 3px;
     background-color: hsl(261deg 80% 48%);
@@ -292,6 +320,7 @@ h3 {
 }
 
 #playlist-section {
+    height: 100vh;
     position: relative;
     display: flex;
     flex-direction: column;

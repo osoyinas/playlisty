@@ -7,6 +7,7 @@ const generatePlaylistButton = document.getElementById("generate-playlist-button
 const playlistContainer = document.querySelector('.playlist-container')
 const selectMenu = document.getElementById("select-menu")
 
+
 var selectedItems = { items: [] }
 var count = 0; //playlist items count
 var timer = null //timer to delay the requests
@@ -30,13 +31,14 @@ async function fetchData() {
     if (str == "") {
         return;
     }
-    const response = await fetch(`./createplaylist/getitem/${str}/${getCurrentType()}`); //peticion GET
+    const response = await fetch(`./getitem/${str}/${getCurrentType()}`); //peticion GET
     const data = await response.json();
     if (data.status == "success") {
         updateResults(data) 
     }
     else {
-        location.reload();
+        
+        window.location.href = "/"
     }
 }
 

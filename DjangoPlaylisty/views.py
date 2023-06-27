@@ -20,6 +20,7 @@ def home(request: HttpRequest) -> HttpResponse:
     # store the current page
     set_prepath(request)
     context = {'logged_in': logged_in}
+    print("HOME",logged_in)
     return render(request, "home.html", context)
 
 
@@ -66,6 +67,7 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     logged_in = check_logged_in(request)
     set_prepath(request)
     context = {'logged_in': logged_in}
+    print(logged_in)
     return render(request, 'create_playlist.html', context)
 
 
@@ -130,7 +132,7 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
             add_tracks_to(sp=sp, playlist_id=playlist_id, track_ids=tracks_to_add)
             data = {'message': "Success", 'url': url}
         except ValueError as v:
-            data = {'message': "Failed"}
+            data = {'message': "failed"}
     return JsonResponse(data)
 
 

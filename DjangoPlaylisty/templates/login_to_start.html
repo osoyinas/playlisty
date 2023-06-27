@@ -1,4 +1,5 @@
-<section id="login-to-start">
+{% load static %}
+<section id="login-to-start"> 
   <h1>Generate playlists</h1>
   <div class="text-container">
     <p>
@@ -8,12 +9,21 @@
       <span style="font-weight: bold">artists, albums, or individual songs</span>, we've got you covered.
     </p>
   </div>
-        
+  {%if logged_in == False %}
   <form action="{% url 'auth' %}">
     <button class="fancy-button" type="submit">
       <span class="button_top"> Log In with Spotify</span>
     </button>
   </form>
+  {% else %}
+  <div class="logged-in-box">
+    <span>
+      Successfully logged in
+    </span>
+  </div>
+  <a class="create-playlist-link" href="{% url 'createplaylist' %}">Create playlist</a>
+  {%endif%}
+
 
   <h1>Why do you have to log in?</h1>
   <div class="text-container">
@@ -57,4 +67,5 @@
       interaction with our web app.
     </p>
   </div>
+  <script src="{% static '/js/scroll-to-login.js' %}" defer></script>
 </section>
