@@ -80,24 +80,20 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
         HttpResponse: response
     """
 
-    logged_in = check_logged_in(request)
-
-    if not logged_in or request.session["pre_path"] == request.resolver_match.url_name:
-        return redirect("createplaylist")
-
     set_prepath(request)
-
+    if request.method != "POST":
+        return;
     if request.method == "POST":
         try:
-            token_info = get_token(request)
-            data = json.loads(request.body.decode("utf-8"))
+            token_info = get_token(request) #get token api
+            data = json.loads(request.body.decode("utf-8")) #get body data 
             sp = spotipy.Spotify(auth=token_info["access_token"])
             name = "playlisty playlist"
             desc = "A playlists generated with playlisty.app"
             public = True
             collab = False
-
             items = list(data["items"])
+        
             artists = []
             tracks = []
             albums = []
