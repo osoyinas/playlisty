@@ -184,7 +184,7 @@ def get_similar_tracks(sp: spotipy.Spotify, track_id: dict):
     seed_genres = []
     seed_artists = []
     seed_tracks = [track_id]
-    
+
     tracks_ids = []
     raw_track = sp.track(track_id=track_id)
 
@@ -192,11 +192,10 @@ def get_similar_tracks(sp: spotipy.Spotify, track_id: dict):
         main_artist = sp.artist(artist_id=artist['id'])
         seed_genres.extend(main_artist['genres'])
         seed_artists.append(artist['id'])
-
     result = sp.recommendations(seed_artists=seed_artists[:2], seed_genres=seed_genres[:2], seed_tracks=seed_tracks, limit=10)
     for track in result['tracks']:
         tracks_ids.append(track['id'])
-    return tracks_ids
+    return tracks_ids[:10]
 
 
 def reorder_playlist(sp: spotipy.Spotify, playlist_id: int):
