@@ -192,7 +192,7 @@ def get_similar_tracks(sp: spotipy.Spotify, track_id: dict):
 
     print(seed_genres)
     print(seed_artists)
-    result = sp.recommendations(seed_artists=seed_artists, seed_genres=seed_genres, seed_tracks=seed_tracks)
+    result = sp.recommendations(seed_artists=seed_artists[:5], seed_genres=seed_genres[:5], seed_tracks=seed_tracks[:5], limit=10)
     tracks_ids = []
     for track in result['tracks']:
         tracks_ids.append(track['id'])
