@@ -182,17 +182,21 @@ def get_all_tracks_from_album(sp: spotipy.Spotify, album_id: str):
 def get_similar_tracks(sp: spotipy.Spotify, track_id: dict):
 
     item = sp.track(track_id=track_id)
-    main_artist = sp.artist(item['artists'][0]['id'])
-    second_artist = sp.artist(item['artists'][1]['id'])
+    seed_genres = []
+    seed_artists = []
     seed_tracks = [track_id]
-    seed_genres = list(main_artist['genres'])
-    seed_genres.extend(second_artist['genres'])
+    for artist in item['artists']:
+        main_artist = sp.artist(artist_id=artist['id'])
+        seed_genres.extend(main_artist['genres'])
+        seed_artists.append(artist['id'])
+
     print(seed_genres)
-    seed_artists = [main_artist['id']]
-    print("GENEROS: " + str(seed_genres))
+    print(seed_artists)
     result = sp.recommendations(seed_artists=seed_artists, seed_genres=seed_genres, seed_tracks=seed_tracks)
-    tracks = []
-    return track
+    tracks_ids = []
+    for track in result['tracks']:
+        tracks_ids.append(track['id'])
+    return tracks_ids
 
 
 def reorder_playlist(sp: spotipy.Spotify, playlist_id: int):
@@ -233,6 +237,5 @@ def add_image_to_item(item:dict)-> str:
         return item
     item['images'] = []
     item['images'] = item['album']['images']
-    print(item['images'][0]['url'])
     return item
 

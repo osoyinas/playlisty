@@ -104,7 +104,7 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
                 artists.append(item)
             elif item["type"] == "album":
                 albums.append(item)
-        playlist_id = create_spotify_playlist(sp, "prueba5", public, collab, desc)
+        playlist_id = create_spotify_playlist(sp, "SimilarTracksTest", public, collab, desc)
         tracks_to_add = []
         for artist in artists:
             artist_tracks = []
@@ -122,7 +122,7 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
             if track["option"] == "just-this":
                 tracks_to_add.append(track["id"])
             elif track["option"] == "similar-tracks":
-                print("to do, similar songs")
+                tracks_to_add.extend(get_similar_tracks(sp=sp,track_id=track['id']))
                 # to do, similar songs
         url = get_playlist_url(sp=sp, playlist_id=playlist_id)
         add_tracks_to(sp=sp, playlist_id=playlist_id, track_ids=tracks_to_add)
