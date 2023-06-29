@@ -133,14 +133,14 @@ def get_item(request: HttpRequest, item_str: str, item_type: str) -> JsonRespons
     """
     logged_in = check_logged_in(request)
     if item_str == "undefined" or not logged_in:
-        return JsonResponse({"status": "not found"})
+        return JsonResponse({'status': "error", 'reason': "Not logged in"})
     token_info = get_token(request)
     try:
         sp = spotipy.Spotify(auth=token_info["access_token"])
         results = sp.search(item_str, type=item_type)
     except:
         print("Error")
-        return JsonResponse(data={"status": "error", 'reason': "Not Whitelisted"})
+        return JsonResponse(data={"status": "error", 'reason': "Not whitelisted"})
     items = results[item_type + "s"]["items"]
     items_list = []
     max_items = 6

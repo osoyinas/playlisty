@@ -34,14 +34,16 @@ async function fetchData() {
     const response = await fetch(`./getitem/${str}/${getCurrentType()}`); //peticion GET
     const data = await response.json();
     if (data.status == "success") {
-        updateResults(data) 
+        updateResults(data)
+    }
+    else if (data.status == "error") {
+        if (data.reason == "Not whitelisted") window.location.href = "/ups"
+        else if (data.reason == "Not logged in") window.location.href = "/"
     }
     else {
-        console.log("Error");
-        window.location.href = "/ups"
+        window.location.href = "/"
     }
 }
-
 function updateResults(data) {
     if (data.results.length == 0) {
         resultsWrapper.innerHTML += `<h2 class="">Not found</h2>`//no results 
@@ -71,7 +73,7 @@ function updateResults(data) {
 
 //Add to the DOM the fetched items results.
 function addResultToDom(result) {
-//track doesnt contain images
+    //track doesnt contain images
     image = result.images[0].url
     resultsWrapper.innerHTML +=
         `<li id-value="${result.id}" type-value="${result.type}">
@@ -132,7 +134,7 @@ function addItemToPlaylistContainer(name, id, type, image) {
     setTimeout(() => {
         item.classList.add('show')
     }, 400);
-    
+
 }
 
 
@@ -150,7 +152,7 @@ generatePlaylistButton.addEventListener('click', (e) => {
         selectedItems.name += item.querySelector(".name").textContent.trim() + ", "
         selectedItems.items.push(object);
     });
-    selectedItems.name = selectedItems.name.slice(0,80).slice(0, -1) + "..."
+    selectedItems.name = selectedItems.name.slice(0, 80).slice(0, -1) + "..."
     let url = "/getplaylist/"
     fetch(url, {
         method: 'POST',
@@ -173,7 +175,7 @@ generatePlaylistButton.addEventListener('click', (e) => {
             console.error('Error:', error);
         });
     selectedItems.items = []
-    selectedItems.name= ""
+    selectedItems.name = ""
 });
 
 function getCurrentType() {
@@ -187,11 +189,11 @@ selectMenu.addEventListener('change', function (event) {
 function deleteElement(button) {
     // Obtén el elemento <li> que contiene el botón
     var listItem = button.closest("li");
-    
+
     // Elimina el elemento <li> de la lista
     listItem.classList.remove('show')
     setTimeout(() => {
         listItem.remove();
     }, 400);
-    
+
 }
