@@ -7,8 +7,7 @@ const generatePlaylistButton = document.getElementById("generate-playlist-button
 const playlistContainer = document.querySelector('.playlist-container')
 const selectMenu = document.getElementById("select-menu")
 
-
-var selectedItems = { name: "", items: [] }
+var items_ids = []  
 var count = 0; //playlist items count
 var timer = null //timer to delay the requests
 
@@ -27,7 +26,7 @@ function startTimerAndFetch() {
 
 async function fetchData() {
     resultsWrapper.innerHTML = `` //reset results
-    let str = searchInput.value
+    let str = searchInput.value.trim()
     if (str == "") {
         return;
     }
@@ -84,6 +83,10 @@ function addResultToDom(result) {
 
 //Adds an item to the playlist container with its own options depending on the item
 function addItemToPlaylistContainer(name, id, type, image) {
+    if (items_ids.includes(id)){
+        return;
+    }
+    items_ids.push(id)
     count += 1;
     let content =
         `<li id-value="${id}" type-value="${type}">
@@ -100,8 +103,8 @@ function addItemToPlaylistContainer(name, id, type, image) {
             content +=
                 `<div class="right">
               <select name="options">
-                <option value="top-tracks">top 10 tracks</option>
-                <option value="all-tracks">all tracks</option>
+                <option value="top-tracks">top 10</option>
+                <option value="all-tracks">all</option>
               </select>`;
             break;
 
@@ -109,8 +112,8 @@ function addItemToPlaylistContainer(name, id, type, image) {
             content +=
                 `<div class="right">
               <select name="options">
-                <option value="just-this">just this track</option>
-                <option value="similar-tracks">similar Songs</option>
+                <option value="just-this">just this</option>
+                <option value="similar-tracks">similar tracks</option>
               </select>`;
             break;
 
@@ -141,6 +144,7 @@ function addItemToPlaylistContainer(name, id, type, image) {
 //Generate playlist button clicked, 
 generatePlaylistButton.addEventListener('click', (e) => {
     e.preventDefault();
+    let selectedItems = { name: "", items: [] }
     let playlistItems = document.querySelectorAll('.playlist-container li');
     playlistItems.forEach((item) => {
 
