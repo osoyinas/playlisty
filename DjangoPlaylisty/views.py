@@ -48,17 +48,6 @@ def callback(request: HttpRequest) -> HttpResponse:
     return redirect("/createplaylist")
 
 
-def logout(request: HttpRequest) -> HttpResponse:
-    """
-    Deletes the auth token
-    """
-    previus = request.session["pre_path"]
-    if "token_auth" in request.session:
-        del request.session["token_auth"]
-        request.session.clear()
-    return redirect(previus)
-
-
 def create_playlist(request: HttpRequest) -> HttpResponse:
     """
     Renders create_playlist.html
