@@ -369,7 +369,7 @@ h3 {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background: #393939;
+    background: #414756;
     height: 20%;
 }
 
@@ -384,7 +384,7 @@ h3 {
     min-height: 30rem;
     height: 50vh;
     padding-bottom: 2rem;
-    background-image: linear-gradient(to top, black, #393939);
+    background-image: linear-gradient(to top, black, #414756);
 }
 
 #playlist-section h1 {
@@ -469,7 +469,7 @@ h3 {
     min-width: 50px;
     height: 50px;
     border-radius: 5px;
-    background-color: rgb(57, 57, 57);
+    background-color: #57586D;
     border: none;
     font-weight: 600;
     display: flex;
@@ -525,7 +525,7 @@ h3 {
     text-align: center;
     cursor: pointer;
     color: white;
-    background-color: rgb(57, 57, 57);
+    background-color: #57586D;
     outline: none;
     border: white;
     height: 50px;
