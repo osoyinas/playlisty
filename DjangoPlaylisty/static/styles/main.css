@@ -188,12 +188,19 @@
 }
 
 .footer .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    width: min(50rem, 100%);
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
     line-height: 2rem;
 }
-
+.footer .container aside {
+    display: flex;
+    flex-direction: column;
+}
+.footer .container aside a {
+    cursor: pointer;
+}
 .footer-text {
     margin: 5px 0;
 }
@@ -362,7 +369,7 @@ h3 {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background: black;
+    background: #393939;
     height: 20%;
 }
 
@@ -375,9 +382,9 @@ h3 {
     justify-content: space-between;
     margin: 0;
     min-height: 30rem;
-    height: 60vh;
+    height: 50vh;
     padding-bottom: 2rem;
-    background-image: linear-gradient(to bottom, black, #393939);
+    background-image: linear-gradient(to top, black, #393939);
 }
 
 #playlist-section h1 {
