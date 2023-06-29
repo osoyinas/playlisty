@@ -15,6 +15,15 @@
     ></script>
   </head>
   {% csrf_token %}
-  {% block content%} 
-  {% endblock %}
+  <body>
+    {% block content%} 
+    {% endblock %}
+  </body>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">© 2023 Playlisty. Todos los derechos reservados.</p>
+      <p class="footer-text">Contact: osoyinas@gmail.com</p>
+    </div>
+  </footer>
+  
 </html>

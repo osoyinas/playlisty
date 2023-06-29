@@ -1,4 +1,9 @@
-<h1>Why do you have to log in?</h1>
+{% extends 'base.html' %}
+{% block content%}
+<body>
+  {% include 'banner.html' %}
+  <section id="login-to-start">
+  <h1>Why do you have to log in?</h1>
   <div class="text-container">
     <p>
       To be able to generate Spotify playlists using our web app, we kindly
@@ -40,3 +45,6 @@
       interaction with our web app.
     </p>
   </div>
+</section>
+</body>
+{% endblock %}

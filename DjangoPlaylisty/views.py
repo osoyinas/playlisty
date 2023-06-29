@@ -164,7 +164,8 @@ def getLoginStatus(request: HttpRequest):
 def not_white_listed(request: HttpRequest):
     return render(request, "not_whitelisted.html")
 
-
+def why_login(request: HttpRequest):
+    return render(request, "why_log_in.html")
 # Aux functions
 
 

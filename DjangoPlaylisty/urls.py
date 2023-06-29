@@ -33,4 +33,6 @@ urlpatterns = [
     ),
     path("getloginstatus/", views.getLoginStatus, name="getloginstatus"),
     path("ups/", views.not_white_listed, name="notwhitelisted"),
+    path("whylogin/", views.why_login, name="notwhitelisted"),
+
 ]

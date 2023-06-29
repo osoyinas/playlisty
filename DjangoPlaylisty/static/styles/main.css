@@ -115,7 +115,7 @@
 
 /* ------------HOME------------ */
 
-#banner  {
+#banner {
     position: relative;
     background: #0084EC;
     height: 50vh;
@@ -132,7 +132,7 @@
     padding-bottom: 100px;
     position: relative;
     background-color: #0084EC;
-  }
+}
 
 #banner h1 {
     color: white;
@@ -177,6 +177,26 @@
     }
 }
 
+.footer {
+    background-color: #000;
+    color: #fff;
+    width: 100%;
+    height: 15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 2rem;
+}
+
+.footer-text {
+    margin: 5px 0;
+}
 
 /* GENERATE PLAYLIST NOT LOGGED IN  */
 #login-to-start {
@@ -186,6 +206,7 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    margin-bottom: 10rem;
 }
 
 #login-to-start h1,
@@ -195,7 +216,8 @@
     margin: 2rem;
     text-align: center;
 }
-#create-playlist h1{
+
+#create-playlist h1 {
     color: white;
 }
 
@@ -211,7 +233,7 @@
 }
 
 #login-to-start p {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     text-align: justify;
     width: 100%;
     /* text-align: justify; */
@@ -318,6 +340,7 @@ h3 {
     height: 40px;
     border-radius: 50%;
 }
+
 .curved {
     position: relative;
     background: #0084EC;
@@ -342,6 +365,7 @@ h3 {
     background: black;
     height: 20%;
 }
+
 #playlist-section {
     position: relative;
     display: flex;
@@ -529,6 +553,7 @@ h3 {
         border-bottom-left-radius: 50% 5%;
         border-bottom-right-radius: 50% 5%;
     }
+
     #login-to-start .text-container {
         line-height: 2.2rem;
         width: 100%;
