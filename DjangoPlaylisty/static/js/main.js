@@ -193,7 +193,7 @@ selectMenu.addEventListener('change', function (event) {
 function deleteElement(button) {
     // Obtén el elemento <li> que contiene el botón
     var listItem = button.closest("li");
-
+    items_ids.pop(listItem.getAttribute('id-value'))
     // Elimina el elemento <li> de la lista
     listItem.classList.remove('show')
     setTimeout(() => {
