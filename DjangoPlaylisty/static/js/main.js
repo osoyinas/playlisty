@@ -30,7 +30,6 @@ async function fetchData() {
     resultsWrapper.innerHTML = `` //reset results
     let str = searchInput.value.trim()
     if (str == "") {
-        typeToSearchDisplay.classList.remove('hide');
         return;
     }
     const response = await fetch(`./getitem/${str}/${getCurrentType()}`); //peticion GET
@@ -61,9 +60,6 @@ function updateResults(data) {
         forEach(function (item) {
             item.addEventListener('click', () => {
                 resultsContainer.classList.remove('show');
-                setTimeout(() => {
-                    typeToSearchDisplay.classList.remove('hide');
-                }, 800);
                 searchInput.value = ``
                 addItemToPlaylistContainer(item.textContent, item.getAttribute('id-value'), item.getAttribute('type-value'), item.querySelector('img').getAttribute('src'));
                 setTimeout(() => {
