@@ -285,6 +285,7 @@ h3 {
     align-items: center;
     justify-content: flex-start;
     background-color: #0084EC;
+    position: relative;
 }
 
 .results-container {
@@ -301,6 +302,17 @@ h3 {
     justify-content: center;
 }
 
+.display-results {
+    color: white;
+    z-index: 200;
+    opacity: 0.7 !important;
+    position: absolute;
+    bottom: 20%;
+    transition: opacity 0.4s ease-in-out;
+}
+.display-results.hide {
+    opacity: 0 !important;
+}
 .results-container.show {
     opacity: 1;
 }

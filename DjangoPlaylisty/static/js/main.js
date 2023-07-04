@@ -6,7 +6,7 @@ const resultsContainer = document.querySelector('.results-container')
 const generatePlaylistButton = document.getElementById("generate-playlist-button")
 const playlistContainer = document.querySelector('.playlist-container')
 const selectMenu = document.getElementById("select-menu")
-
+const typeToSearchDisplay = document.querySelector('.display-results')
 var items_ids = []  
 var count = 0; //playlist items count
 var timer = null //timer to delay the requests
@@ -20,6 +20,7 @@ searchInput.addEventListener('input', function (event) {
 // Count 500ms and if the user hasnt typed again, fetch. If not, it restarts the timer
 function startTimerAndFetch() {
     resultsContainer.classList.remove('show');
+    typeToSearchDisplay.classList.add('hide');
     clearTimeout(timer) //reset timer
     timer = setTimeout(fetchData, 500);
 }
@@ -28,6 +29,7 @@ async function fetchData() {
     resultsWrapper.innerHTML = `` //reset results
     let str = searchInput.value.trim()
     if (str == "") {
+        typeToSearchDisplay.classList.remove('hide');
         return;
     }
     const response = await fetch(`./getitem/${str}/${getCurrentType()}`); //peticion GET
@@ -58,6 +60,9 @@ function updateResults(data) {
         forEach(function (item) {
             item.addEventListener('click', () => {
                 resultsContainer.classList.remove('show');
+                setTimeout(() => {
+                    typeToSearchDisplay.classList.remove('hide');
+                }, 800);
                 searchInput.value = ``
                 addItemToPlaylistContainer(item.textContent, item.getAttribute('id-value'), item.getAttribute('type-value'), item.querySelector('img').getAttribute('src'));
                 setTimeout(() => {
