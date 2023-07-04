@@ -580,7 +580,7 @@ h3 {
     color: white;
     opacity: 0.4;
     position: absolute;
-    bottom: 50%;
+    bottom: 65%;
     transition: opacity 0.4s ease-in-out;
 }
 .playlist-empty.hide {
