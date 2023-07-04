@@ -151,6 +151,10 @@ function addItemToPlaylistContainer(name, id, type, image) {
 //Generate playlist button clicked, 
 generatePlaylistButton.addEventListener('click', (e) => {
     e.preventDefault();
+    if (items_ids.length == 0){
+        alert("Add items to your playlist!");
+        return;
+    }
     let selectedItems = { name: "", items: [] }
     let playlistItems = document.querySelectorAll('.playlist-container li');
     playlistItems.forEach((item) => {
