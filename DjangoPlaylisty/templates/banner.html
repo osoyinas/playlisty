@@ -1,24 +1,24 @@
 <section id="banner">
-    {% load static %}
-    <div>
-        <h1 class="Listify_tittle">Playlisty</h1>
-        <h2>Create and Custom</h2>
-        <h1>
-            <span class="spotify">Spotify </span><span class="playlists">Playlists</span>
-        </h1>
-    </div>
-    <div class="bg" style="background-image: url('{% static 'svg/bg.svg' %}')"></div>
-    {%if logged_in == False %}
-    <form action="{% url 'auth' %}">
-      <button class="fancy-button" type="submit">
-        <span class="button_top"> Log In with Spotify</span>
-      </button>
-    </form>
-    {% else %}
-    <form action="{% url 'createplaylist' %}">
-        <button class="fancy-button" type="submit">
-          <span class="button_top"> Create playlist</span>
-        </button>
-      </form>
-    {% endif %}
+  {% load static %}
+  <div>
+    <h1 class="Listify_tittle">Playlisty</h1>
+    <h2>Create and Custom</h2>
+    <h1>
+      <span class="spotify">Spotify</span><span class="playlists">Playlists</span>
+    </h1>
+  </div>
+  <div class="bg" style="background-image: url('{% static 'svg/bg.svg' %}')"></div>
+  {%if logged_in == False %}
+  <form action="{% url 'auth' %}">
+    <button class="fancy-button" type="submit">
+      <span class="button_top">Log In with Spotify</span>
+    </button>
+  </form>
+  {% else %}
+  <form action="{% url 'createplaylist' %}">
+    <button class="fancy-button" type="submit">
+      <span class="button_top">Create playlist</span>
+    </button>
+  </form>
+  {% endif %}
 </section>
