@@ -566,7 +566,17 @@ h3 {
     justify-content: center;
 }
 
+.playlist-empty{
+    color: white;
+    opacity: 0.4;
+    position: absolute;
+    bottom: 50%;
+    transition: opacity 0.4s ease-in-out;
+}
+.playlist-empty.hide {
+    opacity: 0;
 
+}
 
 @media (max-width: 1024px) {
 
