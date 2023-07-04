@@ -188,15 +188,18 @@
 }
 
 .footer .container {
+    padding: 1.5rem;
     width: min(50rem, 100%);
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+    gap: 40px;
     line-height: 2rem;
 }
 .footer .container aside {
     display: flex;
     flex-direction: column;
+    line-height: 1rem;
+    gap: 1rem;
 }
 .footer .container aside a {
     cursor: pointer;
