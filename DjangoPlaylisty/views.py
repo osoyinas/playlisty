@@ -152,7 +152,6 @@ def get_item(request: HttpRequest, item_str: str, item_type: str) -> JsonRespons
 def test (request:HttpRequest, id: str):
     token_info = get_token(request)
     sp = spotipy.Spotify(auth=token_info["access_token"])
-    data = get_similar_tracks(sp,id)
     
     return JsonResponse(data)
 

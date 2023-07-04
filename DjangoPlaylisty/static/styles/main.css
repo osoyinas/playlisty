@@ -187,6 +187,10 @@
     justify-content: center;
 }
 
+.footer a {
+    color: white;
+}
+
 .footer .container {
     padding: 1.5rem;
     width: min(50rem, 100%);
@@ -226,7 +230,9 @@
     margin: 2rem;
     text-align: center;
 }
-
+#login-to-start a {
+    font-size: 1.5rem;
+}
 #create-playlist h1 {
     color: white;
 }
@@ -248,7 +254,11 @@
     width: 100%;
     /* text-align: justify; */
 }
-
+#login-to-start h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin: 1rem 0;
+}
 
 /* CREATE PLAYLIST */
 #create-playlist .container {

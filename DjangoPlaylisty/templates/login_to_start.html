@@ -6,8 +6,7 @@
       Creating a playlist on our web app is a breeze! We offer you a variety
       of options to curate your perfect Spotify playlist. Whether you prefer
       selecting
-      <span style="font-weight: bold">artists, albums, or individual songs</span>, we've got you covered.
-    </p>
+      <span style="font-weight: bold">artists, albums, or individual songs</span>, we've got you covered. But first, you will have to log in with your Spotify's account.</p>
   </div>
   {%if logged_in == False %}
   <form action="{% url 'auth' %}">
@@ -21,7 +20,7 @@
       Successfully logged in
     </span>
   </div>
-  <a class="create-playlist-link" href="{% url 'createplaylist' %}">Create playlist</a>
+  <a style="color: blue; opacity: 0.8; cursor: pointer;" href="/whylogin">Why do you have to log in?</a>
   {%endif%}  
   <script src="{% static '/js/scroll-to-login.js' %}" defer></script>
 </section>
