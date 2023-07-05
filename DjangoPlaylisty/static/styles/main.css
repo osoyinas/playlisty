@@ -143,7 +143,14 @@
     padding-top: 2rem;
     z-index: 10;
 }
-
+#banner #logo {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    margin: 2rem;
+}
 #banner .Listify_tittle {
     font-size: clamp(4em, 10vw, 9em);
 }
@@ -244,13 +251,12 @@
 
 #login-to-start .text-container {
     width: 60%;
-    max-width: 60rem;
-    line-height: 3rem;
+    max-width: 75ch;
+    line-height: 1.8rem;
 }
 
 #login-to-start p {
-    font-size: 1.6rem;
-    text-align: justify;
+    font-size: 1.4rem;
     width: 100%;
     /* text-align: justify; */
 }
@@ -259,7 +265,9 @@
     text-align: center;
     margin: 1rem 0;
 }
-
+#login-to-start .fancy-button {
+    margin-bottom: 0.5rem !important; 
+}
 /* CREATE PLAYLIST */
 #create-playlist .container {
     display: grid;
@@ -587,7 +595,10 @@ h3 {
     opacity: 0;
 
 }
-
+.right-icon {
+    width: 50px;
+    height: 50px;
+}
 @media (max-width: 1024px) {
 
     #banner {
