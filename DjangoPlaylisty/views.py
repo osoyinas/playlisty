@@ -93,7 +93,7 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
                 album_tracks = get_all_tracks_from_album(sp=sp, album_id=album["id"])
                 tracks_to_add.extend(album_tracks)
             for track in tracks:
-                tracks_to_add.append(track["id"])
+                tracks_to_add.append(sp.track(track["id"]))
                 if track["option"] == "similar-tracks":
                     tracks_to_add.extend(get_similar_tracks(sp=sp,track_id=track['id']))
         except ValueError as v:
