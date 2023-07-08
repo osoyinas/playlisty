@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content%}
+{% load static %}
+<section id="top-custom-playlist">
+    <h1>Create playlist</h1>
+</section>
+<section class="curved"></section>
+<section class="curved2"></section>
+<section id="custom-playlist">
+
+    <section id="custom-playlist">
+        <div class="input-container">
+            <input id="search-input" type="text" name="text" class="input" placeholder="Playlist name" />
+        </div>
+        <main class="playlist-container">
+            {% for item in data %}
+            <li id-value="{{ item.id }}" class="show">
+
+                <div class="left">
+                    <h2>{{ forloop.counter }}</h2>
+                    <img src={{item.album.images.0.url}} alt="">
+                    <div class="name-type-container">
+                        <p class="name">{{ item.name }}</p>
+                        <p class="type">{{ item.artists.0.name }}</p>
+                    </div>
+                </div>
+                <div class="right">
+                    <button class="button" onclick="deleteElement(this)">
+                        <svg viewBox="0 0 448 512" class="svgIcon">
+                            <path
+                                d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z">
+                            </path>
+                        </svg>
+                    </button>
+                    <img class="right-icon" src="/static/svg/spotify_logo.png" alt="">
+                </div>
+            </li>
+            {% endfor %}
+        </main>
+        <div id="button-container">
+            <button id="create-playlist-button" class="fancy-button">
+                Create playlist
+            </button>
+        </div>
+    </section>
+</section>
+<script src="{% static 'js/custom-playlist.js' %}"></script>
+{% endblock %}

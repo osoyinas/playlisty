@@ -232,7 +232,9 @@
 
 #login-to-start h1,
 #create-playlist h1,
-#playlist-section h1 {
+#playlist-section h1,
+#top-custom-playlist h1,
+#custom-playlist h1 {
     font-size: clamp(2.5rem, 3vw, 5rem);
     margin: 2rem;
     text-align: center;
@@ -393,6 +395,7 @@ h3 {
     position: relative;
     background: white;
     height: 8vh;
+    width: 100%;
 }
 
 .curved2::after {
@@ -424,7 +427,7 @@ h3 {
     color: white;
 }
 
-#playlist-section .playlist-container {
+.playlist-container {
     display: flex;
     flex-direction: column;
     width: min(50rem, 100%);
@@ -435,7 +438,7 @@ h3 {
     height: 70%;
 }
 
-#playlist-section .playlist-container li {
+.playlist-container li {
     display: grid;
     grid-template-columns: 1.5fr 1fr;
     color: white;
@@ -446,18 +449,19 @@ h3 {
     transition: opacity 0.4s ease-in-out;
 }
 
-#playlist-section .playlist-container li.show {
+.playlist-container li.show {
     opacity: 1;
 }
 
-#playlist-section .playlist-container li .left {
+.playlist-container li .left {
     font-size: 15px;
     display: grid;
-    grid-template-columns: 0.2fr 2fr;
     align-items: center;
     gap: 18px;
 }
-
+#playlist-section .playlist-container li .left {
+    grid-template-columns: 0.2fr 2fr;
+}
 .name-type-container {
     width: 100%;
     overflow: hidden;
@@ -466,22 +470,22 @@ h3 {
 
 }
 
-#playlist-section .playlist-container li .left h2 {
+.playlist-container li .left h2 {
     color: white;
     opacity: 50%;
 }
 
-#playlist-section .playlist-container li .left .name-type-container {
+.playlist-container li .left .name-type-container {
     display: inline-block;
     width: 100%;
 }
 
-#playlist-section .playlist-container li .left img {
+.playlist-container li .left img {
     width: 50px;
     height: 50px;
 }
 
-#playlist-section .playlist-container li .left .name {
+.playlist-container li .left .name {
     font-weight: bold;
     flex-wrap: nowrap;
     white-space: nowrap;
@@ -490,7 +494,7 @@ h3 {
     width: 100%;
 }
 
-#playlist-section .playlist-container li .right {
+.playlist-container li .right {
     display: flex;
     justify-content: right;
     width: auto;
@@ -553,7 +557,7 @@ h3 {
     transition-duration: .3s;
 }
 
-#playlist-section .playlist-container li div select {
+.playlist-container li div select {
     text-align: center;
     cursor: pointer;
     color: white;
@@ -567,11 +571,11 @@ h3 {
     border-radius: 5px;
 }
 
-#playlist-section .playlist-container li div select option {
+.playlist-container li div select option {
     text-align: center;
 }
 
-#playlist-section .playlist-container li .name-type-container .type {
+.playlist-container li .name-type-container .type {
     font-size: 90%;
     font-weight: 100;
 }
@@ -598,6 +602,39 @@ h3 {
     width: 50px;
     height: 50px;
 }
+
+#top-custom-playlist{
+    height: auto;
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #0084EC;
+    position: relative;
+}
+#top-custom-playlist h1 {
+    color: white;
+}
+#custom-playlist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 70vh;
+    background-image: linear-gradient(to top, black, #414756);
+    justify-content: space-around;
+    width: 100%;
+}
+ main {
+    width: 100%;
+    padding: 2rem;
+}
+
+#custom-playlist .playlist-container li .left {
+    grid-template-columns: 0.2fr 0.2fr 2fr;
+}
+
 @media (max-width: 1024px) {
 
     #banner {

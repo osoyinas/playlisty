@@ -6,7 +6,7 @@ from DjangoPlaylisty.SpotifyAPI.spotify import *
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from django.http import Http404
-
+import urllib.parse
 
 CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
 CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
@@ -56,6 +56,49 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     set_prepath(request)
     if not logged_in:
         return redirect("home")
+    query_string = request.GET.get('data', '')
+    if (query_string):
+        decoded_query = urllib.parse.unquote(query_string)
+        data = json.loads(decoded_query)
+        try:
+            token_info = get_token(request) #get token api
+            data = json.loads(decoded_query)
+            sp = spotipy.Spotify(auth=token_info["access_token"])
+            name = str(data['name'])
+            desc = "A playlists generated with playlisty.app"
+            public = True
+            collab = False
+            items = list(data["items"])
+            artists = []
+            tracks = []
+            albums = []
+            for item in items:
+                if item["type"] == "track":
+                    tracks.append(item)
+                elif item["type"] == "artist":
+                    artists.append(item)
+                elif item["type"] == "album":
+                    albums.append(item)
+            tracks_to_add = []
+            for artist in artists:
+                artist_tracks = []
+                if artist["option"] == "top-tracks":
+                    artist_tracks = get_top_tracks(sp=sp, artist_id=artist["id"])
+                elif artist["option"] == "all-tracks":
+                    artist_tracks = get_all_tracks_from_artist(
+                        sp=sp, artist_id=artist["id"]
+                    )
+                tracks_to_add.extend(artist_tracks)
+            for album in albums:
+                album_tracks = get_all_tracks_from_album(sp=sp, album_id=album["id"])
+                tracks_to_add.extend(album_tracks)
+            for track in tracks:
+                tracks_to_add.append(track["id"])
+                if track["option"] == "similar-tracks":
+                    tracks_to_add.extend(get_similar_tracks(sp=sp,track_id=track['id']))
+        except ValueError as v:
+            data = {"message": "failed"}
+        return render(request, "custom_playlist.html", {'data': tracks_to_add})        
     return render(request, "create_playlist.html", {})
 
 
@@ -85,32 +128,8 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
         artists = []
         tracks = []
         albums = []
-        for item in items:
-            if item["type"] == "track":
-                tracks.append(item)
-            elif item["type"] == "artist":
-                artists.append(item)
-            elif item["type"] == "album":
-                albums.append(item)
         playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
-        tracks_to_add = []
-        for artist in artists:
-            artist_tracks = []
-            if artist["option"] == "top-tracks":
-                artist_tracks = get_top_tracks(sp=sp, artist_id=artist["id"])
-            elif artist["option"] == "all-tracks":
-                artist_tracks = get_all_tracks_from_artist(
-                    sp=sp, artist_id=artist["id"]
-                )
-            tracks_to_add.extend(artist_tracks)
-        for album in albums:
-            album_tracks = get_all_tracks_from_album(sp=sp, album_id=album["id"])
-            tracks_to_add.extend(album_tracks)
-        for track in tracks:
-            tracks_to_add.append(track["id"])
-            if track["option"] == "similar-tracks":
-                tracks_to_add.extend(get_similar_tracks(sp=sp,track_id=track['id']))
-
+        tracks_to_add = list(data['items'])
         url = get_playlist_url(sp=sp, playlist_id=playlist_id)
         add_tracks_to(sp=sp, playlist_id=playlist_id, track_ids=tracks_to_add)
         data = {"message": "Success", "url": url}

@@ -101,7 +101,7 @@ def get_top_tracks(sp: spotipy.Spotify, artist_id: str):
     tracks = []
     top_tracks = sp.artist_top_tracks(artist_id=artist_id)["tracks"]
     for track in top_tracks:
-        tracks.append(track["id"])
+        tracks.append(track)
     return tracks
 
 
@@ -168,7 +168,7 @@ def get_all_tracks_from_artist(sp: spotipy.Spotify, artist_id: str):
         album_id = album["id"]
         album_tracks = sp.album_tracks(limit=50, album_id=album_id)["items"]
         for track in album_tracks:
-            tracks.append(track["id"])
+            tracks.append(track)
     return tracks
 
 
@@ -176,7 +176,7 @@ def get_all_tracks_from_album(sp: spotipy.Spotify, album_id: str):
     tracks = []
     album_tracks = sp.album_tracks(album_id=album_id, limit=50)["items"]
     for track in album_tracks:
-        tracks.append(track["id"])
+        tracks.append(track)
     return tracks
 
 def get_similar_tracks(sp: spotipy.Spotify, track_id: dict):
@@ -194,7 +194,7 @@ def get_similar_tracks(sp: spotipy.Spotify, track_id: dict):
         seed_artists.append(artist['id'])
     result = sp.recommendations(seed_artists=seed_artists[:2], seed_genres=seed_genres[:2], seed_tracks=seed_tracks, limit=10)
     for track in result['tracks']:
-        tracks_ids.append(track['id'])
+        tracks_ids.append(track)
     return tracks_ids[:10]
 
 
