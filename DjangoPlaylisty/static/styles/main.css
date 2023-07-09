@@ -532,16 +532,13 @@ h3 {
 
 .playlist-container li .left .name {
     font-weight: bold;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     width: 100%;
 }
 
 .playlist-container li .right {
     display: flex;
     justify-content: right;
+    align-items: center;
     width: auto;
     gap: 1rem;
 }
@@ -644,7 +641,13 @@ h3 {
 
 }
 .right-icon {
-    margin: auto auto;
+    margin: 0rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.right-icon img {
     width: 40px;
     height: 40px;
 }
@@ -674,11 +677,10 @@ h3 {
 }
  main {
     width: 100%;
-    padding: 2rem;
 }
 
 #custom-playlist .playlist-container li .left {
-    grid-template-columns: 0.2fr 0.2fr 2fr;
+    grid-template-columns: 0.2fr 0.2fr 6fr;
 }
 
 @media (max-width: 1024px) {
