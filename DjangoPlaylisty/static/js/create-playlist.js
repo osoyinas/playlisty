@@ -35,6 +35,7 @@ async function fetchData() {
     const response = await fetch(`./getitem/${str}/${getCurrentType()}`); //peticion GET
     const data = await response.json();
     if (data.status == "success") {
+        console.log(data);
         updateResults(data)
     }
     else if (data.status == "error") {
@@ -54,14 +55,14 @@ function updateResults(data) {
     }
     resultsWrapper.innerHTML = `` //reset results
     data.results.forEach((result) => {
-        addResultToDom(result)
+        addToResultsItems(result)
     });
     document.querySelectorAll('.results-container ul li').
-        forEach(function (item) {
+        forEach(function (item) { //Option clicked
             item.addEventListener('click', () => {
                 resultsContainer.classList.remove('show');
                 searchInput.value = ``
-                addItemToPlaylistContainer(item.textContent, item.getAttribute('id-value'), item.getAttribute('type-value'), item.querySelector('img').getAttribute('src'));
+                addItemToPlaylistContainer(item.textContent, item.getAttribute('id-value'), item.getAttribute('type-value'), item.querySelector('img').getAttribute('src'), item.getAttribute('data-url'));
                 setTimeout(() => {
                     resultsWrapper.innerHTML = ``
                 }, 500);
@@ -73,17 +74,17 @@ function updateResults(data) {
 }
 
 //Add to the DOM the fetched items results.
-function addResultToDom(result) {
+function addToResultsItems(result) {
     //track doesnt contain images
     image = result.images[0].url
     resultsWrapper.innerHTML +=
-        `<li id-value="${result.id}" type-value="${result.type}">
+        `<li id-value="${result.id}" type-value="${result.type}" data-url="${result.external_urls.spotify}"  >
         <img src="${image}" alt="${result.name}">
         ${result.name}
     </li>`
 }
 //Adds an item to the playlist container with its own options depending on the item
-function addItemToPlaylistContainer(name, id, type, image) {
+function addItemToPlaylistContainer(name, id, type, image, url) {
     emptyPlaylist.classList.add('hide')
     if (items_ids.includes(id)){
         return;
@@ -91,7 +92,7 @@ function addItemToPlaylistContainer(name, id, type, image) {
     items_ids.push(id)
     count += 1;
     let content =
-        `<li id-value="${id}" type-value="${type}">
+        `<li id-value="${id}" type-value="${type}" data-url="${url}">
             <div class="left">
                 <img src="${image}" alt="">
                     <div class="name-type-container">
@@ -133,7 +134,8 @@ function addItemToPlaylistContainer(name, id, type, image) {
                     <button class="button" onclick="deleteElement(this)">
                     <svg viewBox="0 0 448 512" class="svgIcon"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path></svg>
                 </button>
-            <img class = "right-icon" src="/static/svg/spotify_logo.png" alt="">    
+                <a class="right-icon" href="${url}" target="_blank" rel="noreferrer noopener" alt="${name} on Spotify"><img class = "right-icon" src="/static/svg/Spotify_Icon_RGB_White.png" alt=""></a>
+               
                 </div>
                 </li>
                 `

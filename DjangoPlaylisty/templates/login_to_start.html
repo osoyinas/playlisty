@@ -1,27 +1,30 @@
 {% load static %}
-<section id="login-to-start"> 
+<section id="login-to-start">
   <h1>Generate playlists</h1>
   <div class="text-container">
     <p>
       Creating a playlist on our web app is a breeze! We offer you a variety
       of options to curate your perfect Spotify playlist. Whether you prefer
       selecting
-      <span style="font-weight: bold">artists, albums, or individual songs</span>, we've got you covered. But first, you will have to log in with your Spotify's account.</p>
+      <span style="font-weight: bold">artists, albums, or individual songs</span>, we've got you covered. But first, you
+      will have to log in with your Spotify's account.
+    </p>
   </div>
   {%if logged_in == False %}
   <form action="{% url 'auth' %}">
     <button class="fancy-button" type="submit">
-      <span class="button_top"> Log In with Spotify</span>
+      <span class="button_top">Log In with Spotify</span>
     </button>
+    <a style="color: blue; opacity: 0.8; cursor: pointer;" href="/whylogin">Why do you have to log in?</a>
+
   </form>
   {% else %}
-  <div class="logged-in-box">
-    <span>
-      Successfully logged in
-    </span>
-  </div>
-  {%endif%} 
-  <a style="color: blue; opacity: 0.8; cursor: pointer;" href="/whylogin">Why do you have to log in?</a>
+  <form action="{% url 'createplaylist' %}">
+    <button class="fancy-button" type="submit">
+      <span class="button_top">Create playlist</span>
+    </button>
+  </form>
+  {% endif %}
 
   <script src="{% static '/js/scroll-to-login.js' %}" defer></script>
 </section>
