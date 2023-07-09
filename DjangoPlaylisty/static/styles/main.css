@@ -116,7 +116,7 @@
 
 .arrow {
     position: absolute;
-    top: 80%;
+    top: 75%;
     left: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
@@ -192,9 +192,11 @@
     position: absolute;
     right: 0;
     top: 0;
-    width: 50px;
-    height: 50px;
-    margin: 2rem;
+    width: 10vw;
+    min-width: 100px;
+    max-width: 180px;
+    height: auto;
+    margin: 2.5rem;
 }
 #banner .Listify_tittle {
     font-size: clamp(4em, 10vw, 9em);
@@ -436,6 +438,11 @@ h3 {
     border-bottom-right-radius: 50% 21%;
 }
 
+.curved.black{
+    background: black;
+    margin-bottom: 5rem;
+}
+
 .curved2 {
     position: relative;
     background: white;
@@ -641,15 +648,18 @@ h3 {
 
 }
 .right-icon {
-    margin: 0rem 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .right-icon img {
-    width: 40px;
-    height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+    min-height: 24px;
+    min-width: 24px;
+    width: 10vw;
+    height: 10vw;
 }
 
 #top-custom-playlist{
@@ -682,13 +692,19 @@ h3 {
 #custom-playlist .playlist-container li .left {
     grid-template-columns: 0.2fr 0.2fr 6fr;
 }
-
+.arrow {
+    opacity: 0;
+}
 @media (max-width: 1024px) {
 
     #banner {
         height: 100vh;
         border-bottom-left-radius: 50% 5%;
         border-bottom-right-radius: 50% 5%;
+    }
+    .arrow {
+        display: block;
+        opacity: 1;
     }
 
     #login-to-start .text-container {

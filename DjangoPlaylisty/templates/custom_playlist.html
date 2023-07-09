@@ -33,7 +33,7 @@
                             </path>
                         </svg>
                     </button>
-                    <a class="right-icon" href="{{item.external_urls.spotify}}" target="_blank" rel="noreferrer noopener"><img src="/static/svg/Spotify_Icon_RGB_White.png" alt=""></a>
+                    <a class="right-icon" href="{{item.external_urls.spotify}}" target="_blank" rel="noreferrer noopener"><img alt="{{item.name}} on Spotify" src="/static/svg/Spotify_Icon_RGB_White.png" alt=""></a>
                     
                 </div>
             </li>
@@ -46,5 +46,7 @@
         </div>
     </section>
 </section>
+<section class="curved black"></section>
+
 <script src="{% static 'js/custom-playlist.js' %}"></script>
 {% endblock %}
