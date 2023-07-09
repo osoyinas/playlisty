@@ -121,13 +121,13 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
         data = json.loads(request.body.decode("utf-8")) #get body data 
         sp = spotipy.Spotify(auth=token_info["access_token"])
         name = str(data['name'])
+        if (name == ""):
+            name = "A playlist created with Playlisty app"
+
         desc = "A playlists generated with playlisty.app"
         public = True
         collab = False
         items = list(data["items"])
-        artists = []
-        tracks = []
-        albums = []
         playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
         tracks_to_add = list(data['items'])
         url = get_playlist_url(sp=sp, playlist_id=playlist_id)

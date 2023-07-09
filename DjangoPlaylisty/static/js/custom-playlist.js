@@ -51,11 +51,10 @@ createPlaylistButton.addEventListener('click', (e) => {
                 console.log("Error ocurred");
                 return;
             }
-            window.location.href = data.url
+            window.open(data.url, "_blank");
+            window.location.href = "/"
         })
         .catch(error => {
             console.error('Error:', error);
         });
-    selectedItems.items = []
-    selectedItems.name = ""
 });
