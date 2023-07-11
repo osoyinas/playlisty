@@ -97,14 +97,6 @@ def create_spotify_playlist(
     return playlist_id
 
 
-def get_top_tracks(sp: spotipy.Spotify, artist_id: str):
-    tracks = []
-    top_tracks = sp.artist_top_tracks(artist_id=artist_id)["tracks"]
-    for track in top_tracks:
-        tracks.append(track)
-    return tracks
-
-
 def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, track_ids: list):
     tracks_set = set(track_ids)  # eliminate repited
     tracks = list(tracks_set)
@@ -124,51 +116,31 @@ def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, track_ids: list):
         sp.playlist_add_items(playlist_id=playlist_id, items=new_tracks)
 
 
-def add_tracks_from_artists(
-    sp: spotipy.Spotify, playlist_id: int, artists_ids: list
-) -> None:
-    """Add top 10 songs of the artists given to the playlist.
-
-    Args:
-        sp (spotipy.Spotify): Object with the current user to be able to connect spotify's API.
-        id (int): Playlist's ID
-        raw_artists (list): Artists's list like ['1b62AO1IzcVr5SOgoguc9o', '4jhHaLksdP8DJZzxYAjOSz']
-    """
+def get_top_tracks(sp: spotipy.Spotify, artist_id: str):
     tracks = []
-    for artist_id in artists_ids:
-        # Search for the artist
-        # look at the first id result
-        top_tracks = sp.artist_top_tracks(artist_id=artist_id)["tracks"]
-        top_tracks.sort(key=lambda track: track["popularity"], reverse=True)
-        for track in top_tracks:
-            tracks.append(track["id"])
-    tracks_set = set(tracks)
-    tracks = list(tracks_set)
-    max_len = 0
-    new_tracks = []
-    for track in tracks:
-        if (
-            max_len != 100
-        ):  # The max tracks we can append in a playlist in a single request is 100,
-            new_tracks.append(track)
-            max_len += 1
-        else:
-            sp.playlist_add_items(playlist_id=playlist_id, items=new_tracks)
-            new_tracks = []
-            max_len = 0
-    if len(new_tracks) > 0:
-        sp.playlist_add_items(playlist_id=playlist_id, items=new_tracks)
+    top_tracks = sp.artist_top_tracks(artist_id=artist_id)["tracks"]
+    for track in top_tracks:
+        tracks.append(track)
+    return tracks
 
 
 def get_all_tracks_from_artist(sp: spotipy.Spotify, artist_id: str):
-    results = sp.artist_albums(artist_id=artist_id)
-    albums = results["items"]
+    fetch_albums = sp.artist_albums(artist_id=artist_id)
+    albums = fetch_albums["items"]
     tracks = []
     for album in albums:
+        print(album)
         album_id = album["id"]
         album_tracks = sp.album_tracks(limit=50, album_id=album_id)["items"]
         for track in album_tracks:
-            tracks.append(track)
+            # item.album.images.0.url
+            track['album'] = album
+            artist_in_track = False
+            for artist in track['artists']:
+                if artist['id'] == artist_id:
+                    artist_in_track = True
+            if artist_in_track:
+                tracks.append(track)
     return tracks
 
 
@@ -179,8 +151,8 @@ def get_all_tracks_from_album(sp: spotipy.Spotify, album_id: str):
         tracks.append(track)
     return tracks
 
+
 def get_similar_tracks(sp: spotipy.Spotify, track_id: dict):
-    
     seed_genres = []
     seed_artists = []
     seed_tracks = [track_id]
@@ -188,12 +160,17 @@ def get_similar_tracks(sp: spotipy.Spotify, track_id: dict):
     tracks_ids = []
     raw_track = sp.track(track_id=track_id)
 
-    for artist in raw_track['artists']:
-        main_artist = sp.artist(artist_id=artist['id'])
-        seed_genres.extend(main_artist['genres'])
-        seed_artists.append(artist['id'])
-    result = sp.recommendations(seed_artists=seed_artists[:2], seed_genres=seed_genres[:2], seed_tracks=seed_tracks, limit=10)
-    for track in result['tracks']:
+    for artist in raw_track["artists"]:
+        main_artist = sp.artist(artist_id=artist["id"])
+        seed_genres.extend(main_artist["genres"])
+        seed_artists.append(artist["id"])
+    result = sp.recommendations(
+        seed_artists=seed_artists[:2],
+        seed_genres=seed_genres[:2],
+        seed_tracks=seed_tracks,
+        limit=10,
+    )
+    for track in result["tracks"]:
         tracks_ids.append(track)
     return tracks_ids[:10]
 
@@ -231,10 +208,9 @@ def get_playlist_url(sp: spotipy.Spotify, playlist_id: int) -> str:
     return playlist_url
 
 
-def add_image_to_item(item:dict)-> str:
-    if (item['type'] != 'track'):
+def add_image_to_item(item: dict) -> str:
+    if item["type"] != "track":
         return item
-    item['images'] = []
-    item['images'] = item['album']['images']
+    item["images"] = []
+    item["images"] = item["album"]["images"]
     return item
-

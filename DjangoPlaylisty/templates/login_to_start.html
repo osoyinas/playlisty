@@ -11,13 +11,13 @@
     </p>
   </div>
   {%if logged_in == False %}
-  <form action="{% url 'auth' %}">
+  <form id="login-form" action="{% url 'auth' %}">
     <button class="fancy-button" type="submit">
       <span class="button_top">Log In with Spotify</span>
     </button>
     <br>
     <br>
-    <a style="color: blue; opacity: 0.8; cursor: pointer;" href="/whylogin">Why do you have to log in?</a>
+    <a href="/whylogin">Why do you have to log in?</a>
 
   </form>
   {% else %}
