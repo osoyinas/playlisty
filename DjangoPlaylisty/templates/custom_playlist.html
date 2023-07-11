@@ -1,16 +1,8 @@
 {% extends 'base.html' %}
 {% block content%}
 {% load static %}
-<section id="top-custom-playlist">
-    <h1>Create playlist</h1>
-    <div class="input-container">
-        <input id="search-input" type="text" name="text" class="input" placeholder="Playlist name" />
-    </div>
-</section>
-<section class="curved"></section>
-<section class="curved2"></section>
 <section id="custom-playlist">
-
+    <h1>Your playlist preview</h1>
     <section id="custom-playlist">
         <main class="playlist-container">
             {% for item in data %}
@@ -34,20 +26,33 @@
                     </button>
                     <a class="right-icon" href="{{item.external_urls.spotify}}" target="_blank"
                         rel="noreferrer noopener"><img alt="{{item.name}} on Spotify"
-                            src="/static/svg/Spotify_Icon_RGB_White.png" alt=""></a>
+                            src="/static/svg/Spotify_Icon_RGB_Black.png" alt="{{item.name}}"></a>
 
                 </div>
             </li>
             {% endfor %}
         </main>
-        <div id="button-container">
-            <button id="create-playlist-button" class="fancy-button">
-                Create playlist
+        <header class="header-container">
+            <aside>
+                <div class="info-box">
+                    <h2 id="artists-n">0</h2>
+                    <h3>Artists</h3>
+                </div>
+                <div class="info-box">
+                    <h2 id="albums-n">0</h2>
+                    <h3>Albums</h3>
+                </div>
+                <div class="info-box">
+                    <h2 id="tracks-n">0</h2>
+                    <h3>Tracks</h3>
+                </div>
+            </aside>
+            <button id="generate-playlist-button" class="fancy-button">
+                Generate playlist
             </button>
-        </div>
+        </header>
     </section>
 </section>
-<section class="curved black"></section>
 
 <script src="{% static 'js/custom-playlist.js' %}"></script>
 {% endblock %}
