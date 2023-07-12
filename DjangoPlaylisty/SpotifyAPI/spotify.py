@@ -146,7 +146,9 @@ def get_all_tracks_from_artist(sp: spotipy.Spotify, artist_id: str):
 def get_all_tracks_from_album(sp: spotipy.Spotify, album_id: str):
     tracks = []
     album_tracks = sp.album_tracks(album_id=album_id, limit=50)["items"]
+    album = sp.album(album_id=album_id)
     for track in album_tracks:
+        track['album'] = album
         tracks.append(track)
     return tracks
 
