@@ -1,3 +1,10 @@
+:root {
+    --blue: #0084EC;
+    --green: #04D94F;
+    --light-green: #22F241;
+}
+
+
 /* Butons */
 .fancy-button {
     z-index: 100;
@@ -15,13 +22,14 @@
     cursor: pointer;
     text-wrap: nowrap;
     white-space: nowrap;
+    border-radius: 1rem;
 }
 
 .fancy-button:hover {
     letter-spacing: 3px;
-    background-color: #0084EC;
+    background-color: var(--blue);
     color: white;
-    box-shadow: #0084EC 0px 7px 29px 0px;
+    box-shadow: var(--blue) 0px 7px 29px 0px;
 }
 
 
@@ -44,7 +52,7 @@
     z-index: 100;
     padding: 10px 20px;
     border: 1px solid black;
-    background-color: #04D94F;
+    background-color: var(--green);
     box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -86,6 +94,7 @@
     padding: 10px;
     transition: .2s linear;
     border: 2.5px solid black;
+    border-radius: 1rem;
     height: clamp(40px, 5vw, 50px);
     font-size: clamp(14px, 2vw, 20px);
     text-transform: uppercase;
@@ -165,7 +174,6 @@ body {
 
 #banner {
     position: relative;
-    background: #0084EC;
     height: 50vh;
     border-bottom-left-radius: 50% 30%;
     border-bottom-right-radius: 50% 30%;
@@ -179,7 +187,7 @@ body {
     flex-direction: column;
     padding-bottom: 100px;
     position: relative;
-    background-color: #0084EC;
+    background-color: var(--blue);
 }
 
 #banner h1 {
@@ -362,6 +370,7 @@ body {
     padding: 10px;
     transition: .2s linear;
     border: 2.5px solid rgb(19, 16, 16);
+    border-radius: 1rem;
     font-size: clamp(14px, 2vw, 20px);
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -380,7 +389,7 @@ h3 {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background-color: #0084EC;
+    background-color: var(--blue);
     position: relative;
 }
 
@@ -436,7 +445,7 @@ h3 {
 }
 
 #create-playlist .results-container li {
-    border-radius: 18px;
+    border-radius: 1rem;
     height: 50px;
     background-color: #E2F0FF;
     padding: 8px;
@@ -463,7 +472,7 @@ h3 {
 
 .curved {
     position: relative;
-    background: #0084EC;
+    background: var(--blue);
     height: 8vh;
     border-bottom-left-radius: 50% 21%;
     border-bottom-right-radius: 50% 21%;
@@ -504,7 +513,13 @@ h3 {
 }
 
 #playlist-section h1 {
-    color: white;
+    color: black;
+    opacity: 0.8;
+    text-align: left;
+    margin: 2rem 0;
+    width: min(50rem, 100%);
+    text-align: left;
+    font-size: 2rem;
 }
 
 .header-container {
@@ -516,22 +531,22 @@ h3 {
 }
 
 .header-container aside {
-    display: flex;
-    justify-content: flex-start;
-    gap: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .header-container aside .info-box {
-    border: 2.5px solid black;
     display: flex;
+    justify-content: center;
     align-items: center;
-    flex-direction: column;
-    justify-content: space-around;
-    height: clamp(60px, 5vw, 60px);
     padding: 1rem;
     min-width: 5.5rem;
+    gap: 0.5rem;
 }
+.header-container aside .info-box h2 {
+    font-weight: 400;
 
+}
 .header-container aside h3 {
     margin: 0;
     font-size: 90%;
@@ -550,13 +565,35 @@ h3 {
     background-color: white;
     padding: 1rem;
     transition: height 0.2s ease-in-out;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.164);
+    border-radius: 1rem;
+}
+
+.empty-playlists {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.5rem;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    font-weight: 700;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.empty-playlists.hide{
+    position: absolute;
+    opacity: 0;
+}
+#generate-playlist-button {
+    border: 0;
+    background-color: var(--green);
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
 }
 
-#generate-playlist-button {
-    border: 0;
-    background-color: #04D94F;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+#generate-playlist-button:hover {
+    background-color: var(--blue);
 }
 
 /* Estilos para el scroll */
@@ -639,8 +676,8 @@ h3 {
     width: 20%;
     min-width: 50px;
     height: 50px;
-    border-radius: 5px;
-    background-color: black;
+    border-radius: 1rem;
+    background-color: rgb(0, 0, 0, 0.8);
     border: none;
     font-weight: 600;
     display: flex;
@@ -695,14 +732,14 @@ h3 {
     text-align: center;
     cursor: pointer;
     color: white;
-    background-color: black;
+    background-color: rgb(0, 0, 0, 0.8);
     outline: none;
     border: white;
     height: 50px;
     font-size: clamp(1rem, 2vw, 1.3rem);
     width: 80%;
     min-width: 70px;
-    border-radius: 5px;
+    border-radius: 1rem;
 }
 
 .playlist-container li div select option {
@@ -757,7 +794,7 @@ h3 {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background-color: #0084EC;
+    background-color: var(--blue);
     position: relative;
 }
 
@@ -851,13 +888,17 @@ main {
         transition: background-color 0.3s ease;
         font-size: clamp(1rem, 2vw, 1.3rem);
     }
+
+    #playlist-section h1 {
+        text-align: center;
+    }
     .header-container aside {
         justify-content: space-between;
     }
+
     .header-container {
         grid-template-columns: 1fr;
         gap: 1rem;
         min-width: 2rem;
     }
 }
-

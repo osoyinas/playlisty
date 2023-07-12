@@ -37,31 +37,33 @@
 </section>
 <section class="curved"></section>
 <section id="playlist-section">
+  <h1>Your playlist items</h1>
+  <ul class="playlist-container">
+    <div class="empty-playlists">Add tracks, artists or albums.</div>
+  </ul>
   <header class="header-container">
     <aside>
       <div class="info-box">
+        <h3>Artists:</h3>
         <h2 id="artists-n">0</h2>
-        <h3>Artists</h3>
       </div>
       <div class="info-box">
+        <h3>Albums:</h3>
         <h2 id="albums-n">0</h2>
-        <h3>Albums</h3>
       </div>
       <div class="info-box">
+        <h3>Tracks:</h3>
         <h2 id="tracks-n">0</h2>
-        <h3>Tracks</h3>
       </div>
       <div class="info-box">
+        <h3>Total:</h3>
         <h2 id="total-n">0</h2>
-        <h3>Total</h3>
       </div>
     </aside>
     <button id="generate-playlist-button" class="fancy-button">
       Generate playlist
     </button>
   </header>
-  <ul class="playlist-container">
-  </ul>
 </section>
 <script src="{% static 'js/create-playlist.js' %}"></script>
 {% endblock %}

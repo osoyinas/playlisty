@@ -7,7 +7,7 @@ const generatePlaylistButton = document.getElementById("generate-playlist-button
 const playlistContainer = document.querySelector('.playlist-container')
 const selectMenu = document.getElementById("select-menu")
 const typeToSearchDisplay = document.querySelector('.display-results')
-const emptyPlaylist = document.querySelector('.playlist-empty')
+const emptyPlaylist = document.querySelector('.empty-playlists')
 var items_ids = []  
 var count = 0; //playlist items count
 var timer = null //timer to delay the requests
@@ -91,7 +91,7 @@ function addToResultsItems(result) {
 }
 //Adds an item to the playlist container with its own options depending on the item
 function addItemToPlaylistContainer(name, id, type, image, url) {
-    // emptyPlaylist.classList.add('hide')
+    emptyPlaylist.classList.add('hide')
     if (items_ids.includes(id)){
         return;
     }
@@ -227,7 +227,8 @@ function deleteElement(button) {
     setTimeout(() => {
         listItem.remove();
         if (items_ids.length == 0){
-            // emptyPlaylist.classList.remove('hide')
+            console.log("a");
+            emptyPlaylist.classList.toggle('hide')
         }
     }, 400);
 
