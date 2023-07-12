@@ -41,7 +41,6 @@ async function fetchData() {
     const response = await fetch(`./getitem/${str}/${getCurrentType()}`); //peticion GET
     const data = await response.json();
     if (data.status == "success") {
-        console.log(data);
         updateResults(data)
     }
     else if (data.status == "error") {
@@ -91,17 +90,16 @@ function addToResultsItems(result) {
 }
 //Adds an item to the playlist container with its own options depending on the item
 function addItemToPlaylistContainer(name, id, type, image, url) {
+    let emptyPlaylist = document.querySelector('.empty-playlists')
     emptyPlaylist.classList.add('hide')
-    setTimeout(()=> {
-        emptyPlaylist.remove()
-    }, 400)
     if (items_ids.includes(id)) {
         return;
     }
     items_ids.push(id)
     count += 1;
     let content =
-        `<li id-value="${id}" type-value="${type}" data-url="${url}">
+        `
+        <li id-value="${id}" type-value="${type}" data-url="${url}">
             <div class="left">
                 <img src="${image}" alt="">
                     <div class="name-type-container">
@@ -153,12 +151,11 @@ function addItemToPlaylistContainer(name, id, type, image, url) {
                 </li>
                 `
     domTotalNumber.textContent = albumsNumber + tracksNumber + artistsNumber
-    playlistContainer.innerHTML += content;
-    var item = document.querySelector('.playlist-container li[id-value="' + id + '"]');
     setTimeout(() => {
-        item.classList.add('show')
-    }, 400);
-
+        playlistContainer.innerHTML += content;
+        var item = document.querySelector('.playlist-container li[id-value="' + id + '"]');
+        setTimeout(() => {item.classList.add('show');},400)
+    }, 400)
 }
 
 
@@ -203,6 +200,7 @@ function deleteElement(button) {
     setTimeout(() => {
         listItem.remove();
         if (items_ids.length == 0) {
+            let emptyPlaylist = document.querySelector('.empty-playlists')
             emptyPlaylist.classList.remove('hide')
         }
     }, 400);
