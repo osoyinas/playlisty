@@ -8,20 +8,20 @@ const playlistContainer = document.querySelector('.playlist-container')
 const selectMenu = document.getElementById("select-menu")
 const typeToSearchDisplay = document.querySelector('.display-results')
 const emptyPlaylist = document.querySelector('.empty-playlists')
-var items_ids = []  
+const domArtistsNumber = document.getElementById('artists-n')
+const domAlbumsNumber = document.getElementById('albums-n')
+const domTracksNumber = document.getElementById('tracks-n')
+const domTotalNumber = document.getElementById('total-n')
+
+var items_ids = []
 var count = 0; //playlist items count
 var timer = null //timer to delay the requests
 var artistsNumber = 0
 var albumsNumber = 0
 var tracksNumber = 0
-const domArtistsNumber = document.getElementById('artists-n')
-const domAlbumsNumber = document.getElementById('albums-n')
-const domTracksNumber = document.getElementById('tracks-n')
-const domTotalNumber = document.getElementById('total-n')
+
 //User typed in search input
-searchInput.addEventListener('input', function (event) {
-    startTimerAndFetch();
-});
+searchInput.addEventListener('input', () => startTimerAndFetch());
 
 
 // Count 500ms and if the user hasnt typed again, fetch. If not, it restarts the timer
@@ -84,7 +84,7 @@ function addToResultsItems(result) {
     //track doesnt contain images
     image = result.images[0].url
     resultsWrapper.innerHTML +=
-        `<li id-value="${result.id}" type-value="${result.type}" data-url="${result.external_urls.spotify}"  >
+        `<li id-value="${result.id}" type-value="${result.type}" data-url="${result.external_urls.spotify}">
         <img src="${image}" alt="${result.name}">
         ${result.name}
     </li>`
@@ -92,7 +92,10 @@ function addToResultsItems(result) {
 //Adds an item to the playlist container with its own options depending on the item
 function addItemToPlaylistContainer(name, id, type, image, url) {
     emptyPlaylist.classList.add('hide')
-    if (items_ids.includes(id)){
+    setTimeout(()=> {
+        emptyPlaylist.remove()
+    }, 400)
+    if (items_ids.includes(id)) {
         return;
     }
     items_ids.push(id)
@@ -106,10 +109,10 @@ function addItemToPlaylistContainer(name, id, type, image, url) {
                         <p class="type">${type}</p>
                     </div>  
             </div>
-    `
+        `
     switch (type) {
         case "artist":
-            artistsNumber+=1
+            artistsNumber += 1
             domArtistsNumber.textContent = artistsNumber
             content +=
                 `<div class="right">
@@ -120,7 +123,7 @@ function addItemToPlaylistContainer(name, id, type, image, url) {
             break;
 
         case "track":
-            tracksNumber+=1
+            tracksNumber += 1
             domTracksNumber.textContent = tracksNumber
             content +=
                 `<div class="right">
@@ -131,7 +134,7 @@ function addItemToPlaylistContainer(name, id, type, image, url) {
             break;
 
         case "album":
-            albumsNumber+=1
+            albumsNumber += 1
             domAlbumsNumber.textContent = albumsNumber
             content +=
                 `<div class="right">
@@ -141,7 +144,6 @@ function addItemToPlaylistContainer(name, id, type, image, url) {
             break;
     }
 
-
     content += `
                     <button class="button" onclick="deleteElement(this)">
                     <svg viewBox="0 0 448 512" class="svgIcon"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path></svg>
@@ -150,7 +152,6 @@ function addItemToPlaylistContainer(name, id, type, image, url) {
                 </div>
                 </li>
                 `
-                //<a class="right-icon" href="${url}" target="_blank" rel="noreferrer noopener" alt="${name} on Spotify"><img src="/static/svg/Spotify_Icon_RGB_Black.png" alt=""></a>
     domTotalNumber.textContent = albumsNumber + tracksNumber + artistsNumber
     playlistContainer.innerHTML += content;
     var item = document.querySelector('.playlist-container li[id-value="' + id + '"]');
@@ -164,7 +165,7 @@ function addItemToPlaylistContainer(name, id, type, image, url) {
 //Generate playlist button clicked, 
 generatePlaylistButton.addEventListener('click', (e) => {
     e.preventDefault();
-    if (items_ids.length == 0){
+    if (items_ids.length == 0) {
         alert("Add items to your playlist!");
         return;
     }
@@ -178,36 +179,11 @@ generatePlaylistButton.addEventListener('click', (e) => {
             option: item.querySelector('select').value
         }
         selectedItems.name += item.querySelector(".name").textContent.trim() + ", "
-        selectedItems.items.push(object);
+        selectedItems.items.push(object)
     });
-    console.log(selectedItems);
-    let queryString = encodeURIComponent(JSON.stringify(selectedItems));
-    window.location.href =  '/createplaylist/?data=' + queryString;
-    return;
-    selectedItems.name = selectedItems.name.slice(0, 80).slice(0, -1) + "..."
-    let url = "/getplaylist/"
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrf_token
-        },
-        body: JSON.stringify(selectedItems)
-    })
-        .then(
-            response => response.json()
-        ).then(data => {
-            if (data.message == "failed") {
-                console.log("Error ocurred");
-                return;
-            }
-            window.location.href = data.url
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    selectedItems.items = []
-    selectedItems.name = ""
+    console.log(selectedItems)
+    let queryString = encodeURIComponent(JSON.stringify(selectedItems))
+    window.location.href = '/createplaylist/?data=' + queryString
 });
 
 function getCurrentType() {
@@ -226,9 +202,8 @@ function deleteElement(button) {
     listItem.classList.remove('show')
     setTimeout(() => {
         listItem.remove();
-        if (items_ids.length == 0){
-            console.log("a");
-            emptyPlaylist.classList.toggle('hide')
+        if (items_ids.length == 0) {
+            emptyPlaylist.classList.remove('hide')
         }
     }, 400);
 

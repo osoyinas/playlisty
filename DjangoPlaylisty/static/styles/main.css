@@ -355,6 +355,19 @@ body {
 }
 
 /* CREATE PLAYLIST */
+#create-playlist {
+    min-height: 30rem;
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: var(--blue);
+    position: relative;
+    border-bottom-left-radius: 50% 21%;
+    border-bottom-right-radius: 50% 21%;
+}
 #create-playlist .container {
     display: grid;
     width: 95%;
@@ -381,17 +394,6 @@ h3 {
     margin: 2rem;
 }
 
-#create-playlist {
-    min-height: 20rem;
-    height: auto;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    background-color: var(--blue);
-    position: relative;
-}
 
 .results-container {
     opacity: 0;
@@ -508,7 +510,8 @@ h3 {
     align-items: center;
     min-height: 30rem;
     height: 50vh;
-    margin: 4rem 0;
+
+    margin: 1rem 0;
     padding: 0 1rem;
 }
 
@@ -554,6 +557,7 @@ h3 {
 }
 
 .playlist-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: min(50rem, 100%);
@@ -566,7 +570,6 @@ h3 {
     padding: 1rem;
     transition: height 0.2s ease-in-out;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.164);
-    border-radius: 1rem;
 }
 
 .empty-playlists {
@@ -574,16 +577,17 @@ h3 {
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 1.5rem;
-    width: 100%;
-    height: 100%;
+    font-size: 1.2rem;
+    width: auto;
     opacity: 0.7;
     font-weight: 700;
     transition: opacity 0.4s ease-in-out;
+    bottom: 68%;
+    position: absolute;
+    z-index: 1000;
 }
 
 .empty-playlists.hide{
-    position: absolute;
     opacity: 0;
 }
 #generate-playlist-button {
@@ -599,16 +603,19 @@ h3 {
 /* Estilos para el scroll */
 .playlist-container::-webkit-scrollbar {
     width: 8px;
+    height: 100px;
     /* Ancho del scroll */
 }
 
 
 .playlist-container::-webkit-scrollbar-thumb {
     background-color: black;
+    opacity: 0.9;
+    border-radius: 5px;
 }
 
 .playlist-container::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
+    cursor: pointer;
     /* Color del thumb al pasar el cursor */
 }
 
@@ -768,7 +775,6 @@ h3 {
 
 .playlist-empty.hide {
     opacity: 0;
-
 }
 
 .right-icon {
@@ -851,7 +857,7 @@ main {
 
 
 @media (max-width: 768px) {
-    .results-container {
+    /* .results-container {
         min-height: 0;
         opacity: 0;
         transition: 0.4s opacity ease-in-out;
@@ -887,7 +893,7 @@ main {
         font-weight: bold;
         transition: background-color 0.3s ease;
         font-size: clamp(1rem, 2vw, 1.3rem);
-    }
+    } */
 
     #playlist-section h1 {
         text-align: center;
@@ -900,5 +906,10 @@ main {
         grid-template-columns: 1fr;
         gap: 1rem;
         min-width: 2rem;
+    }
+    #create-playlist {
+        min-height: 15rem;
+        border-bottom-left-radius: 50% 11%;
+        border-bottom-right-radius: 50% 11%;
     }
 }
