@@ -560,7 +560,7 @@ h3 {
     position: relative;
     display: flex;
     flex-direction: column;
-    width: min(50rem, 100%);
+    width: min(50rem, 95%);
     gap: 5px;
     overflow-y: scroll;
     justify-content: flex-start;
@@ -795,21 +795,6 @@ h3 {
     height: 8vw;
 }
 
-#top-custom-playlist {
-    height: auto;
-    height: auto;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    background-color: var(--blue);
-    position: relative;
-}
-
-#top-custom-playlist h1 {
-    color: white;
-}
 
 #custom-playlist {
     display: flex;
@@ -818,8 +803,12 @@ h3 {
     height: auto;
     justify-content: space-around;
     width: 100%;
+    margin-bottom: 2rem;
 }
-
+#custom-playlist .playlist-container {
+    max-height: 581px;
+    min-height: 500px;
+}
 main {
     width: 100%;
 }
@@ -916,5 +905,8 @@ main {
         min-height: 15rem;
         border-bottom-left-radius: 50% 11%;
         border-bottom-right-radius: 50% 11%;
+    }
+    #generate-playlist-button {
+        margin: 0 1rem;
     }
 }

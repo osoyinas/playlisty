@@ -197,6 +197,22 @@ function deleteElement(button) {
     items_ids.pop(listItem.getAttribute('id-value'))
     // Elimina el elemento <li> de la lista
     listItem.classList.remove('show')
+    type = listItem.getAttribute('type-value')
+    switch(type){
+        case ('artist'):
+            artistsNumber--
+            domArtistsNumber.textContent = artistsNumber
+            break
+        case ('album'):
+            albumsNumber--
+            domAlbumsNumber.textContent = albumsNumber
+            break
+        case('track'):
+            tracksNumber--
+            domTracksNumber.textContent = tracksNumber
+            break
+    }
+    domTotalNumber.textContent = artistsNumber + albumsNumber + tracksNumber
     setTimeout(() => {
         listItem.remove();
         if (items_ids.length == 0) {
