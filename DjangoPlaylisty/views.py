@@ -93,15 +93,20 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
 
             duration = 0
             for track in tracks_to_add:
-                duration += track['duration_ms']
-            duration_secs = int((duration/1000)%60)
-            duration_mins = int((duration/1000)//60)
+                duration += track["duration_ms"]
+            duration_secs = int((duration / 1000) % 60)
+            duration_mins = int((duration / 1000) // 60)
         except ValueError as v:
             data = {"message": "failed"}
         return render(
             request,
             "custom_playlist.html",
-            {"data": tracks_to_add, 'length':len(tracks_to_add),"duration_mins": duration_mins,"duration_secs": duration_secs},
+            {
+                "data": tracks_to_add,
+                "length": len(tracks_to_add),
+                "duration_mins": duration_mins,
+                "duration_secs": duration_secs,
+            },
         )
     return render(request, "create_playlist.html", {})
 
@@ -136,10 +141,26 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
         tracks_to_add = list(data["items"])
         url = get_playlist_url(sp=sp, playlist_id=playlist_id)
         add_tracks_to(sp=sp, playlist_id=playlist_id, track_ids=tracks_to_add)
-        data = {"message": "Success", "url": url}
+        data = {"message": "Success", "url": url, "id": playlist_id}
+        print(data)
     except ValueError as v:
         data = {"message": "failed"}
     return JsonResponse(data)
+
+
+def generated_playlist(request: HttpRequest) -> JsonResponse:
+    if request.method != "GET":
+        return Http404
+    query_string = request.GET.get("data", "")
+    if query_string:
+        decoded_query = urllib.parse.unquote(query_string)
+        data = json.loads(decoded_query)
+        print(data)
+        return render(
+            request,
+            "generated_playlist.html",
+            {"id": data["id"]},
+        )
 
 
 def get_item(request: HttpRequest, item_str: str, item_type: str) -> JsonResponse:

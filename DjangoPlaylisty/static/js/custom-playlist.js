@@ -8,7 +8,6 @@ var items_ids = []
 playlistItems.forEach((item) => {
     items_ids.push(item.getAttribute('id-value'));
 })
-console.log(items_ids);
 
 function deleteElement(button) {
     // Obtén el elemento <li> que contiene el botón
@@ -52,7 +51,8 @@ createPlaylistButton.addEventListener('click', (e) => {
                 return;
             }
             window.open(data.url, "_blank");
-            window.location.href = "/"
+            let queryString = encodeURIComponent(JSON.stringify({url: data.url, id: data.id}))
+            window.location.href = '/generatedplaylist/?data=' + queryString
         })
         .catch(error => {
             console.error('Error:', error);

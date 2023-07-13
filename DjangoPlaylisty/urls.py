@@ -29,7 +29,7 @@ urlpatterns = [
         views.get_item,
         name="getitem",
     ),
-    path("getloginstatus/", views.getLoginStatus, name="getloginstatus"),
+    path("generatedplaylist/", views.generated_playlist, name="generatedplaylist"),
     path("ups/", views.not_white_listed, name="notwhitelisted"),
     path("whylogin/", views.why_login, name="whylogin"),
 

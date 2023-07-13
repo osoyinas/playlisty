@@ -317,7 +317,8 @@ body {
 #create-playlist h1,
 #playlist-section h1,
 #top-custom-playlist h1,
-#custom-playlist h1 {
+#custom-playlist h1,
+#generated-playlist h1 {
     font-size: clamp(2.5rem, 3vw, 5rem);
     margin: 2rem;
     text-align: center;
@@ -842,7 +843,18 @@ main {
 .arrow {
     opacity: 0;
 }
-
+#generated-playlist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: auto;
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+.custom-container {
+    width: min(98%, 50rem);
+}
 @media (max-width: 1024px) {
 
     #banner {
