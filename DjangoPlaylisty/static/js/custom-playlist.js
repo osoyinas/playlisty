@@ -50,7 +50,6 @@ createPlaylistButton.addEventListener('click', (e) => {
                 console.log("Error ocurred");
                 return;
             }
-            window.open(data.url, "_blank");
             let queryString = encodeURIComponent(JSON.stringify({url: data.url, id: data.id}))
             window.location.href = '/generatedplaylist/?data=' + queryString
         })
