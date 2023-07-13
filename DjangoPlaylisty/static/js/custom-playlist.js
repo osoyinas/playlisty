@@ -1,7 +1,7 @@
 const csrf_token = document.querySelector('input[name="csrfmiddlewaretoken"]').value
 const playlistItems = document.querySelectorAll('.playlist-container li')
-const createPlaylistButton = document.getElementById('create-playlist-button')
-const nameInputValue = document.getElementById('search-input')
+const createPlaylistButton = document.getElementById('generate-playlist-button')
+const nameInputValue = document.getElementById('name-input')
 
 var items_ids = []
 

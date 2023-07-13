@@ -537,6 +537,9 @@ h3 {
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
+#custom-playlist .header-container aside {
+    display: flex;
+}
 .header-container aside .info-box {
     display: flex;
     justify-content: center;
@@ -544,6 +547,7 @@ h3 {
     padding: 1rem;
     min-width: 5.5rem;
     gap: 0.5rem;
+    text-wrap: nowrap;
 }
 
 .header-container aside .info-box h2 {
@@ -806,9 +810,26 @@ h3 {
     width: 100%;
     margin-bottom: 2rem;
 }
+
+.name-input-container {
+    display: flex;
+    width: min(50rem, 95%);
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.name-input-container input {
+    width: 100%;
+}
+.name-input-container h2 {
+    font-weight: 300;
+    font-size: 1.2rem;
+}
 #custom-playlist .playlist-container {
-    max-height: 581px;
-    min-height: 500px;
+    min-height: 83px;
+    height: 50vh;    
 }
 main {
     width: 100%;
@@ -850,44 +871,6 @@ main {
 
 
 @media (max-width: 768px) {
-    /* .results-container {
-        min-height: 0;
-        opacity: 0;
-        transition: 0.4s opacity ease-in-out;
-        align-items: center;
-        width: 95%;
-        max-width: 50rem;
-        overflow-y: auto;
-    }
-
-    .results-container ul {
-        justify-content: center;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        flex-wrap: nowrap;
-        flex-direction: column;
-        align-items: normal;
-    }
-
-    #create-playlist .results-container li img {
-        border-radius: 0;
-    }
-
-    #create-playlist .results-container li {
-        height: 50px;
-        border-radius: 0;
-        padding: 8px;
-        margin: 5px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-        font-size: clamp(1rem, 2vw, 1.3rem);
-    } */
-
     #playlist-section h1 {
         text-align: center;
     }

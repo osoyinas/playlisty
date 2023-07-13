@@ -4,6 +4,10 @@
 <section id="custom-playlist">
     <h1>Your playlist preview</h1>
     <section id="custom-playlist">
+        <div class="name-input-container">
+            <h2>Name:</h2>
+            <input id="name-input" type="text" name="text" class="input" placeholder="Created with Playlisty" />
+        </div>
         <main class="playlist-container">
             {% for item in data %}
             <li id-value="{{ item.id }}" class="show">
@@ -35,16 +39,12 @@
         <header class="header-container">
             <aside>
                 <div class="info-box">
-                    <h2 id="artists-n">0</h2>
-                    <h3>Artists</h3>
+                    <h3>Tracks:</h3>
+                    <h2>{{length}}</h2>
                 </div>
                 <div class="info-box">
-                    <h2 id="albums-n">0</h2>
-                    <h3>Albums</h3>
-                </div>
-                <div class="info-box">
-                    <h2 id="tracks-n">0</h2>
-                    <h3>Tracks</h3>
+                    <h3>Duration:</h3>
+                    <h2>{{duration_mins}} mins {{duration_secs}} s</h2>
                 </div>
             </aside>
             <button id="generate-playlist-button" class="fancy-button">

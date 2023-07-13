@@ -56,30 +56,20 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     set_prepath(request)
     if not logged_in:
         return redirect("home")
-    query_string = request.GET.get('data', '')
-    if (query_string):
+    query_string = request.GET.get("data", "")
+    if query_string:
         decoded_query = urllib.parse.unquote(query_string)
         data = json.loads(decoded_query)
         try:
-            token_info = get_token(request) #get token api
+            token_info = get_token(request)  # get token api
             data = json.loads(decoded_query)
             sp = spotipy.Spotify(auth=token_info["access_token"])
-            name = str(data['name'])
-            desc = "A playlists generated with playlisty.app"
-            public = True
-            collab = False
             items = list(data["items"])
-            artists = []
-            tracks = []
-            albums = []
-            for item in items:
-                if item["type"] == "track":
-                    tracks.append(item)
-                elif item["type"] == "artist":
-                    artists.append(item)
-                elif item["type"] == "album":
-                    albums.append(item)
+            artists = list(filter(lambda item: item["type"] == "artist", items))
+            tracks = list(filter(lambda item: item["type"] == "track", items))
+            albums = list(filter(lambda item: item["type"] == "album", items))
             tracks_to_add = []
+
             for artist in artists:
                 artist_tracks = []
                 if artist["option"] == "top-tracks":
@@ -89,16 +79,30 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
                         sp=sp, artist_id=artist["id"]
                     )
                 tracks_to_add.extend(artist_tracks)
+
             for album in albums:
                 album_tracks = get_all_tracks_from_album(sp=sp, album_id=album["id"])
                 tracks_to_add.extend(album_tracks)
+
             for track in tracks:
                 tracks_to_add.append(sp.track(track["id"]))
                 if track["option"] == "similar-tracks":
-                    tracks_to_add.extend(get_similar_tracks(sp=sp,track_id=track['id']))
+                    tracks_to_add.extend(
+                        get_similar_tracks(sp=sp, track_id=track["id"])
+                    )
+
+            duration = 0
+            for track in tracks_to_add:
+                duration += track['duration_ms']
+            duration_secs = int((duration/1000)%60)
+            duration_mins = int((duration/1000)//60)
         except ValueError as v:
             data = {"message": "failed"}
-        return render(request, "custom_playlist.html", {'data': tracks_to_add})        
+        return render(
+            request,
+            "custom_playlist.html",
+            {"data": tracks_to_add, 'length':len(tracks_to_add),"duration_mins": duration_mins,"duration_secs": duration_secs},
+        )
     return render(request, "create_playlist.html", {})
 
 
@@ -114,14 +118,14 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
 
     set_prepath(request)
     if request.method != "POST":
-        return;
+        return
 
     try:
-        token_info = get_token(request) #get token api
-        data = json.loads(request.body.decode("utf-8")) #get body data 
+        token_info = get_token(request)  # get token api
+        data = json.loads(request.body.decode("utf-8"))  # get body data
         sp = spotipy.Spotify(auth=token_info["access_token"])
-        name = str(data['name'])
-        if (name == ""):
+        name = str(data["name"])
+        if name == "":
             name = "A playlist created with Playlisty app"
 
         desc = "A playlists generated with playlisty.app"
@@ -129,7 +133,7 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
         collab = False
         items = list(data["items"])
         playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
-        tracks_to_add = list(data['items'])
+        tracks_to_add = list(data["items"])
         url = get_playlist_url(sp=sp, playlist_id=playlist_id)
         add_tracks_to(sp=sp, playlist_id=playlist_id, track_ids=tracks_to_add)
         data = {"message": "Success", "url": url}
@@ -152,14 +156,14 @@ def get_item(request: HttpRequest, item_str: str, item_type: str) -> JsonRespons
     """
     logged_in = check_logged_in(request)
     if item_str == "undefined" or not logged_in:
-        return JsonResponse({'status': "error", 'reason': "Not logged in"})
+        return JsonResponse({"status": "error", "reason": "Not logged in"})
     token_info = get_token(request)
     try:
         sp = spotipy.Spotify(auth=token_info["access_token"])
         results = sp.search(item_str, type=item_type)
     except:
         print("Error")
-        return JsonResponse(data={"status": "error", 'reason': "Not whitelisted"})
+        return JsonResponse(data={"status": "error", "reason": "Not whitelisted"})
     items = results[item_type + "s"]["items"]
     items_list = []
     max_items = 6
@@ -167,6 +171,7 @@ def get_item(request: HttpRequest, item_str: str, item_type: str) -> JsonRespons
         items_list.append(add_image_to_item(item))
     data = {"status": "success", "results": items_list[:max_items]}
     return JsonResponse(data=data)
+
 
 def getLoginStatus(request: HttpRequest):
     data = {"status": check_logged_in(request)}
@@ -176,8 +181,11 @@ def getLoginStatus(request: HttpRequest):
 def not_white_listed(request: HttpRequest):
     return render(request, "not_whitelisted.html")
 
+
 def why_login(request: HttpRequest):
     return render(request, "why_log_in.html")
+
+
 # Aux functions
 
 
