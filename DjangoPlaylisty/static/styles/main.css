@@ -541,6 +541,7 @@ h3 {
 #custom-playlist .header-container aside {
     display: flex;
 }
+
 .header-container aside .info-box {
     display: flex;
     justify-content: center;
@@ -810,6 +811,7 @@ h3 {
     justify-content: space-around;
     width: 100%;
     margin-bottom: 2rem;
+    transition: 0.5s opacity ease-in-out;
 }
 
 .name-input-container {
@@ -824,14 +826,42 @@ h3 {
 .name-input-container input {
     width: 100%;
 }
+
 .name-input-container h2 {
     font-weight: 300;
     font-size: 1.2rem;
 }
+
 #custom-playlist .playlist-container {
     min-height: 83px;
-    height: 50vh;    
+    height: 50vh;
 }
+
+#custom-playlist.nodisplay {
+    display: none;
+}
+
+#custom-playlist.opacity {
+    opacity: 0;
+}
+
+.loader-container {
+    position: absolute;
+    display: flex;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.loader-container.show {
+    opacity: 1;
+}
+
 main {
     width: 100%;
 }
@@ -843,6 +873,7 @@ main {
 .arrow {
     opacity: 0;
 }
+
 #generated-playlist {
     display: flex;
     flex-direction: column;
@@ -852,9 +883,21 @@ main {
     gap: 2rem;
     margin-bottom: 4rem;
 }
+
 .custom-container {
     width: min(98%, 50rem);
 }
+
+.buttons-container {
+    width: min(98%, 50rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.buttons-container .fancy-button {
+    width: 48%;
+}
+
 @media (max-width: 1024px) {
 
     #banner {
@@ -902,7 +945,20 @@ main {
         border-bottom-left-radius: 50% 11%;
         border-bottom-right-radius: 50% 11%;
     }
+
     #generate-playlist-button {
         margin: 0 1rem;
+    }
+
+    .buttons-container {
+        width: min(98%, 50rem);
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+    }
+    .buttons-container .fancy-button {
+        width: 100%;
     }
 }

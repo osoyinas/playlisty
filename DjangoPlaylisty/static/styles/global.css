@@ -66,6 +66,7 @@ select {
     font-family: 'Circular', sans-serif;
 
 }
+
 option {
     font-family: 'Circular', sans-serif;
 
@@ -79,9 +80,10 @@ option {
     height: 84px;
     position: relative;
     margin-top: 5rem;
-  }
-  
-  .loader:before , .loader:after {
+}
+
+.loader:before,
+.loader:after {
     content: "";
     position: absolute;
     left: 50%;
@@ -90,20 +92,65 @@ option {
     height: 64px;
     border-radius: 50%;
     background: #FFF;
-    transform: translate(-50% , -100%)  scale(0);
+    transform: translate(-50%, -100%) scale(0);
     animation: push_401 2s infinite linear;
-  }
-  
-  .loader:after {
+}
+
+.loader:after {
     animation-delay: 1s;
-  }
-  
-  @keyframes push_401 {
-    0% , 50% {
-      transform: translate(-50% , 0%)  scale(1)
+}
+
+@keyframes push_401 {
+
+    0%,
+    50% {
+        transform: translate(-50%, 0%) scale(1)
     }
-  
+
     100% {
-      transform: translate(-50%, -100%) scale(0)
+        transform: translate(-50%, -100%) scale(0)
     }
-  }
+}
+
+.loading-wave {
+    width: 300px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.loading-bar {
+    width: 20px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #3498db;
+    border-radius: 5px;
+    animation: loading-wave-animation 1s ease-in-out infinite;
+}
+
+.loading-bar:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.loading-bar:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.loading-bar:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+@keyframes loading-wave-animation {
+    0% {
+        height: 10px;
+    }
+
+    50% {
+        height: 50px;
+    }
+
+    100% {
+        height: 10px;
+    }
+}

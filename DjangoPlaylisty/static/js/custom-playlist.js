@@ -29,6 +29,10 @@ function deleteElement(button) {
 
 createPlaylistButton.addEventListener('click', (e) => {
     e.preventDefault();
+    const section = document.querySelector('#custom-playlist')
+    section.classList.add('opacity')
+    const loader = document.querySelector('.loader-container')
+    loader.classList.add('show')
     if (items_ids.length == 0) {
         alert("Add items to your playlist!");
         return;
@@ -50,8 +54,11 @@ createPlaylistButton.addEventListener('click', (e) => {
                 console.log("Error ocurred");
                 return;
             }
-            let queryString = encodeURIComponent(JSON.stringify({url: data.url, id: data.id}))
-            window.location.href = '/generatedplaylist/?data=' + queryString
+            let queryString = encodeURIComponent(JSON.stringify({ url: data.url, id: data.id }))
+            setTimeout(() => {
+                window.location.href = '/generatedplaylist/?data=' + queryString
+            },4000)
+
         })
         .catch(error => {
             console.error('Error:', error);

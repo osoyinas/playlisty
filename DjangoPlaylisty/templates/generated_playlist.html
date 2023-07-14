@@ -8,6 +8,15 @@
             height="700" frameBorder="0" allowfullscreen=""
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
+    <div class="buttons-container">
+        <button class="fancy-button" id="home-button" url-data="/">
+            Home
+        </button>
+        <button class="fancy-button" id="create-playlist-button" url-data="/createplaylist">
+            Create playlist
+        </button>
+    </div>
+    <script src="{% static 'js/generated-playlist.js' %}"></script>
 </section>
 
 {% endblock %}
