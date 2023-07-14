@@ -27,16 +27,27 @@ function deleteElement(button) {
     }
 }
 
-createPlaylistButton.addEventListener('click', (e) => {
-    e.preventDefault();
+function turnOnLoader() {
     const section = document.querySelector('#custom-playlist')
     section.classList.add('opacity')
     const loader = document.querySelector('.loader-container')
     loader.classList.add('show')
+}
+
+function turnOffLoader() {
+    const section = document.querySelector('#custom-playlist')
+    section.classList.remove('opacity')
+    const loader = document.querySelector('.loader-container')
+    loader.classList.remove('show')
+}
+createPlaylistButton.addEventListener('click', (e) => {
+    e.preventDefault()
+    turnOnLoader()
     if (items_ids.length == 0) {
         alert("Add items to your playlist!");
         return;
     }
+
     let selectedItems = { name: nameInputValue.value, items: items_ids }
     let url = "/getplaylist/"
     fetch(url, {
@@ -50,6 +61,12 @@ createPlaylistButton.addEventListener('click', (e) => {
         .then(
             response => response.json()
         ).then(data => {
+            if (data.message == "not logged in") {
+                turnOffLoader()
+                let queryString = encodeURIComponent(JSON.stringify({ url:window.location.href}))
+                window.location.href= '/auth/?data=' + "hola"
+                return;
+            }
             if (data.message == "failed") {
                 console.log("Error ocurred");
                 return;

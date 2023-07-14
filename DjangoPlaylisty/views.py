@@ -28,12 +28,18 @@ def auth(request: HttpRequest) -> HttpResponse:
     Generates the API token to connect to Spotify's API, redirects to /callback with the token
     """
     try:
+        # query_string = request.GET.get("data", "")
+        # if query_string:
+        #     decoded_query = urllib.parse.unquote(query_string)
+        #     data = json.loads(decoded_query)
+        #     request.session['custom_playlist_url'] = data['url']
+        #     print(data['url'])
         auth_manager = create_spotify_oauth()
         auth_url = auth_manager.get_authorize_url()
         return redirect(auth_url)
     except:
         previus = request.session["pre_path"]
-        return redirect(previus)
+        return redirect('home')
 
 
 def callback(request: HttpRequest) -> HttpResponse:
@@ -52,18 +58,15 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
     """
     Renders create_playlist.html
     """
-    logged_in = check_logged_in(request)
     set_prepath(request)
-    if not logged_in:
-        return redirect("home")
+    # if not logged_in:
+    #     return redirect("home")
     query_string = request.GET.get("data", "")
     if query_string:
         decoded_query = urllib.parse.unquote(query_string)
         data = json.loads(decoded_query)
         try:
-            token_info = get_token(request)  # get token api
             data = json.loads(decoded_query)
-            sp = spotipy.Spotify(auth=token_info["access_token"])
             items = list(data["items"])
             artists = list(filter(lambda item: item["type"] == "artist", items))
             tracks = list(filter(lambda item: item["type"] == "track", items))
@@ -73,23 +76,19 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
             for artist in artists:
                 artist_tracks = []
                 if artist["option"] == "top-tracks":
-                    artist_tracks = get_top_tracks(sp=sp, artist_id=artist["id"])
+                    artist_tracks = get_top_tracks(artist_id=artist["id"])
                 elif artist["option"] == "all-tracks":
-                    artist_tracks = get_all_tracks_from_artist(
-                        sp=sp, artist_id=artist["id"]
-                    )
+                    artist_tracks = get_all_tracks_from_artist(artist_id=artist["id"])
                 tracks_to_add.extend(artist_tracks)
 
             for album in albums:
-                album_tracks = get_all_tracks_from_album(sp=sp, album_id=album["id"])
+                album_tracks = get_all_tracks_from_album(album_id=album["id"])
                 tracks_to_add.extend(album_tracks)
 
             for track in tracks:
-                tracks_to_add.append(sp.track(track["id"]))
+                tracks_to_add.append(get_track(track_id=track['id']))
                 if track["option"] == "similar-tracks":
-                    tracks_to_add.extend(
-                        get_similar_tracks(sp=sp, track_id=track["id"])
-                    )
+                    tracks_to_add.extend(get_similar_tracks(track_id=track["id"]))
 
             duration = 0
             for track in tracks_to_add:
@@ -124,7 +123,11 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
     set_prepath(request)
     if request.method != "POST":
         return
-
+    logged_in = check_logged_in(request=request)
+    data = {"message": ""}
+    if not logged_in:
+        data = {"message": "not logged in"}
+        return JsonResponse(data)
     try:
         token_info = get_token(request)  # get token api
         data = json.loads(request.body.decode("utf-8"))  # get body data
@@ -142,7 +145,6 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
         url = get_playlist_url(sp=sp, playlist_id=playlist_id)
         add_tracks_to(sp=sp, playlist_id=playlist_id, track_ids=tracks_to_add)
         data = {"message": "Success", "url": url, "id": playlist_id}
-        print(data)
     except ValueError as v:
         data = {"message": "failed"}
     return JsonResponse(data)
@@ -175,16 +177,10 @@ def get_item(request: HttpRequest, item_str: str, item_type: str) -> JsonRespons
     Returns:
         JsonResponse: JSON
     """
-    logged_in = check_logged_in(request)
-    if item_str == "undefined" or not logged_in:
-        return JsonResponse({"status": "error", "reason": "Not logged in"})
-    token_info = get_token(request)
     try:
-        sp = spotipy.Spotify(auth=token_info["access_token"])
-        results = sp.search(item_str, type=item_type)
+        results = searchItem(item_str, item_type)
     except:
-        print("Error")
-        return JsonResponse(data={"status": "error", "reason": "Not whitelisted"})
+        return Http404
     items = results[item_type + "s"]["items"]
     items_list = []
     max_items = 6
@@ -194,7 +190,7 @@ def get_item(request: HttpRequest, item_str: str, item_type: str) -> JsonRespons
     return JsonResponse(data=data)
 
 
-def getLoginStatus(request: HttpRequest):
+def get_login_status(request: HttpRequest):
     data = {"status": check_logged_in(request)}
     return JsonResponse(data=data)
 

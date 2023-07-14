@@ -1,11 +1,11 @@
 from django.http import HttpRequest
 from spotipy.oauth2 import SpotifyOAuth
-from django.contrib.sites.shortcuts import get_current_site
-from django.urls import reverse
 import os
 import time
 import spotipy
 import random
+from spotipy.oauth2 import SpotifyClientCredentials
+
 
 CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
 CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
@@ -50,6 +50,15 @@ def create_spotify_oauth() -> SpotifyOAuth:
         scope=SCOPE,
         redirect_uri=redir_url,
     )
+
+
+def searchItem(str: str, type: str):
+    client_credentials_manager = SpotifyClientCredentials(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET
+    )
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+    results = sp.search(str, type=type)
+    return results
 
 
 def is_expired(request: HttpRequest) -> bool:
@@ -116,7 +125,11 @@ def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, track_ids: list):
         sp.playlist_add_items(playlist_id=playlist_id, items=new_tracks)
 
 
-def get_top_tracks(sp: spotipy.Spotify, artist_id: str):
+def get_top_tracks(artist_id: str):
+    client_credentials_manager = SpotifyClientCredentials(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET
+    )
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
     tracks = []
     top_tracks = sp.artist_top_tracks(artist_id=artist_id)["tracks"]
     for track in top_tracks:
@@ -124,7 +137,12 @@ def get_top_tracks(sp: spotipy.Spotify, artist_id: str):
     return tracks
 
 
-def get_all_tracks_from_artist(sp: spotipy.Spotify, artist_id: str):
+def get_all_tracks_from_artist(artist_id: str):
+    client_credentials_manager = SpotifyClientCredentials(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET
+    )
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+
     fetch_albums = sp.artist_albums(artist_id=artist_id)
     albums = fetch_albums["items"]
     tracks = []
@@ -133,10 +151,10 @@ def get_all_tracks_from_artist(sp: spotipy.Spotify, artist_id: str):
         album_tracks = sp.album_tracks(limit=50, album_id=album_id)["items"]
         for track in album_tracks:
             # item.album.images.0.url
-            track['album'] = album
+            track["album"] = album
             artist_in_track = False
-            for artist in track['artists']:
-                if artist['id'] == artist_id:
+            for artist in track["artists"]:
+                if artist["id"] == artist_id:
                     artist_in_track = True
             if artist_in_track:
                 tracks.append(track)
@@ -144,16 +162,34 @@ def get_all_tracks_from_artist(sp: spotipy.Spotify, artist_id: str):
 
 
 def get_all_tracks_from_album(sp: spotipy.Spotify, album_id: str):
+    client_credentials_manager = SpotifyClientCredentials(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET
+    )
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+
     tracks = []
     album_tracks = sp.album_tracks(album_id=album_id, limit=50)["items"]
     album = sp.album(album_id=album_id)
     for track in album_tracks:
-        track['album'] = album
+        track["album"] = album
         tracks.append(track)
     return tracks
 
 
-def get_similar_tracks(sp: spotipy.Spotify, track_id: dict):
+def get_track(track_id: str):
+    client_credentials_manager = SpotifyClientCredentials(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET
+    )
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+    result = sp.track(track_id=track_id)
+    return result
+
+
+def get_similar_tracks(track_id: dict):
+    client_credentials_manager = SpotifyClientCredentials(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET
+    )
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
     seed_genres = []
     seed_artists = []
     seed_tracks = [track_id]

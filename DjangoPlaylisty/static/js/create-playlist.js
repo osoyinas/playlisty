@@ -45,7 +45,9 @@ async function fetchData() {
     }
     else if (data.status == "error") {
         if (data.reason == "Not whitelisted") window.location.href = "/ups"
-        else if (data.reason == "Not logged in") window.location.href = "/"
+        else if (data.reason == "Not logged in") {
+            console.log("HOLA");
+         }
     }
     else {
         window.location.href = "/"
@@ -154,7 +156,7 @@ function addItemToPlaylistContainer(name, id, type, image, url) {
     setTimeout(() => {
         playlistContainer.innerHTML += content;
         var item = document.querySelector('.playlist-container li[id-value="' + id + '"]');
-        setTimeout(() => {item.classList.add('show');},400)
+        setTimeout(() => { item.classList.add('show'); }, 400)
     }, 400)
 }
 
@@ -198,7 +200,7 @@ function deleteElement(button) {
     // Elimina el elemento <li> de la lista
     listItem.classList.remove('show')
     type = listItem.getAttribute('type-value')
-    switch(type){
+    switch (type) {
         case ('artist'):
             artistsNumber--
             domArtistsNumber.textContent = artistsNumber
@@ -207,7 +209,7 @@ function deleteElement(button) {
             albumsNumber--
             domAlbumsNumber.textContent = albumsNumber
             break
-        case('track'):
+        case ('track'):
             tracksNumber--
             domTracksNumber.textContent = tracksNumber
             break
