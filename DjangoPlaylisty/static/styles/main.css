@@ -883,7 +883,9 @@ main {
     gap: 2rem;
     margin-bottom: 4rem;
 }
-
+#generated-playlist h1{
+    color: black;
+}
 .custom-container {
     width: min(98%, 50rem);
 }
