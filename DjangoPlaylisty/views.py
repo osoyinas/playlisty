@@ -54,9 +54,10 @@ def callback(request: HttpRequest) -> HttpResponse:
     auth_manager = create_spotify_oauth()
     token = auth_manager.get_access_token(code=code, check_cache=False)
     request.session["token_auth"] = token
-    if request.session['back_url']:
-        print("devuelta al hangeo")
-        return redirect(request.session['back_url'])
+    back_url = request.session['back_url']
+    if back_url:
+        del request.session['back_url']
+        return redirect(back_url)
     return redirect(previus)
 
 def logout(request: HttpRequest) -> HttpResponse:
