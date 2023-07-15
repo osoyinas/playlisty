@@ -5,6 +5,7 @@
 ./DjangoPlaylisty.code-workspace
 DjangoPlaylisty.code-workspace
 
+.vscode
 ### Django ###
 *.log
 *.pot
