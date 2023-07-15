@@ -1,33 +1,76 @@
 {% load static %}
 <section id="login-to-start">
-  <h1>Generate playlists</h1>
+  <h2></h2>
   <div class="text-container">
+    <h2>Create a Spotify playlist with Playlisty</h2>
     <p>
       Creating a playlist on our web app is a breeze! We offer you a variety
       of options to curate your perfect Spotify playlist. Whether you prefer
       selecting
-      <span style="font-weight: bold">artists, albums, or individual songs</span>, we've got you covered. But first, you
-      will have to log in with your Spotify's account.
+      <span style="font-weight: bold">artists, albums, or individual songs</span>, we've got you covered.
     </p>
+    <div class="buttons-container">
+      <button class="fancy-button" id="create-playlist-button" data-url="/createplaylist">
+        <span class="button_top">Create playlist</span>
+      </button>
+    </div>
   </div>
-  {%if logged_in == False %}
-  <div class="buttons-container">
-    <button class="fancy-button" type="submit" data-url="/auth">
-      <span class="button_top">Log In with Spotify</span>
-    </button>
-    <button class="fancy-button" id="create-playlist-button" data-url="/createplaylist">
-      <span class="button_top">Create playlist</span>
-    </button>
+  <div class="text-container">
+    <section>
+      <h2>Log in with <span class="span-green"></span>Spotify</h2>
+      <p>Click on the "Log in with Spotify" button to connect your Spotify account. You can do it later when you're
+        ready
+        to
+        save your playlist.</p>
+      {%if logged_in == False %}
+      <div class="buttons-container">
+        <button class="fancy-button" type="submit" data-url="/auth">
+          <span class="button_top">Log In with Spotify</span>
+        </button>
+      </div>
+      {% else %}
+      <div class="buttons-container">
+        <button class="fancy-button" id="create-playlist-button" data-url="/logout">
+          <span class="button_top">Log out from Spotify</span>
+        </button>
+      </div>
+      {% endif %}
+    </section>
+
+    <section>
+      <h2>Search for Artists, Albums, or Tracks</h2>
+      <p>Using the search bar, enter the name of an artist, album, or track that you want to include in your playlist.
+      </p>
+      <img loading="lazy" src="{% static 'img/search_case.png' %}" alt="">
+    </section>
+
+
+    <section>
+      <h2>Artists</h2>
+      <p> To include the top 10 tracks of an artist, simply select the artist from the search results, and they will be
+        automatically added to your playlist.
+        If you want to include all tracks by an artist, select the artist and choose the "All Tracks" option.</p>
+      <img loading="lazy" src="{% static 'img/artist_item_showcase.png' %}" alt="">
+    </section>
+
+
+    <section>
+      <h2>Albums</h2>
+      <p>Select the desired album from the search results, and all tracks from that album will be added to your
+        playlist.
+      </p>
+      <img loading="lazy" src="{% static 'img/album_item_showcase.png' %}" alt="">
+    </section>
+
+    <section>
+      <h2>Tracks</h2>
+      <p>Choose a specific track from the search results, and it will be added to your playlist.
+        If you want to discover similar tracks to the one selected, choose the "Similar Tracks" option, and a collection
+        of
+        related songs will be added to your playlist.</p>
+      <img loading="lazy" src="{% static 'img/track_item_showcase.png' %}" alt="">
+    </section>
   </div>
-  {% else %}
-  <div class="buttons-container">
-    <button class="fancy-button" type="submit" data-url="/logout">
-      <span class="button_top">Log out from spotify</span>
-    </button>
-    <button class="fancy-button" id="create-playlist-button" data-url="/createplaylist">
-      <span class="button_top">Create playlist</span>
-    </button>
-  </div>
-  {% endif %}
+
 </section>
 <script src="{% static 'js/buttons.js' %}"></script>

@@ -299,8 +299,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 1rem;
+    gap: 5rem;
     margin-bottom: 10rem;
 }
 
@@ -333,12 +332,21 @@ body {
     width: 60%;
     max-width: 75ch;
     line-height: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
 }
 
+#login-to-start .text-container section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
 #login-to-start p {
     font-size: 1.4rem;
     width: 100%;
-    /* text-align: justify; */
+    text-align: center;
 }
 
 #login-to-start h2 {
@@ -351,6 +359,12 @@ body {
     margin-bottom: 0.5rem !important;
 }
 
+#login-to-start img {
+    width: 70%;
+    height: auto;
+    border-radius: 2rem;
+    margin: 2rem;
+}
 /* CREATE PLAYLIST */
 #create-playlist {
     min-height: 27rem;
@@ -891,8 +905,10 @@ main {
 .buttons-container {
     width: min(98%, 50rem);
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
 }
 .buttons-container .fancy-button {
     width: 48%;
@@ -916,16 +932,19 @@ main {
         width: 100%;
         padding: 0 2.5rem;
     }
-
     #login-to-start p {
-        text-align: left;
-        text-wrap: balance;
+        text-align: center;
         font-size: 1.5rem;
     }
 }
 
 
 @media (max-width: 768px) {
+    #login-to-start img {
+        width: 95%;
+        height: auto;
+        border-radius: 1rem;
+    }
     #playlist-section h1 {
         text-align: center;
     }

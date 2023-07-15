@@ -53,8 +53,8 @@ def callback(request: HttpRequest) -> HttpResponse:
     auth_manager = create_spotify_oauth()
     token = auth_manager.get_access_token(code=code, check_cache=False)
     request.session["token_auth"] = token
-    back_url = request.session['back_url']
-    if back_url:
+    if 'back_url' in request.session:
+        back_url = request.session['back_url']
         del request.session['back_url']
         return redirect(back_url)
     return redirect(previus)
