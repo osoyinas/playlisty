@@ -33,7 +33,6 @@ def auth(request: HttpRequest) -> HttpResponse:
         auth_manager = create_spotify_oauth()
         auth_url = auth_manager.get_authorize_url()
         if request.method == 'POST':
-            print("ES POST")
             back_url = json.loads(request.body.decode("utf-8"))
             request.session['back_url'] = back_url
             return JsonResponse({'auth_url': auth_url})
