@@ -7,6 +7,7 @@
 
 /* Butons */
 .fancy-button {
+    color: black;
     z-index: 100;
     padding: 10px 20px;
     border: 2.5px solid black;
@@ -14,7 +15,9 @@
     box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    transition: all .5s ease;
+    transition-property: background-color, letter-spacing, color, box-shadow;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
     height: clamp(60px, 5vw, 60px);
     font-size: clamp(16px, 2vw, 20px);
     text-transform: uppercase;
@@ -299,12 +302,6 @@ body {
     justify-content: center;
     gap: 1rem;
     margin-bottom: 10rem;
-}
-
-#login-to-start .buttons-container {
-    width: 60%;
-    max-width: 75ch;
-    margin: 2rem 0;
 }
 
 #login-form a {
