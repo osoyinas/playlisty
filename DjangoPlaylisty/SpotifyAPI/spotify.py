@@ -34,7 +34,7 @@ def get_token(request: HttpRequest) -> SpotifyOAuth:
 
 
 def create_spotify_oauth() -> SpotifyOAuth:
-    """Creates an SpotifyOAuth object with SCOPE = playlist-modify-private and redirects to the home page
+    """Creates an SpotifyOAuth object with SCOPE
 
     Args:
         request (HttpRequest):
@@ -52,7 +52,7 @@ def create_spotify_oauth() -> SpotifyOAuth:
     )
 
 
-def searchItem(str: str, type: str):
+def search_item(str: str, type: str):
     client_credentials_manager = SpotifyClientCredentials(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET
     )
@@ -161,7 +161,7 @@ def get_all_tracks_from_artist(artist_id: str):
     return tracks
 
 
-def get_all_tracks_from_album(sp: spotipy.Spotify, album_id: str):
+def get_all_tracks_from_album(album_id: str):
     client_credentials_manager = SpotifyClientCredentials(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET
     )

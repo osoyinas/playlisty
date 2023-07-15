@@ -178,7 +178,7 @@ def get_item(request: HttpRequest, item_str: str, item_type: str) -> JsonRespons
         JsonResponse: JSON
     """
     try:
-        results = searchItem(item_str, item_type)
+        results = search_item(item_str, item_type)
     except:
         return Http404
     items = results[item_type + "s"]["items"]
