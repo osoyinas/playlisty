@@ -76,6 +76,7 @@
 }
 
 .button_top {
+    text-wrap: wrap;
     color: inherit;
 }
 
@@ -363,7 +364,7 @@ body {
     width: 70%;
     height: auto;
     border-radius: 2rem;
-    margin: 2rem;
+    margin: 2rem 0;
 }
 /* CREATE PLAYLIST */
 #create-playlist {
@@ -930,7 +931,7 @@ main {
     #login-to-start .text-container {
         line-height: 2.2rem;
         width: 100%;
-        padding: 0 2.5rem;
+        padding: 0 1rem;
     }
     #login-to-start p {
         text-align: center;
@@ -941,7 +942,7 @@ main {
 
 @media (max-width: 768px) {
     #login-to-start img {
-        width: 95%;
+        width: 100%;
         height: auto;
         border-radius: 1rem;
     }
