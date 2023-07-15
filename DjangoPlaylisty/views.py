@@ -6,10 +6,10 @@ from DjangoPlaylisty.SpotifyAPI.spotify import *
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from django.http import Http404
+import urllib.parse
 
-
-CLIENT_ID = os.environ.get('SPOTIFY_CLIENT_ID')
-CLIENT_SECRET = os.environ.get('SPOTIFY_CLIENT_SECRET')
+CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
+CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
 
 
 def home(request: HttpRequest) -> HttpResponse:
@@ -19,7 +19,7 @@ def home(request: HttpRequest) -> HttpResponse:
     logged_in = check_logged_in(request)
     # store the current page
     set_prepath(request)
-    context = {'logged_in': logged_in}
+    context = {"logged_in": logged_in}
     return render(request, "home.html", context)
 
 
@@ -28,45 +28,86 @@ def auth(request: HttpRequest) -> HttpResponse:
     Generates the API token to connect to Spotify's API, redirects to /callback with the token
     """
     try:
+        # query_string = request.GET.get("data", "")
+        # if query_string:
+        #     decoded_query = urllib.parse.unquote(query_string)
+        #     data = json.loads(decoded_query)
+        #     request.session['custom_playlist_url'] = data['url']
+        #     print(data['url'])
         auth_manager = create_spotify_oauth()
         auth_url = auth_manager.get_authorize_url()
         return redirect(auth_url)
     except:
-        previus = request.session['pre_path']
-        return redirect(previus)
+        previus = request.session["pre_path"]
+        return redirect('home')
 
 
 def callback(request: HttpRequest) -> HttpResponse:
     """
     Saves the token in auth_token and redirects to /home
     """
-    previus = request.session['pre_path']
-    code = request.GET.get('code')
+    previus = request.session["pre_path"]
+    code = request.GET.get("code")
     auth_manager = create_spotify_oauth()
     token = auth_manager.get_access_token(code=code, check_cache=False)
-    request.session['token_auth'] = token
-    return redirect(previus)
-
-
-def logout(request: HttpRequest) -> HttpResponse:
-    """
-    Deletes the auth token
-    """
-    previus = request.session['pre_path']
-    if 'token_auth' in request.session:
-        del request.session['token_auth']
-        request.session.clear()
-    return redirect(previus)
+    request.session["token_auth"] = token
+    return redirect("/createplaylist")
 
 
 def create_playlist(request: HttpRequest) -> HttpResponse:
     """
     Renders create_playlist.html
     """
-    logged_in = check_logged_in(request)
     set_prepath(request)
-    context = {'logged_in': logged_in}
-    return render(request, 'create_playlist.html', context)
+    # if not logged_in:
+    #     return redirect("home")
+    query_string = request.GET.get("data", "")
+    if query_string:
+        decoded_query = urllib.parse.unquote(query_string)
+        data = json.loads(decoded_query)
+        try:
+            data = json.loads(decoded_query)
+            items = list(data["items"])
+            artists = list(filter(lambda item: item["type"] == "artist", items))
+            tracks = list(filter(lambda item: item["type"] == "track", items))
+            albums = list(filter(lambda item: item["type"] == "album", items))
+            tracks_to_add = []
+
+            for artist in artists:
+                artist_tracks = []
+                if artist["option"] == "top-tracks":
+                    artist_tracks = get_top_tracks(artist_id=artist["id"])
+                elif artist["option"] == "all-tracks":
+                    artist_tracks = get_all_tracks_from_artist(artist_id=artist["id"])
+                tracks_to_add.extend(artist_tracks)
+
+            for album in albums:
+                album_tracks = get_all_tracks_from_album(album_id=album["id"])
+                tracks_to_add.extend(album_tracks)
+
+            for track in tracks:
+                tracks_to_add.append(get_track(track_id=track['id']))
+                if track["option"] == "similar-tracks":
+                    tracks_to_add.extend(get_similar_tracks(track_id=track["id"]))
+
+            duration = 0
+            for track in tracks_to_add:
+                duration += track["duration_ms"]
+            duration_secs = int((duration / 1000) % 60)
+            duration_mins = int((duration / 1000) // 60)
+        except ValueError as v:
+            data = {"message": "failed"}
+        return render(
+            request,
+            "custom_playlist.html",
+            {
+                "data": tracks_to_add,
+                "length": len(tracks_to_add),
+                "duration_mins": duration_mins,
+                "duration_secs": duration_secs,
+            },
+        )
+    return render(request, "create_playlist.html", {})
 
 
 def get_playlist(request: HttpRequest) -> HttpResponse:
@@ -79,43 +120,52 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
         HttpResponse: response
     """
 
-    logged_in = check_logged_in(request)
-
-    if not logged_in or request.session['pre_path'] == request.resolver_match.url_name:
-        return redirect('createplaylist')
-
     set_prepath(request)
-
-    if request.method == 'POST':
-        try:
-            token_info = get_token(request)
-            data = json.loads(request.body.decode('utf-8'))
-            sp = spotipy.Spotify(auth=token_info['access_token'])
-            name = data['name']
-            desc = "A playlists generated with playlisty.app"
-            public = True
-            collab = False
-            playlist_id = create_spotify_playlist(
-                sp, name, public, collab, desc)
-            artists_ids = list(data['list'])
-            add_tracks_to(sp, playlist_id, artists_ids)
-            reorder_playlist(sp, playlist_id)
-            url = get_playlist_url(sp, playlist_id)
-            data = {'message': "Success", 'url': url}
-        except ValueError as v:
-            data = {'message': "Failed"}
+    if request.method != "POST":
+        return
+    logged_in = check_logged_in(request=request)
+    data = {"message": ""}
+    if not logged_in:
+        data = {"message": "not logged in"}
         return JsonResponse(data)
+    try:
+        token_info = get_token(request)  # get token api
+        data = json.loads(request.body.decode("utf-8"))  # get body data
+        sp = spotipy.Spotify(auth=token_info["access_token"])
+        name = str(data["name"])
+        if name == "":
+            name = "A playlist created with Playlisty app"
 
-    elif (request.method == 'GET'):
-        data = json.loads(request.body.decode('utf-8'))
-        url = data['url']
-        context = {'url': url, 'logged_in': logged_in}
-        return render(request, 'generate_playlist.html', context)
-    else:
-        raise Http404
+        desc = "A playlists generated with playlisty.app"
+        public = True
+        collab = False
+        items = list(data["items"])
+        playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
+        tracks_to_add = list(data["items"])
+        url = get_playlist_url(sp=sp, playlist_id=playlist_id)
+        add_tracks_to(sp=sp, playlist_id=playlist_id, track_ids=tracks_to_add)
+        data = {"message": "Success", "url": url, "id": playlist_id}
+    except ValueError as v:
+        data = {"message": "failed"}
+    return JsonResponse(data)
 
 
-def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
+def generated_playlist(request: HttpRequest) -> JsonResponse:
+    if request.method != "GET":
+        return Http404
+    query_string = request.GET.get("data", "")
+    if query_string:
+        decoded_query = urllib.parse.unquote(query_string)
+        data = json.loads(decoded_query)
+        print(data)
+        return render(
+            request,
+            "generated_playlist.html",
+            {"id": data["id"]},
+        )
+
+
+def get_item(request: HttpRequest, item_str: str, item_type: str) -> JsonResponse:
     """Returns a JSON with N artists name by inputing a str.
         INPUT: Bad
         JSON: Bad Bunny, Bad Gyal, Bad Omen, Klaus Badelt
@@ -127,37 +177,43 @@ def get_artists(request: HttpRequest, artist_str: str) -> JsonResponse:
     Returns:
         JsonResponse: JSON
     """
-    logged_in = check_logged_in(request)
-    if artist_str == "undefined" or not logged_in:
-        return JsonResponse({'message': "Not Found"})
-    token_info = get_token(request)
-    sp = spotipy.Spotify(auth=token_info['access_token'])
-    results = sp.search(artist_str, type='artist')
-    artists = results['artists']['items']
-    artists_list = []
-    artists_number = 4
-    for artist in artists:
-        if artist_str.lower().strip() in artist['name'].lower():
-            artists_list.append(artist)
-    data = {'message': "Success", 'artists': artists_list[:artists_number]}
-    return JsonResponse(data)
-
-
-def getLoginStatus(request: HttpRequest):
-    data = {'status': check_logged_in(request)}
+    try:
+        results = search_item(item_str, item_type)
+    except:
+        return Http404
+    items = results[item_type + "s"]["items"]
+    items_list = []
+    max_items = 6
+    for item in items:
+        items_list.append(add_image_to_item(item))
+    data = {"status": "success", "results": items_list[:max_items]}
     return JsonResponse(data=data)
+
+
+def get_login_status(request: HttpRequest):
+    data = {"status": check_logged_in(request)}
+    return JsonResponse(data=data)
+
+
+def not_white_listed(request: HttpRequest):
+    return render(request, "not_whitelisted.html")
+
+
+def why_login(request: HttpRequest):
+    return render(request, "why_log_in.html")
+
 
 # Aux functions
 
 
 def set_prepath(request: HttpRequest):
     """
-    Saves the current web page to control redirects. If i am in /createplaylist and i logout, I will be redirected to /createplaylist 
+    Saves the current web page to control redirects. If i am in /createplaylist and i logout, I will be redirected to /createplaylist
 
     Args:
         request (HttpRequest): request
     """
-    request.session['pre_path'] = request.resolver_match.url_name
+    request.session["pre_path"] = request.resolver_match.url_name
 
 
 def check_logged_in(request) -> bool:
@@ -169,4 +225,4 @@ def check_logged_in(request) -> bool:
     Returns:
         bool: logged in
     """
-    return 'token_auth' in request.session and not is_expired(request)
+    return "token_auth" in request.session and not is_expired(request)

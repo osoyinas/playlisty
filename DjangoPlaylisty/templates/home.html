@@ -1,65 +1,11 @@
-{% extends 'base.html' %} {% load static %} {% block content%}
-
-<body>
-  <section id="banner">
-    <div>
-      <h2 class="welcome">Welcome to</h2>
-      <h1 class="Listify_tittle">Playlisty</h1>
-      <h2>Create and Custom </h2>
-      <h1><span class="spotify">Spotify </span><span class="playlists">Playlists</span></h1>
-      <a type="image" class="welcome_button" href="#tutorial">
-        Get started
-        <div class="icon">
-          <svg
-            height="24"
-            width="24"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0h24v24H0z" fill="none"></path>
-            <path
-              d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778
-              7.778-1.414-1.414L16.172 13H4v-2z"
-              fill="currentColor"></path>
-          </svg>
-        </div>
-      </a>
-    </div>
-  </section>
-  <div
-    class="inter"
-    style="background-image: url('{% static 'svg/wave.svg' %}')"></div>
-  <section id="tutorial">
-    <h2>Get started</h2>
-    <div class="container">
-      <div class="step">
-        <div class="cloud">
-          <i class="fa-solid fa-cloud-arrow-up"></i>
-        </div>
-        <h3>1. Connect with your <span>Spotify</span> Account.</h3>
-        {% if logged_in != True %}
-        <form action="/auth">
-          <button class="button_step1">Connect with Spotify</button>
-        </form>
-        {% else %}
-        <button class="logged">Connected</button>
-        {% endif %}
-      </div>
-      <div class="step">
-        <div class="cloud">
-          <i class="fa-solid fa-hand-pointer"></i>
-        </div>
-        <h3>2. Select what you want to do</h3>
-        <div class="options">
-          <a class="box blue" href="{% url 'createplaylist' %}">
-            Generate playlists
-          </a>
-          <a class="box pink">
-            Watch stats
-          </a>
-
-        </div>
-      </div>
-    </div>
-  </section>
-</body>
+{% extends 'base.html' %}
+{% block content%}
+  {% include 'banner.html' %}
+  {% include 'login_to_start.html' %}
+<script>
+  function scrollToElement(selector) {
+    const element = document.querySelector(selector);
+    element.scrollIntoView({ behavior: "smooth" });
+  }
+</script>
 {% endblock %}

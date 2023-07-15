@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content%}
+{% load static %}
+<section id="generated-playlist">
+    <h1>Playlist generated!</h1>
+    <div class="custom-container">
+        <iframe style="border-radius:12px"
+            src="https://open.spotify.com/embed/playlist/{{id}}?utm_source=generator&theme=0" width="100%" height="500"
+            frameBorder="0" allowfullscreen=""
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+        </iframe>
+    </div>
+    <div class="buttons-container">
+        <button class="fancy-button" id="home-button" data-url="/">
+            Home
+        </button>
+        <button class="fancy-button" id="create-playlist-button" data-url="/createplaylist">
+            Create playlist
+        </button>
+    </div>
+</section>
+<script src="{% static 'js/buttons.js' %}"></script>
+
+{% endblock %}
