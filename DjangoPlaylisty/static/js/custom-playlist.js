@@ -42,7 +42,6 @@ function turnOffLoader() {
 }
 createPlaylistButton.addEventListener('click', async (e) => {
     e.preventDefault()
-    turnOnLoader()
     if (items_ids.length == 0) {
         alert("Add items to your playlist!");
         return;
@@ -69,6 +68,7 @@ createPlaylistButton.addEventListener('click', async (e) => {
             })
         return;
     }
+    turnOnLoader()
     let selectedItems = { name: nameInputValue.value, items: items_ids }
     let url = "/getplaylist/"
     fetch(url, {
