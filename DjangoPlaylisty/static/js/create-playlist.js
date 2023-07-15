@@ -47,7 +47,7 @@ async function fetchData() {
         if (data.reason == "Not whitelisted") window.location.href = "/ups"
         else if (data.reason == "Not logged in") {
             console.log("HOLA");
-         }
+        }
     }
     else {
         window.location.href = "/"
@@ -99,16 +99,19 @@ function addItemToPlaylistContainer(name, id, type, image, url) {
     }
     items_ids.push(id)
     count += 1;
+    var newLi = document.createElement('li');
+    newLi.setAttribute("id-value", id);
+    newLi.setAttribute("type-value", type);
+    newLi.setAttribute("data-url", url);
     let content =
         `
-        <li id-value="${id}" type-value="${type}" data-url="${url}">
-            <div class="left">
-                <img src="${image}" alt="">
-                    <div class="name-type-container">
-                        <p class="name">${name}</p>
-                        <p class="type">${type}</p>
-                    </div>  
-            </div>
+        <div class="left">
+            <img src="${image}" alt="">
+            <div class="name-type-container">
+                <p class="name">${name}</p>
+                <p class="type">${type}</p>
+            </div>  
+        </div>
         `
     switch (type) {
         case "artist":
@@ -116,10 +119,10 @@ function addItemToPlaylistContainer(name, id, type, image, url) {
             domArtistsNumber.textContent = artistsNumber
             content +=
                 `<div class="right">
-              <select name="options">
-                <option value="top-tracks">top 10</option>
-                <option value="all-tracks">all</option>
-              </select>`;
+                    <select name="options">
+                        <option value="top-tracks" selected>top 10</option>
+                        <option value="all-tracks">all</option>
+                    </select>`;
             break;
 
         case "track":
@@ -127,20 +130,21 @@ function addItemToPlaylistContainer(name, id, type, image, url) {
             domTracksNumber.textContent = tracksNumber
             content +=
                 `<div class="right">
-              <select name="options">
-                <option value="just-this">just this</option>
-                <option value="similar-tracks">similar tracks</option>
-              </select>`;
+                    <select name="options">
+                        <option value="just-this" selected>just this</option>
+                        <option value="similar-tracks">similar tracks</option>
+                    </select>`;
             break;
 
         case "album":
             albumsNumber += 1
             domAlbumsNumber.textContent = albumsNumber
             content +=
-                `<div class="right">
-              <select name="options">
-                <option value="all-tracks">all tracks</option>
-              </select>`;
+                `
+                <div class="right">
+                <select name="options">
+                    <option value="all-tracks" selected>all tracks</option>
+                </select>`;
             break;
     }
 
@@ -150,13 +154,13 @@ function addItemToPlaylistContainer(name, id, type, image, url) {
                 </button>
                
                 </div>
-                </li>
                 `
+    newLi.insertAdjacentHTML('beforeend', content);
     domTotalNumber.textContent = albumsNumber + tracksNumber + artistsNumber
     setTimeout(() => {
-        playlistContainer.innerHTML += content;
+        playlistContainer.appendChild(newLi);
         var item = document.querySelector('.playlist-container li[id-value="' + id + '"]');
-        setTimeout(() => { item.classList.add('show'); }, 400)
+        setTimeout(() => { item.classList.add('show'); }, 100)
     }, 400)
 }
 
