@@ -22,6 +22,7 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("auth/", views.auth, name="auth"),
     path("callback/", views.callback, name="callback"),
+    path("logout/", views.logout, name="logout"),
     path("createplaylist/", views.create_playlist, name="createplaylist"),
     path("getplaylist/", views.get_playlist, name="getplaylist"),
     path(
@@ -32,5 +33,7 @@ urlpatterns = [
     path("generatedplaylist/", views.generated_playlist, name="generatedplaylist"),
     path("ups/", views.not_white_listed, name="notwhitelisted"),
     path("whylogin/", views.why_login, name="whylogin"),
+    path('getloginstatus/', views.get_login_status, name='getloginstatus')
+
 
 ]

@@ -40,14 +40,35 @@ function turnOffLoader() {
     const loader = document.querySelector('.loader-container')
     loader.classList.remove('show')
 }
-createPlaylistButton.addEventListener('click', (e) => {
+createPlaylistButton.addEventListener('click', async (e) => {
     e.preventDefault()
     turnOnLoader()
     if (items_ids.length == 0) {
         alert("Add items to your playlist!");
         return;
     }
+    const loggedIn = await checkLoggedIn()
+    console.log(loggedIn);
+    if (!loggedIn) {
+        console.log("no logeado");
+        let url = "/auth/"
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrf_token,
 
+            },
+            body: JSON.stringify(window.location.href)
+        })
+            .then(
+                response => response.json()
+            )
+            .then(data => {
+                window.location.href = data.auth_url
+            })
+        return;
+    }
     let selectedItems = { name: nameInputValue.value, items: items_ids }
     let url = "/getplaylist/"
     fetch(url, {
@@ -63,8 +84,8 @@ createPlaylistButton.addEventListener('click', (e) => {
         ).then(data => {
             if (data.message == "not logged in") {
                 turnOffLoader()
-                let queryString = encodeURIComponent(JSON.stringify({ url:window.location.href}))
-                window.location.href= '/auth/?data=' + "hola"
+                let queryString = encodeURIComponent(JSON.stringify({ url: window.location.href }))
+                window.location.href = '/auth/?data=' + "hola"
                 return;
             }
             if (data.message == "failed") {
@@ -74,10 +95,25 @@ createPlaylistButton.addEventListener('click', (e) => {
             let queryString = encodeURIComponent(JSON.stringify({ url: data.url, id: data.id }))
             setTimeout(() => {
                 window.location.href = '/generatedplaylist/?data=' + queryString
-            },4000)
+            }, 4000)
 
         })
         .catch(error => {
             console.error('Error:', error);
         });
 });
+
+
+async function checkLoggedIn() {
+    let url = "/getloginstatus/";
+    let loggedIn = false;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        loggedIn = data.status;
+    }
+    catch {
+        loggedIn = false;
+    }
+    return loggedIn;
+}

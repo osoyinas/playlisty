@@ -11,21 +11,23 @@
     </p>
   </div>
   {%if logged_in == False %}
-  <form id="login-form" action="{% url 'auth' %}">
+  <div class="buttons-container">
     <button class="fancy-button" type="submit" data-url="/auth">
       <span class="button_top">Log In with Spotify</span>
     </button>
     <button class="fancy-button" id="create-playlist-button" data-url="/createplaylist">
       <span class="button_top">Create playlist</span>
     </button>
-    <a href="/whylogin">Limited functionality</a>
-  </form>
+  </div>
   {% else %}
-  <form action="{% url 'createplaylist' %}">
-    <button data-url="/createplaylist"class="fancy-button" type="submit">
+  <div class="buttons-container">
+    <button class="fancy-button" type="submit" data-url="/logout">
+      <span class="button_top">Log out from spotify</span>
+    </button>
+    <button class="fancy-button" id="create-playlist-button" data-url="/createplaylist">
       <span class="button_top">Create playlist</span>
     </button>
-  </form>
+  </div>
   {% endif %}
 </section>
 <script src="{% static 'js/buttons.js' %}"></script>

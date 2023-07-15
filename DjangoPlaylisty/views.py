@@ -16,6 +16,8 @@ def home(request: HttpRequest) -> HttpResponse:
     """
     Index page view. Checks if the user is logged in and passes that information to the template.
     """
+
+    set_prepath(request)
     logged_in = check_logged_in(request)
     # store the current page
     set_prepath(request)
@@ -28,14 +30,15 @@ def auth(request: HttpRequest) -> HttpResponse:
     Generates the API token to connect to Spotify's API, redirects to /callback with the token
     """
     try:
-        # query_string = request.GET.get("data", "")
-        # if query_string:
-        #     decoded_query = urllib.parse.unquote(query_string)
-        #     data = json.loads(decoded_query)
-        #     request.session['custom_playlist_url'] = data['url']
-        #     print(data['url'])
         auth_manager = create_spotify_oauth()
         auth_url = auth_manager.get_authorize_url()
+        if request.method == 'POST':
+            print("ES POST")
+            back_url = json.loads(request.body.decode("utf-8"))
+            request.session['back_url'] = back_url
+            return JsonResponse({'auth_url': auth_url})
+        
+
         return redirect(auth_url)
     except:
         previus = request.session["pre_path"]
@@ -51,16 +54,26 @@ def callback(request: HttpRequest) -> HttpResponse:
     auth_manager = create_spotify_oauth()
     token = auth_manager.get_access_token(code=code, check_cache=False)
     request.session["token_auth"] = token
-    return redirect("/createplaylist")
+    if request.session['back_url']:
+        print("devuelta al hangeo")
+        return redirect(request.session['back_url'])
+    return redirect(previus)
 
+def logout(request: HttpRequest) -> HttpResponse:
+    """
+    Deletes the auth token
+    """
+    previus = request.session['pre_path']
+    if 'token_auth' in request.session:
+        del request.session['token_auth']
+        request.session.clear()
+    return redirect(previus)
 
 def create_playlist(request: HttpRequest) -> HttpResponse:
     """
     Renders create_playlist.html
     """
     set_prepath(request)
-    # if not logged_in:
-    #     return redirect("home")
     query_string = request.GET.get("data", "")
     if query_string:
         decoded_query = urllib.parse.unquote(query_string)
@@ -151,6 +164,7 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
 
 
 def generated_playlist(request: HttpRequest) -> JsonResponse:
+    set_prepath(request)
     if request.method != "GET":
         return Http404
     query_string = request.GET.get("data", "")
@@ -201,7 +215,6 @@ def not_white_listed(request: HttpRequest):
 
 def why_login(request: HttpRequest):
     return render(request, "why_log_in.html")
-
 
 # Aux functions
 
