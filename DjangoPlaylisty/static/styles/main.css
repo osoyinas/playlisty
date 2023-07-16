@@ -264,6 +264,7 @@ body {
 }
 
 .footer .container {
+    z-index: 1000;
     width: min(50rem, 100%);
     display: flex;
     justify-content: space-between;
@@ -939,7 +940,16 @@ main {
     }
 }
 
+@media (min-width: 1440px) {
+    #playlist-section {
+        height: 40vh;
+    }
+    .footer {
+        height: 25vh;
+    }
 
+
+}
 @media (max-width: 768px) {
     #login-to-start img {
         width: 100%;
