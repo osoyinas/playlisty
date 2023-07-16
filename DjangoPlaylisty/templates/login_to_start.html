@@ -2,41 +2,36 @@
 <section id="login-to-start">
   <h2></h2>
   <div class="text-container">
-    <h2>Create a Spotify playlist with Playlisty</h2>
-    <p>
-      Creating a playlist on our web app is a breeze! We offer you a variety
-      of options to curate your perfect Spotify playlist. Whether you prefer
-      selecting
-      <span style="font-weight: bold">artists, albums, or individual songs</span>, we've got you covered.
-    </p>
-    <div class="buttons-container">
-      <button class="fancy-button" id="create-playlist-button" data-url="/createplaylist">
-        <span class="button_top">Create playlist</span>
-      </button>
-    </div>
-  </div>
-  <div class="text-container">
+    <h1>Getting started</h1>
+    {%if logged_in == False %}
     <section>
       <h2>Log in with <span class="span-green"></span>Spotify</h2>
       <p>Click on the "Log in with Spotify" button to connect your Spotify account. You can do it later when you're
         ready
         to
         save your playlist.</p>
-      {%if logged_in == False %}
       <div class="buttons-container">
         <button class="fancy-button" type="submit" data-url="/auth">
           <span class="button_top">Log In with Spotify</span>
         </button>
       </div>
-      {% else %}
+    </section>
+    {% endif %}
+    <section>
+      <h2>Create a Spotify playlist with Playlisty</h2>
+      <p>
+        Creating a playlist on our web app is a breeze! We offer you a variety
+        of options to curate your perfect Spotify playlist. Whether you prefer
+        selecting
+        <span style="font-weight: bold">artists, albums, or individual songs</span>, we've got you covered.
+      </p>
       <div class="buttons-container">
-        <button class="fancy-button" id="create-playlist-button" data-url="/logout">
-          <span class="button_top">Log out from Spotify</span>
+        <button class="fancy-button green" id="create-playlist-button" data-url="/createplaylist">
+          <span class="button_top">Create playlist</span>
         </button>
       </div>
-      {% endif %}
     </section>
-
+    <h1>What you can do?</h1>
     <section>
       <h2>Search for Artists, Albums, or Tracks</h2>
       <p>Using the search bar, enter the name of an artist, album, or track that you want to include in your playlist.

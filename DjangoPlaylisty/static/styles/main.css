@@ -315,12 +315,15 @@ body {
 #top-custom-playlist h1,
 #custom-playlist h1,
 #generated-playlist h1 {
-    font-size: clamp(2.5rem, 3vw, 5rem);
-    margin: 2rem;
+    font-size: clamp(2.8rem, 3.5vw, 5rem);
+    margin: 2rem 0rem;
     text-align: center;
+    line-height: 4rem;
 }
 
-
+#create-playlist-button {
+    margin:2rem 0;
+}
 #create-playlist h1 {
     color: white;
 }
@@ -344,6 +347,9 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
+    box-shadow: 0 0 30px 10px rgba(52, 19, 129, 0.1);
+    border-radius: 1rem;
+    padding: 2rem
 }
 #login-to-start p {
     font-size: 1.4rem;
@@ -610,9 +616,14 @@ h3 {
     opacity: 0;
 }
 
-#generate-playlist-button {
+.green {
     border: 0;
     background-color: var(--green);
+    border: 1px solid black;
+}
+.blue {
+    border: 0;
+    background-color: var(--blue);
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
 }
 
@@ -885,7 +896,7 @@ main {
 }
 
 .arrow {
-    opacity: 0;
+    display: none;
 }
 
 #generated-playlist {
@@ -926,7 +937,6 @@ main {
 
     .arrow {
         display: block;
-        opacity: 1;
     }
 
     #login-to-start .text-container {
