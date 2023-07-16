@@ -349,7 +349,8 @@ body {
     flex-direction: column;
     box-shadow: 0 0 30px 10px rgba(52, 19, 129, 0.1);
     border-radius: 1rem;
-    padding: 2rem
+    padding: 2rem;
+    background-color: white;
 }
 #login-to-start p {
     font-size: 1.4rem;
