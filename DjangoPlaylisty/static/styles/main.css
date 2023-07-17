@@ -13,7 +13,7 @@
     border: 2.5px solid black;
     background-color: white;
     box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     transition-property: background-color, letter-spacing, color, box-shadow;
     transition-duration: 0.5s;
@@ -29,7 +29,7 @@
 }
 
 .fancy-button:hover {
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     background-color: var(--blue);
     color: white;
     box-shadow: var(--blue) 0px 7px 29px 0px;
@@ -99,7 +99,7 @@
     transition: .2s linear;
     border: 2.5px solid black;
     border-radius: 1rem;
-    height: clamp(40px, 5vw, 50px);
+    height: clamp(45px, 5vw, 50px);
     font-size: clamp(14px, 2vw, 20px);
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -321,7 +321,7 @@ body {
     line-height: 4rem;
 }
 
-#create-playlist-button {
+#login-to-start .fancy-button {
     margin:2rem 0;
 }
 #create-playlist h1 {
@@ -399,7 +399,7 @@ body {
 }
 
 #create-playlist .container select {
-    height: clamp(40px, 5vw, 50px);
+    height: clamp(45px, 5vw, 50px);
     width: auto;
     padding: 10px;
     transition: .2s linear;
@@ -777,7 +777,7 @@ h3 {
     border: white;
     height: 50px;
     font-size: clamp(1rem, 2vw, 1.3rem);
-    width: 80%;
+    width: 90%;
     min-width: 70px;
     border-radius: 1rem;
 }
@@ -958,9 +958,8 @@ main {
     .footer {
         height: 25vh;
     }
-
-
 }
+
 @media (max-width: 768px) {
     #login-to-start img {
         width: 100%;
@@ -1001,5 +1000,12 @@ main {
     }
     .buttons-container .fancy-button {
         width: 100%;
+    }
+    .playlist-container li .right {
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        width: auto;
+        gap: 0.5rem;
     }
 }
