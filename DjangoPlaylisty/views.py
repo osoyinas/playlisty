@@ -61,7 +61,6 @@ def logout(request: HttpRequest) -> HttpResponse:
     """
     previus = request.session['pre_path']
     if 'token_auth' in request.session:
-        del request.session['back_url']
         del request.session['token_auth']
         request.session.clear()
     return redirect(previus)
@@ -162,7 +161,6 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
 
 def generated_playlist(request: HttpRequest) -> JsonResponse:
     set_prepath(request)
-    del request.session['back_url']
     if request.method != "GET":
         return Http404
     query_string = request.GET.get("data", "")
