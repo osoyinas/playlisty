@@ -7,5 +7,5 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def feedback_view(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
-        print()
-    return JsonResponse({'eyyy':'aaa'})
+        data = json.loads(request.body.decode('utf-8'))
+    return JsonResponse(data)
