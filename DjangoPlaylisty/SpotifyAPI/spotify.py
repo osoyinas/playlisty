@@ -7,11 +7,6 @@ import random
 from spotipy.oauth2 import SpotifyClientCredentials
 
 
-CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
-CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
-HOST_URL = str(os.environ.get("HOST_URL"))  # url to redirect
-SCOPE = """playlist-modify-public"""
-
 
 def get_token(request: HttpRequest) -> SpotifyOAuth:
     """Generates a token if is expired
@@ -42,8 +37,12 @@ def create_spotify_oauth() -> SpotifyOAuth:
     Returns:
         SpotifyOAuth:
     """
+    CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
+    CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
+    HOST_URL = str(os.environ.get("HOST_URL"))  # url to redirect
     redir_url = os.path.join(HOST_URL, "callback")
-
+    print(redir_url)
+    SCOPE = """playlist-modify-public"""
     return SpotifyOAuth(
         client_id=CLIENT_ID,
         client_secret=CLIENT_SECRET,
@@ -53,6 +52,8 @@ def create_spotify_oauth() -> SpotifyOAuth:
 
 
 def search_item(str: str, type: str):
+    CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
+    CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
     client_credentials_manager = SpotifyClientCredentials(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET
     )
@@ -126,6 +127,8 @@ def add_tracks_to(sp: spotipy.Spotify, playlist_id: int, track_ids: list):
 
 
 def get_top_tracks(artist_id: str):
+    CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
+    CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
     client_credentials_manager = SpotifyClientCredentials(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET
     )
@@ -138,6 +141,8 @@ def get_top_tracks(artist_id: str):
 
 
 def get_all_tracks_from_artist(artist_id: str):
+    CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
+    CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
     client_credentials_manager = SpotifyClientCredentials(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET
     )
@@ -162,6 +167,8 @@ def get_all_tracks_from_artist(artist_id: str):
 
 
 def get_all_tracks_from_album(album_id: str):
+    CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
+    CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
     client_credentials_manager = SpotifyClientCredentials(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET
     )
@@ -177,6 +184,8 @@ def get_all_tracks_from_album(album_id: str):
 
 
 def get_track(track_id: str):
+    CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
+    CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
     client_credentials_manager = SpotifyClientCredentials(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET
     )
@@ -186,6 +195,8 @@ def get_track(track_id: str):
 
 
 def get_similar_tracks(track_id: dict):
+    CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
+    CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
     client_credentials_manager = SpotifyClientCredentials(
         client_id=CLIENT_ID, client_secret=CLIENT_SECRET
     )

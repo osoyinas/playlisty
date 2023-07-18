@@ -4,12 +4,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from DjangoPlaylisty.SpotifyAPI.spotify import *
 import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
 from django.http import Http404
 import urllib.parse
-
-CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
-CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
 
 
 def home(request: HttpRequest) -> HttpResponse:
