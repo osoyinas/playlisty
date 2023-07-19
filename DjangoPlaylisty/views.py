@@ -32,7 +32,6 @@ def auth(request: HttpRequest) -> HttpResponse:
             back_url = json.loads(request.body.decode("utf-8"))
             request.session['back_url'] = back_url
             return JsonResponse({'auth_url': auth_url})
-        
 
         return redirect(auth_url)
     except:
@@ -55,6 +54,7 @@ def callback(request: HttpRequest) -> HttpResponse:
         return redirect(back_url)
     return redirect(previus)
 
+
 def logout(request: HttpRequest) -> HttpResponse:
     """
     Deletes the auth token
@@ -64,6 +64,7 @@ def logout(request: HttpRequest) -> HttpResponse:
         del request.session['token_auth']
         request.session.clear()
     return redirect(previus)
+
 
 def create_playlist(request: HttpRequest) -> HttpResponse:
     """
@@ -77,7 +78,8 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
         try:
             data = json.loads(decoded_query)
             items = list(data["items"])
-            artists = list(filter(lambda item: item["type"] == "artist", items))
+            artists = list(
+                filter(lambda item: item["type"] == "artist", items))
             tracks = list(filter(lambda item: item["type"] == "track", items))
             albums = list(filter(lambda item: item["type"] == "album", items))
             tracks_to_add = []
@@ -87,7 +89,8 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
                 if artist["option"] == "top-tracks":
                     artist_tracks = get_top_tracks(artist_id=artist["id"])
                 elif artist["option"] == "all-tracks":
-                    artist_tracks = get_all_tracks_from_artist(artist_id=artist["id"])
+                    artist_tracks = get_all_tracks_from_artist(
+                        artist_id=artist["id"])
                 tracks_to_add.extend(artist_tracks)
 
             for album in albums:
@@ -97,7 +100,8 @@ def create_playlist(request: HttpRequest) -> HttpResponse:
             for track in tracks:
                 tracks_to_add.append(get_track(track_id=track['id']))
                 if track["option"] == "similar-tracks":
-                    tracks_to_add.extend(get_similar_tracks(track_id=track["id"]))
+                    tracks_to_add.extend(
+                        get_similar_tracks(track_id=track["id"]))
 
             duration = 0
             for track in tracks_to_add:
@@ -149,7 +153,8 @@ def get_playlist(request: HttpRequest) -> HttpResponse:
         public = True
         collab = False
         items = list(data["items"])
-        playlist_id = create_spotify_playlist(sp, name, public, collab, desc)
+        playlist_id = create_spotify_playlist(sp, name, public, collab,
+                                              desc)
         tracks_to_add = list(data["items"])
         url = get_playlist_url(sp=sp, playlist_id=playlist_id)
         add_tracks_to(sp=sp, playlist_id=playlist_id, track_ids=tracks_to_add)

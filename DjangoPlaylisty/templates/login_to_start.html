@@ -11,9 +11,9 @@
         to
         save your playlist.</p>
       <div class="buttons-container">
-        <button class="fancy-button" type="submit" data-url="/auth">
+        <a class="fancy-button" type="submit" href="/auth">
           <span class="button_top">Log In with Spotify</span>
-        </button>
+        </a>
       </div>
     </section>
     {% endif %}
@@ -26,9 +26,9 @@
         <span style="font-weight: bold">artists, albums, or individual songs</span>, we've got you covered.
       </p>
       <div class="buttons-container">
-        <button class="fancy-button" id="create-playlist-button" data-url="/createplaylist">
+        <a class="fancy-button" id="create-playlist-button" href="/createplaylist">
           <span class="button_top">Create playlist</span>
-        </button>
+        </a>
       </div>
     </section>
     <h1>What can you do?</h1>
@@ -68,4 +68,3 @@
   </div>
 
 </section>
-<script src="{% static 'js/buttons.js' %}"></script>
