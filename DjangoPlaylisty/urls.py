@@ -34,5 +34,4 @@ urlpatterns = [
     path("ups/", views.not_white_listed, name="notwhitelisted"),
     path("whylogin/", views.why_login, name="whylogin"),
     path('getloginstatus/', views.get_login_status, name='getloginstatus'),
-    path('feedback/', include('feedbackApp.urls'))
 ]
