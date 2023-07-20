@@ -7,7 +7,6 @@ import random
 from spotipy.oauth2 import SpotifyClientCredentials
 
 
-
 def get_token(request: HttpRequest) -> SpotifyOAuth:
     """Generates a token if is expired
 
@@ -49,6 +48,17 @@ def create_spotify_oauth() -> SpotifyOAuth:
         redirect_uri=redir_url,
     )
 
+
+def check_logged_in(request) -> bool:
+    """If the user is logged in, returns true
+
+    Args:
+        request (HttpRequest):
+
+    Returns:
+        bool: logged in
+    """
+    return "token_auth" in request.session and not is_expired(request)
 
 def search_item(str: str, type: str):
     CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")

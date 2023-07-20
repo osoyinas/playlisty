@@ -40,6 +40,8 @@ function turnOffLoader() {
     const loader = document.querySelector('.loader-container')
     loader.classList.remove('show')
 }
+
+
 createPlaylistButton.addEventListener('click', async (e) => {
     e.preventDefault()
     if (items_ids.length == 0) {
@@ -70,8 +72,8 @@ createPlaylistButton.addEventListener('click', async (e) => {
     }
     turnOnLoader()
     let selectedItems = { name: nameInputValue.value, items: items_ids }
-    let url = "/getplaylist/"
-    fetch(url, {
+
+    fetch( "./getplaylist/", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -94,7 +96,7 @@ createPlaylistButton.addEventListener('click', async (e) => {
             }
             let queryString = encodeURIComponent(JSON.stringify({ url: data.url, id: data.id }))
             setTimeout(() => {
-                window.location.href = '/generatedplaylist/?data=' + queryString
+                window.location.href = './generatedplaylist/?data=' + queryString
             }, 4000)
 
         })

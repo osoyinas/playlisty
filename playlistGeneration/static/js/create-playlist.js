@@ -83,7 +83,8 @@ function updateResults(data) {
 //Add to the DOM the fetched items results.
 function addToResultsItems(result) {
     //track doesnt contain images
-    image = result.images[0].url
+    console.log(result);
+    image = result.images.length > 0 ? result.images[0].url : 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpluspng.com%2Fimg-png%2Fpng-user-icon-circled-user-icon-2240.png&f=1&nofb=1&ipt=44566a639661e2c0be63851cdfe96a5bbef2cc246fd13f817b67e1e1c6214592&ipo=images'
     resultsWrapper.innerHTML +=
         `<li id-value="${result.id}" type-value="${result.type}" data-url="${result.external_urls.spotify}">
         <img src="${image}" alt="${result.name}">
