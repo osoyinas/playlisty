@@ -18,7 +18,6 @@ def auth(request: HttpRequest) -> HttpResponse:
 
         return redirect(auth_url)
     except:
-        previus = request.session["pre_path"]
         return redirect('home')
 
 
@@ -26,7 +25,6 @@ def callback(request: HttpRequest) -> HttpResponse:
     """
     Saves the token in auth_token and redirects to /home
     """
-    previus = request.session["pre_path"]
     code = request.GET.get("code")
     auth_manager = create_spotify_oauth()
     token = auth_manager.get_access_token(code=code, check_cache=False)
@@ -35,20 +33,27 @@ def callback(request: HttpRequest) -> HttpResponse:
         back_url = request.session['back_url']
         del request.session['back_url']
         return redirect(back_url)
-    return redirect(previus)
+    return redirect('home')
 
 
 def logout(request: HttpRequest) -> HttpResponse:
     """
     Deletes the auth token
     """
-    previus = request.session['pre_path']
     if 'token_auth' in request.session:
         del request.session['token_auth']
         request.session.clear()
-    return redirect(previus)
+    return redirect('home')
 
 
 def get_login_status(request: HttpRequest):
+    """Return a Json with the login status {"status": true}
+
+    Args:
+        request (HttpRequest): _description_
+
+    Returns:
+        _type_: _description_
+    """
     data = {"status": check_logged_in(request)}
     return JsonResponse(data=data)
