@@ -471,12 +471,12 @@ h3 {
   align-items: center;
   gap: 8px;
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  transition: transform 0.2s ease-in;
   font-size: clamp(1rem, 2vw, 1.3rem);
 }
 
 #create-playlist .results-container ul li:hover {
-  background-color: #154ebf;
+  transform: translateY(-3px);
 }
 
 #create-playlist .results-container li img {
@@ -669,6 +669,9 @@ h3 {
   grid-template-columns: 0.2fr 2fr;
 }
 
+#playlist-section .playlist-container li .left a {
+  color: black;
+}
 .name-type-container {
   width: 100%;
   overflow: hidden;
@@ -732,7 +735,6 @@ h3 {
 }
 
 .button:hover {
-  border-radius: 5px;
   transition-duration: 0.3s;
   background-color: rgb(255, 69, 69);
   align-items: center;
