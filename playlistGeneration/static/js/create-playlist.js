@@ -109,7 +109,7 @@ function addItemToPlaylistContainer(name, id, type, image, url) {
         <div class="left">
             <img src="${image}" alt="">
             <div class="name-type-container">
-                <p class="name">${name}</p>
+                <a  href= "${url}" target='_blank' rel= 'noreferrer noopener' class="name">${name}</a>
                 <p class="type">${type}</p>
             </div>  
         </div>
