@@ -2,6 +2,7 @@
   --blue: #0084ec;
   --green: #04d94f;
   --light-green: #22f241;
+  --light-blue: rgba(54,167,255,1);
 }
 
 /* Butons */
@@ -184,8 +185,8 @@ body {
   flex-direction: column;
   padding-bottom: 100px;
   position: relative;
-  background-color: var(--blue);
-}
+  background: rgb(110,192,255);
+  background: radial-gradient(circle, var(--light-blue) 0%, var(--blue) 100%);}
 
 #banner h1 {
   color: white;
