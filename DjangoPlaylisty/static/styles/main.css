@@ -953,7 +953,7 @@ main {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 843px) {
   #login-to-start img {
     width: 100%;
     height: auto;
