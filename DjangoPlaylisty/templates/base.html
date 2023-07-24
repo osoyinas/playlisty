@@ -1,42 +1,19 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Playlisty -Generate Playlists</title>
-  <link rel="stylesheet" href="{% static 'styles/global.css'%}" />
-  <link rel="stylesheet" href="{% static 'styles/main.css'%}" />
-  <link rel="icon" href="{% static 'svg/spotify_logo.png'%}" />
-</head>
-{% csrf_token %}
-
-<body>
-  {% block content%}
-  {% endblock %}
-</body>
-<footer class="footer">
-  <div class="container">
-    <aside>
-      <p class="footer-tittle">LINKS</p>
-      <a href="/">Home</a>
-      <a href="{% url 'createplaylist' %}">Create playlist</a>
-      <a href="{% url 'whylogin' %}">Why do you have to log in?</a>
-    </aside>
-    <aside>
-      <p class="footer-tittle">INFO</p>
-      <p class="footer-text">© 2023 Playlisty</p>
-      <p class="footer-text">App designed for Spotify</p>      
-    </aside>
-    <aside>
-      <p class="footer-tittle">CONTACT</p>
-      <a target="_blank" rel="noreferrer noopener" href="mailto:osoyinas@gmail.com">osoyinas@gmail.com</a>
-      <a target="_blank" rel="noreferrer noopener" href="https://t.me/osoyinas">Telegram</a>
-      <a target="_blank" rel="noreferrer noopener" href="https://github.com/osoyinas">Github</a>
-      <a target="_blank" rel="noreferrer noopener" href="https://www.linkedin.com/in/osoyinas">Linkedin</a>     
-    </aside>
-  </div>
-</footer>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playlisty - Spotify Playlist Generator</title>
+    {% include 'seo.html' %}
+    <link rel="stylesheet" href="{% static 'styles/global.css'%}" />
+    <link rel="stylesheet" href="{% static 'styles/main.css'%}" />
+    <link rel="icon" href="{% static 'img/icon.png'%}" />
+  </head>
+  {% csrf_token %}
+  <body>
+    {% block content%} {% endblock %}
+    {% include 'footer.html' %}
+  </body>
 </html>
