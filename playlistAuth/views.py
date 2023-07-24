@@ -17,7 +17,7 @@ def auth(request: HttpRequest) -> HttpResponse:
             return JsonResponse({'auth_url': auth_url})
 
         return redirect(auth_url)
-    except:
+    except TypeError:
         return redirect('home')
 
 
