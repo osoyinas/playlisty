@@ -8,7 +8,7 @@ This application is being develped with **[python](https://www.python.org/)** an
 
 ### Links
 
-[Playlisty](playlisty.es/)
+[Playlisty](https://playlisty.es/)
 
 [https://github.com/osoyinas/playlisty](https://github.com/osoyinas/playlisty)
 
