@@ -39,7 +39,7 @@ def create_spotify_oauth() -> SpotifyOAuth:
     CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
     CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
     HOST_URL = str(os.environ.get("RAILWAY_PUBLIC_DOMAIN"))  # url to redirect
-    redir_url = os.path.join(HOST_URL, "callback")
+    redir_url = HOST_URL + "/" +"callback"
     SCOPE = """playlist-modify-public"""
     return SpotifyOAuth(
         client_id=CLIENT_ID,
