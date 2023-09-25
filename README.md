@@ -4,7 +4,7 @@
 
 ### Implementation
 
-This application is being develped with **[python](https://www.python.org/)** and **[Django’s](https://www.djangoproject.com/)** Framework. For the thime being, it is hosted by **[railway.app](https://railway.app/)** using **[PostgreSQL](https://www.postgresql.org/)** as database.
+This application is being develped with **[python](https://www.python.org/)** and **[Django’s](https://www.djangoproject.com/)** Framework. For the thime being, it is hosted by **[render.com](https://render.com)** using **[PostgreSQL](https://www.postgresql.org/)** as database.
 
 ### Links
 
