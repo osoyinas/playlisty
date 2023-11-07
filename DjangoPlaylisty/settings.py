@@ -135,4 +135,4 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 HOST_URL = os.environ.get("HOST_URL")
-TRUSTED_ORIGINS = [HOST_URL]
+CSRF_TRUSTED_ORIGINS = [HOST_URL]
