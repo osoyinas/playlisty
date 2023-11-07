@@ -6,7 +6,6 @@ import spotipy
 import random
 from spotipy.oauth2 import SpotifyClientCredentials
 
-
 def get_token(request: HttpRequest) -> SpotifyOAuth:
     """Generates a token if is expired
 
@@ -38,8 +37,8 @@ def create_spotify_oauth() -> SpotifyOAuth:
     """
     CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
     CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
-    HOST_URL = "https://"+ str(os.environ.get("RAILWAY_PUBLIC_DOMAIN"))  # url to redirect
-    redir_url = HOST_URL + "/" +"callback"
+    
+    redir_url = os.environ.get("HOST_URL") + "/" +"callback"
     SCOPE = """playlist-modify-public"""
     return SpotifyOAuth(
         client_id=CLIENT_ID,
