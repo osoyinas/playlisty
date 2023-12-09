@@ -20,10 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+SECRET_KEY = "debug_secret_key"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = str(os.environ.get("DEBUG")) == "1"
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -79,24 +79,13 @@ WSGI_APPLICATION = "DjangoPlaylisty.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if str(os.environ.get("DEBUG_DATABASE")) == "0":
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.environ.get("PGDATABASE"),
-            "USER": os.environ.get("PGUSER"),
-            "PASSWORD": os.environ.get("PGPASSWORD"),
-            "HOST": os.environ.get("PGHOST"),
-            "PORT": os.environ.get("PGPORT"),
-        }
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "db.sqlite3",
     }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": "db.sqlite3",
-        }
-    }
+}
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -125,14 +114,14 @@ USE_TZ = True
 
 
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
     BASE_DIR / "DjangoPlaylisty" / "static",
     BASE_DIR / "playlistGeneration" / "static",
 ]
 
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-HOST_URL = os.environ.get("HOST_URL")
-CSRF_TRUSTED_ORIGINS = [HOST_URL]
+WEBSITE_HOSTURL = "http://127.0.0.1:8000"
+WEBSITE_HOSTNAME = "127.0.0.1:8000"
+if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
+   from .azure import *
