@@ -31,14 +31,14 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'playlistGeneration',
-    'playlistAuth'
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "playlistGeneration",
+    "playlistAuth",
 ]
 
 MIDDLEWARE = [
@@ -59,7 +59,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             BASE_DIR / "DjangoPlaylisty" / "templates",
-            BASE_DIR / "playlistGeneration" / "templates"
+            BASE_DIR / "playlistGeneration" / "templates",
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -80,10 +80,23 @@ WSGI_APPLICATION = "DjangoPlaylisty.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": "db.sqlite3",
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ["DBNAME"],
+        "HOST": os.environ["DBHOST"],
+        "USER": os.environ["DBUSER"],
+        "PASSWORD": os.environ["DBPASS"],
+        "OPTIONS": {
+            "sslmode": "require",
+        },
     }
 }
 
@@ -123,5 +136,5 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 WEBSITE_HOSTURL = "http://127.0.0.1:8000"
 WEBSITE_HOSTNAME = "127.0.0.1:8000"
-if 'WEBSITE_HOSTNAME' in os.environ: # Running on Azure
-   from .azure import *
+if "WEBSITE_HOSTNAME" in os.environ:  # Running on Azure
+    from .azure import *

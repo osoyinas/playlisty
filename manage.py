@@ -5,16 +5,17 @@ import sys
 import dotenv
 import warnings
 
+
 def main():
     """Run administrative tasks."""
     try:
-        DEBUG = str(os.environ.get('DEBUG')) == "1"
+        DEBUG = str(os.environ.get("DEBUG")) == "1"
     except:
         DEBUG = True
-    if(not DEBUG):
+    if not DEBUG:
         warnings.simplefilter("ignore")
-        dotenv.read_dotenv()
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DjangoPlaylisty.settings')
+        dotenv.load_dotenv()
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoPlaylisty.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -26,5 +27,5 @@ def main():
     execute_from_command_line(sys.argv)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
