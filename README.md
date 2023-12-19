@@ -1,14 +1,14 @@
 # Overview
 
-**Playlisty** is a web application in which  you can generate Spotify’s playlists by selecting artists, albums or tracks.
+**Playlisty** is a web application in which you can generate Spotify’s playlists by selecting artists, albums or tracks.
 
 ### Implementation
 
-This application is being develped with **[python](https://www.python.org/)** and **[Django’s](https://www.djangoproject.com/)** Framework. For the thime being, it is hosted by **[render.com](https://render.com)** using **[PostgreSQL](https://www.postgresql.org/)** as database.
+This application is being develped with **[python](https://www.python.org/)** and **[Django’s](https://www.djangoproject.com/)** Framework. For the thime being, it is hosted by Azure.
 
 ### Links
 
-[Playlisty](https://playlisty-app.onrender.com)
+[https://playlisty.azurewebsites.net/](https://playlisty.azurewebsites.net/)
 
 [https://github.com/osoyinas/playlisty](https://github.com/osoyinas/playlisty)
 
@@ -32,9 +32,6 @@ Now, you will have to configure a `.env` config file. In this file we will appen
 DJANGO_SECRET_KEY = djangosecretkeyexample
 SPOTIFY_CLIENT_ID = spotifyid
 SPOTIFY_CLIENT_SECRET = spotifysecret
-HOST_URL = http://127.0.0.1:8000/
-DEBUG = 1
-DATABASE_DEBUG = 1
 ```
 
 After all, you should be able to run Playlisty in a local server. Execute:
