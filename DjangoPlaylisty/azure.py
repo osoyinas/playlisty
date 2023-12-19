@@ -2,7 +2,7 @@ import os
 from .settings import *
 from .settings import BASE_DIR
 
-DEBUG = False
+DEBUG = True
 SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 WEBSITE_HOSTURL = "https://" + os.environ["WEBSITE_HOSTNAME"]
 ALLOWED_HOSTS = (
