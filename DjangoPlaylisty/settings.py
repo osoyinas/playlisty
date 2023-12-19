@@ -132,6 +132,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "playlistGeneration" / "static",
 ]
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 WEBSITE_HOSTURL = "http://127.0.0.1:8000"
