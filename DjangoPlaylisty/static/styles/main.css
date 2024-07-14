@@ -377,11 +377,12 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background-color: var(--blue);
   position: relative;
   border-bottom-left-radius: 50% 21%;
   border-bottom-right-radius: 50% 21%;
+  background: radial-gradient(circle, var(--light-blue) 0%, var(--blue) 100%);
 }
+
 
 #create-playlist .container {
   display: grid;
@@ -991,6 +992,7 @@ main {
   }
 
   #create-playlist {
+    background: radial-gradient(circle, var(--light-blue) 0%, var(--blue) 100%);
     min-height: 15rem;
     border-bottom-left-radius: 50% 11%;
     border-bottom-right-radius: 50% 11%;
