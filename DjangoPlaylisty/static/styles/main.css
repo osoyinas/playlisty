@@ -387,7 +387,7 @@ body {
   display: grid;
   width: 95%;
   max-width: 50rem;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 1fr 3fr;
   gap: 1rem;
   z-index: 100;
 }
@@ -426,10 +426,10 @@ h3 {
 .display-results {
   color: white;
   z-index: 200;
-  opacity: 0.7 !important;
+  opacity: 0.9 !important;
   position: absolute;
   bottom: 20%;
-  transition: opacity 0.4s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .display-results.hide {
@@ -522,7 +522,7 @@ h3 {
   flex-direction: column;
   align-items: center;
   min-height: auto;
-  margin: 4rem 0;
+  margin-bottom: 4rem;
 }
 
 #playlist-section h1 {
@@ -957,6 +957,19 @@ main {
 }
 
 @media (max-width: 843px) {
+  #create-playlist .spotify-logo {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 10vw;
+    min-width: 64;
+    max-width: 128px;
+    height: auto;
+    margin: 1rem;
+  }#create-playlist h1 {
+    margin-top: 6rem !important;
+  }
+
   #login-to-start img {
     width: 100%;
     height: auto;
@@ -982,6 +995,7 @@ main {
     border-bottom-left-radius: 50% 11%;
     border-bottom-right-radius: 50% 11%;
   }
+
 
   #generate-playlist-button {
     margin: 0 1rem;

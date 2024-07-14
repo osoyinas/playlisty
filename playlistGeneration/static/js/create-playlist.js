@@ -27,20 +27,27 @@ searchInput.addEventListener('input', () => startTimerAndFetch());
 // Count 500ms and if the user hasnt typed again, fetch. If not, it restarts the timer
 function startTimerAndFetch() {
     resultsContainer.classList.remove('show');
-    typeToSearchDisplay.classList.add('hide');
+    typeToSearchDisplay.textContent= 'Loading...';
     clearTimeout(timer) //reset timer
     timer = setTimeout(fetchData, 500);
 }
 
 async function fetchData() {
+    typeToSearchDisplay.classList.remove('hide');
+
+    typeToSearchDisplay.textContent= 'Loading...';
+
     resultsWrapper.innerHTML = `` //reset results
     let str = searchInput.value.trim()
     if (str == "") {
+        typeToSearchDisplay.classList.remove('hide');
+        typeToSearchDisplay.textContent= 'Search to display results';
         return;
     }
     const response = await fetch(`./getitem/${str}/${getCurrentType()}`); //peticion GET
     const data = await response.json();
     if (data.status == "success") {
+        typeToSearchDisplay.classList.add('hide');
         updateResults(data)
     }
     else if (data.status == "error") {
@@ -68,6 +75,8 @@ function updateResults(data) {
         forEach(function (item) { //Option clicked
             item.addEventListener('click', () => {
                 resultsContainer.classList.remove('show');
+                typeToSearchDisplay.classList.remove('hide');
+                typeToSearchDisplay.textContent= 'Search to display results';
                 searchInput.value = ``
                 addItemToPlaylistContainer(item.textContent, item.getAttribute('id-value'), item.getAttribute('type-value'), item.querySelector('img').getAttribute('src'), item.getAttribute('data-url'));
                 setTimeout(() => {
@@ -195,7 +204,16 @@ function getCurrentType() {
     return selectMenu.value;
 }
 
+const typeToPlaceHolder = {
+    'artist': 'Michael Jackson',
+    'album': 'Thriller',
+    'track': 'Shape of you'
+
+}
 selectMenu.addEventListener('change', function (event) {
+    const type = event.target.value;
+    const placeholder = typeToPlaceHolder[type];
+    document.getElementsByName('text')[0].placeholder = placeholder;
     startTimerAndFetch();
 });
 
