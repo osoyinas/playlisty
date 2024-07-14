@@ -18,7 +18,7 @@ def auth(request: HttpRequest) -> HttpResponse:
 
         return redirect(auth_url)
     except TypeError:
-        return redirect('home')
+        return redirect('createplaylist')
 
 
 def callback(request: HttpRequest) -> HttpResponse:
@@ -33,7 +33,7 @@ def callback(request: HttpRequest) -> HttpResponse:
         back_url = request.session['back_url']
         del request.session['back_url']
         return redirect(back_url)
-    return redirect('home')
+    return redirect('createplaylist')
 
 
 def logout(request: HttpRequest) -> HttpResponse:
